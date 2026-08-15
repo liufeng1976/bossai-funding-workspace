@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="BossAI Funding — the owner's financing decision and execution workspace." />
+    <title>BossAI Funding</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">BOSSAI FUNDING</p>
+          <h1>Capital Command Center</h1>
+          <p class="subtitle">Know the gap. Choose the capital. Move the next deal today.</p>
+        </div>
+        <div class="topbar-actions">
+          <span id="save-state" class="save-state">Connected</span>
+          <button class="ghost" data-scroll="setup">Edit capital plan</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero-grid" aria-label="Capital status">
+          <article class="focus-card">
+            <div class="card-label">TODAY'S FOCUS</div>
+            <div class="focus-row">
+              <div>
+                <span id="focus-urgency" class="status-pill">SETUP</span>
+                <h2 id="focus-title">Create the company funding profile</h2>
+                <p id="focus-reason" class="muted">Your capital plan needs reliable company facts first.</p>
+              </div>
+              <button id="focus-action" class="primary">Do this now</button>
+            </div>
+            <div class="next-step">
+              <span>Next step</span>
+              <strong id="focus-next-step">Add your financing facts.</strong>
+            </div>
+          </article>
+
+          <article class="gap-card">
+            <div class="card-label">CAPITAL GAP</div>
+            <div class="gap-number" id="remaining-gap">$0</div>
+            <p class="muted">still needed after received and committed capital</p>
+            <div class="progress"><span id="capital-progress"></span></div>
+            <div class="gap-meta">
+              <div><span>Target</span><strong id="target-amount">$0</strong></div>
+              <div><span>Received</span><strong id="received-amount">$0</strong></div>
+              <div><span>Committed</span><strong id="committed-amount">$0</strong></div>
+              <div><span>In motion</span><strong id="pipeline-amount">$0</strong></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="section" aria-labelledby="tracks-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">THREE CAPITAL TRACKS</p>
+              <h2 id="tracks-heading">Where the money can come from</h2>
+            </div>
+            <button class="ghost" data-scroll="actions">Add financing action</button>
+          </div>
+          <div id="track-grid" class="track-grid"></div>
+        </section>
+
+        <section id="strategy" class="section strategy-section" aria-labelledby="strategy-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">CAPITAL STRATEGY</p>
+              <h2 id="strategy-heading">How to fund the need</h2>
+              <p class="muted">Rule-based planning first. Every allocation shows the reason and the risk.</p>
+            </div>
+            <button id="recalculate-strategy" class="primary">Recalculate strategy</button>
+          </div>
+          <div id="strategy-empty" class="empty-state">
+            Set a funding goal, then calculate the recommended mix across Grant, Debt and Equity.
+          </div>
+          <div id="strategy-content" class="strategy-content hidden">
+            <div id="strategy-bars" class="strategy-bars"></div>
+            <div class="strategy-notes">
+              <div>
+                <h3>Assumptions</h3>
+                <ul id="strategy-assumptions"></ul>
+              </div>
+              <div>
+                <h3>Watch-outs</h3>
+                <ul id="strategy-warnings"></ul>
+              </div>
+            </div>
+            <p class="legal-note">Planning support only. Lending, investment, tax and legal terms require review by the appropriate professional advisers.</p>
+          </div>
+        </section>
+
+        <section id="setup" class="section" aria-labelledby="setup-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">CAPITAL SETUP</p>
+              <h2 id="setup-heading">Give the workspace the facts it needs</h2>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <form id="company-form" class="form-card">
+              <div class="form-card-heading">
+                <span>01</span>
+                <div><h3>Company funding profile</h3><p>The common fact source for every financing decision.</p></div>
+              </div>
+              <div class="fields two-col">
+                <label>Company name<input name="name" required /></label>
+                <label>Industry<input name="industry" required /></label>
+                <label>Stage<select name="stage"><option value="pre-revenue">Pre-revenue</option><option value="early-revenue">Early revenue</option><option value="growth">Growth</option><option value="scale">Scale</option><option value="profitable">Profitable</option><option value="other">Other</option></select></label>
+                <label>Geography<input name="geography" required /></label>
+                <label>Founded year<input name="foundedYear" type="number" min="1800" max="2100" /></label>
+                <label>Team size<input name="teamSize" type="number" min="0" value="0" /></label>
+                <label>Annual revenue ($)<input name="annualRevenue" type="number" min="0" step="1" value="0" /></label>
+                <label>MRR ($)<input name="mrr" type="number" min="0" step="1" value="0" /></label>
+                <label>ARR ($)<input name="arr" type="number" min="0" step="1" value="0" /></label>
+                <label>Growth rate (%)<input name="growthRatePct" type="number" step="0.1" value="0" /></label>
+                <label>Gross margin (%)<input name="grossMarginPct" type="number" step="0.1" value="0" /></label>
+                <label>Cash balance ($)<input name="cashBalance" type="number" min="0" step="1" value="0" /></label>
+                <label>Monthly burn ($)<input name="monthlyBurn" type="number" min="0" step="1" value="0" /></label>
+                <label>Runway (months)<input name="runwayMonths" type="number" min="0" step="0.1" value="0" /></label>
+                <label>Existing debt ($)<input name="existingDebt" type="number" min="0" step="1" value="0" /></label>
+                <label>Target funding ($)<input name="targetFunding" type="number" min="0" step="1" value="0" /></label>
+                <label>Target funding date<input name="targetFundingDate" type="date" /></label>
+                <label class="span-2">Product<textarea name="product" rows="2"></textarea></label>
+                <label class="span-2">Business model<textarea name="businessModel" rows="2"></textarea></label>
+                <label class="span-2">Funding history<textarea name="fundingHistory" rows="2"></textarea></label>
+                <label class="span-2">Cap table summary<textarea name="capTableSummary" rows="2"></textarea></label>
+                <label class="span-2">Use of funds<textarea name="useOfFunds" rows="3" required></textarea></label>
+              </div>
+              <button class="primary" type="submit">Save company profile</button>
+            </form>
+
+            <div class="stack">
+              <form id="goal-form" class="form-card">
+                <div class="form-card-heading">
+                  <span>02</span>
+                  <div><h3>Funding goal</h3><p>State the amount, timing and financing constraints.</p></div>
+                </div>
+                <div class="fields">
+                  <label>Target amount ($)<input name="targetAmount" type="number" min="0" step="1" required /></label>
+                  <label>Need by<input name="needByDate" type="date" /></label>
+                  <label>Why this capital is needed<textarea name="purpose" rows="3" required></textarea></label>
+                  <label>Maximum monthly debt service ($)<input name="maxMonthlyDebtService" type="number" min="0" step="1" value="0" /></label>
+                  <label>Growth plan<textarea name="growthPlan" rows="3"></textarea></label>
+                  <label class="checkbox"><input name="acceptsDilution" type="checkbox" checked /><span>I am open to equity dilution for part of the plan.</span></label>
+                </div>
+                <button class="primary" type="submit">Save funding goal</button>
+              </form>
+
+              <form id="round-form" class="form-card">
+                <div class="form-card-heading">
+                  <span>03</span>
+                  <div><h3>Fundraising round</h3><p>Track committed and received capital separately.</p></div>
+                </div>
+                <div class="fields two-col">
+                  <label>Round name<input name="roundName" placeholder="Seed Round" required /></label>
+                  <label>Round type<input name="roundType" placeholder="Seed / SAFE / Preferred" required /></label>
+                  <label>Target ($)<input name="targetAmount" type="number" min="0" step="1" required /></label>
+                  <label>Minimum ($)<input name="minimumAmount" type="number" min="0" step="1" value="0" /></label>
+                  <label>Committed ($)<input name="committedAmount" type="number" min="0" step="1" value="0" /></label>
+                  <label>Received ($)<input name="receivedAmount" type="number" min="0" step="1" value="0" /></label>
+                  <label>Pre-money valuation ($)<input name="preMoneyValuation" type="number" min="0" step="1" /></label>
+                  <label>Post-money valuation ($)<input name="postMoneyValuation" type="number" min="0" step="1" /></label>
+                  <label>Target close date<input name="targetCloseDate" type="date" /></label>
+                  <label>Status<select name="status"><option value="planning">Planning</option><option value="active">Active</option><option value="closing">Closing</option><option value="closed">Closed</option><option value="paused">Paused</option></select></label>
+                  <label class="span-2">Use of funds<textarea name="useOfFunds" rows="3" required></textarea></label>
+                </div>
+                <button class="primary" type="submit">Create round</button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section id="actions" class="section" aria-labelledby="actions-heading">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">EXECUTION</p>
+              <h2 id="actions-heading">Move real financing work forward</h2>
+              <p class="muted">Every active item needs an owner, next step and—when relevant—a deadline.</p>
+            </div>
+          </div>
+          <div class="actions-layout">
+            <form id="action-form" class="form-card compact">
+              <div class="form-card-heading">
+                <span>+</span>
+                <div><h3>New financing action</h3><p>Create one concrete next move.</p></div>
+              </div>
+              <div class="fields">
+                <label>Capital track<select name="track"><option value="grant">Grant</option><option value="debt">Debt</option><option value="equity">Equity</option></select></label>
+                <label>Action title<input name="title" placeholder="Submit state innovation grant" required /></label>
+                <label>Potential amount ($)<input name="amount" type="number" min="0" step="1" value="0" /></label>
+                <label>Stage<select name="stage"><option value="discover">Discover</option><option value="saved">Saved</option><option value="prepare">Prepare</option><option value="ready">Ready</option><option value="applied">Applied</option><option value="contacted">Contacted</option><option value="replied">Replied</option><option value="meeting">Meeting</option><option value="due-diligence">Due diligence</option><option value="term-sheet">Term sheet</option><option value="negotiation">Negotiation</option><option value="committed">Committed</option><option value="approved">Approved</option><option value="received">Received</option></select></label>
+                <label>Priority<select name="priority"><option value="medium">Medium</option><option value="high">High</option><option value="critical">Critical</option><option value="low">Low</option></select></label>
+                <label>Deadline<input name="deadline" type="date" /></label>
+                <label>Next step<textarea name="nextStep" rows="3" required></textarea></label>
+                <label>Owner<input name="owner" value="Owner" /></label>
+              </div>
+              <button class="primary" type="submit">Add action</button>
+            </form>
+            <div>
+              <div class="list-toolbar"><strong>Active financing work</strong><span id="action-count">0 items</span></div>
+              <div id="action-list" class="action-list"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
