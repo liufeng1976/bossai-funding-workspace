@@ -46,6 +46,8 @@ test("real HTTP entry persists the Phase 1 owner funding journey", async () => {
     const initial = await json<BootstrapState>(baseUrl, "/api/bootstrap");
     assert.equal(initial.companyProfile, null);
     assert.match(initial.dashboard.todayFocus.title, /company funding profile/i);
+    assert.equal(initial.dashboard.todayFocus.entityType, null);
+    assert.equal(initial.dashboard.todayFocus.entityId, null);
 
     await json<BootstrapState>(baseUrl, "/api/company-profile", "PUT", {
       name: "Northstar Robotics",
@@ -81,7 +83,8 @@ test("real HTTP entry persists the Phase 1 owner funding journey", async () => {
       growthPlan: "Expand into two manufacturing regions.",
     });
     assert.equal(goalState.dashboard.targetAmountCents, 100_000_000);
-    assert.match(goalState.dashboard.todayFocus.title, /first financing action/i);
+    assert.match(goalState.dashboard.todayFocus.title, /capital strategy/i);
+    assert.equal(goalState.dashboard.todayFocus.destination, "strategy");
 
     const roundResponse = await json<{ state: BootstrapState }>(baseUrl, "/api/rounds", "POST", {
       roundName: "Seed Round",
@@ -102,6 +105,8 @@ test("real HTTP entry persists the Phase 1 owner funding journey", async () => {
     const strategyResponse = await json<{ state: BootstrapState }>(baseUrl, "/api/capital-strategy/recalculate", "POST", {});
     assert.equal(strategyResponse.state.strategy?.allocations.length, 3);
     assert.equal(strategyResponse.state.strategy?.totalNeedCents, 100_000_000);
+    assert.match(strategyResponse.state.dashboard.todayFocus.title, /first funding target/i);
+    assert.equal(strategyResponse.state.dashboard.todayFocus.destination, "opportunities");
 
     for (const action of [
       {
@@ -144,6 +149,7 @@ test("real HTTP entry persists the Phase 1 owner funding journey", async () => {
     const finalState = await json<BootstrapState>(baseUrl, "/api/bootstrap");
     assert.equal(finalState.actions.length, 3);
     assert.deepEqual(finalState.dashboard.tracks.map((track) => track.activeCount), [1, 1, 1]);
+    assert.deepEqual(finalState.dashboard.tracks.map((track) => track.evidenceKinds), [["funding-action"], ["funding-action"], ["funding-action"]]);
     assert.equal(finalState.dashboard.activePipelineCents, 100_000_000);
     assert.match(finalState.dashboard.todayFocus.title, /manufacturing innovation grant/i);
     assert.equal(finalState.dashboard.remainingGapCents, 75_000_000);

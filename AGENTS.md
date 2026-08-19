@@ -49,10 +49,18 @@ Do not optimize for consultant, CRM administrator, or platform administrator wor
 - Prefer MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, or ISC dependencies.
 - Do not introduce AGPL, GPL, SSPL, or other strong-copyleft dependencies without explicit CEO approval.
 
+## Identity and tenant boundary
+
+BossAI Funding must not become a second account, subscription, license, or identity authority. Follow `IDENTITY_TENANT_CONTRACT.md`, `TENANT_SCOPING_MIGRATION.md`, `AUTHORIZATION_POLICY.md`, and `SECURITY_REVIEW_READINESS.md`. Every `/api/*` route must be registered in the Route Security Manifest; unclassified APIs fail closed. State-changing APIs must preserve the same-origin/JSON browser request-integrity boundary and may not add a permissive form/text mutation bypass. Remote access remains fail-closed until an approved external identity authority cryptographically verifies principals, the BossAI Funding authorization policy is enforced on that verified principal, required security review passes, and tenant-scoped persistence/negative tests remain green.
+
+## External funding-source safety
+
+Before adding or changing an external funding-data integration, read `DATA_SOURCES.md` and record the source contract there. Only owner-entered/manual data, official public data with compatible terms, or BossAI-approved licensed data may be ingested. Preserve source identifiers, retrieval time, attribution and terms references. Do not add silent scraping or let source refresh overwrite an owner's financing decision.
+
 ## Git safety
 
 Do not run `git reset`, `git clean`, destructive checkout, or delete unrelated untracked work. Do not push, deploy, release, or sign without explicit authorization.
 
 ## Completion discipline
 
-Every report must distinguish Technical Acceptance, Business Acceptance, and Real User Experience Acceptance. Passing tests/build/lint is not product completion.
+Every report must distinguish Technical Acceptance, Business Acceptance, and Real User Experience Acceptance. Passing tests/build/lint is not product completion. `OWNER_ACCEPTANCE.md` is the required manual target-device evidence template before `realUserValidated=true` or a Completion Level increase.

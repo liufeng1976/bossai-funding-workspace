@@ -16,10 +16,29 @@
           <p class="subtitle">Know the gap. Choose the capital. Move the next deal today.</p>
         </div>
         <div class="topbar-actions">
+          <label class="language-picker" for="locale-select">
+            <span>Language</span>
+            <select id="locale-select" aria-label="Language">
+              <option value="zh-CN">简体中文</option>
+              <option value="zh-TW">繁體中文</option>
+              <option value="en">English</option>
+              <option value="es">Español</option>
+            </select>
+          </label>
           <span id="save-state" class="save-state">Connected</span>
+          <button id="refresh-workspace" class="ghost" type="button" hidden>Refresh latest — keep draft</button>
           <button class="ghost" data-scroll="setup">Edit capital plan</button>
         </div>
       </header>
+
+      <nav class="owner-nav" aria-label="Funding journey">
+        <button type="button" data-scroll="setup"><span>01</span> Capital plan</button>
+        <button type="button" data-scroll="opportunities"><span>02</span> Find money</button>
+        <button type="button" data-scroll="actions"><span>03</span> Move actions</button>
+        <button type="button" data-scroll="equity"><span>04</span> Investors</button>
+        <button type="button" data-scroll="execution"><span>05</span> Execute & close</button>
+        <button type="button" data-scroll="continuity"><span>06</span> History & safety</button>
+      </nav>
 
       <main>
         <section class="hero-grid" aria-label="Capital status">
@@ -37,6 +56,11 @@
               <span>Next step</span>
               <strong id="focus-next-step">Add your financing facts.</strong>
             </div>
+            <div id="focus-context" class="focus-context" hidden>
+              <div><span>Status</span><strong id="focus-status">Not recorded</strong></div>
+              <div><span>Owner</span><strong id="focus-owner">Not recorded</strong></div>
+              <div><span>When</span><strong id="focus-when">Not recorded</strong></div>
+            </div>
           </article>
 
           <article class="gap-card">
@@ -50,10 +74,127 @@
               <div><span>Committed</span><strong id="committed-amount">$0</strong></div>
               <div><span>In motion</span><strong id="pipeline-amount">$0</strong></div>
             </div>
+            <p class="pipeline-truth-note">In motion uses the most-specific recorded pipeline evidence. Linked stages are not stacked twice.</p>
           </article>
         </section>
 
-        <section class="section" aria-labelledby="tracks-heading">
+        <section class="owner-first-view" aria-label="Owner decision snapshot">
+          <article class="owner-snapshot-card owner-snapshot-blocker">
+            <div class="owner-snapshot-heading"><span>WHY CAPITAL HASN'T ARRIVED</span><strong id="owner-snapshot-blocker-count">0 blockers</strong></div>
+            <h2 id="owner-snapshot-blocker-title">No blocker loaded</h2>
+            <p id="owner-snapshot-blocker-reason" class="muted">Loading the highest recorded financing blocker.</p>
+            <button id="owner-snapshot-blocker-action" class="ghost" type="button">Review blocker</button>
+          </article>
+
+          <article class="owner-snapshot-card owner-snapshot-timing">
+            <div class="owner-snapshot-heading"><span>CAPITAL TIMING</span><strong id="owner-snapshot-timing-status">NO TARGET DATE</strong></div>
+            <h2 id="owner-snapshot-timing-title">Need-by date not recorded</h2>
+            <div class="owner-snapshot-metrics">
+              <div><span>Overdue</span><strong id="owner-snapshot-overdue">0</strong></div>
+              <div><span>Next 14 days</span><strong id="owner-snapshot-due14">0</strong></div>
+              <div><span>Undated</span><strong id="owner-snapshot-undated">0</strong></div>
+            </div>
+            <button id="owner-snapshot-timing-action" class="ghost" type="button">Review timing</button>
+          </article>
+
+          <article class="owner-snapshot-card owner-snapshot-tracks">
+            <div class="owner-snapshot-heading"><span>THREE CAPITAL TRACKS</span><strong>Recorded pipeline</strong></div>
+            <div id="owner-snapshot-track-grid" class="owner-snapshot-track-grid"></div>
+            <button id="owner-snapshot-track-action" class="ghost" type="button">Review capital tracks</button>
+          </article>
+        </section>
+
+        <section id="decision-details" class="section owner-decision-details" aria-labelledby="decision-details-heading" data-progressive-module data-module-label="Decision details">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">OWNER DECISION DETAIL</p>
+              <h2 id="decision-details-heading">Coverage, timing, blockers and capital-track evidence</h2>
+              <p class="muted">Open the full evidence when you need to inspect how the owner snapshot was derived.</p>
+            </div>
+          </div>
+
+        <section class="coverage-plan-card" aria-labelledby="coverage-plan-heading">
+          <div class="section-heading coverage-heading">
+            <div>
+              <p class="eyebrow">CAPITAL COVERAGE & CLOSING PLAN</p>
+              <h2 id="coverage-plan-heading">How much of the target is actually covered</h2>
+              <p id="coverage-explanation" class="muted">Set the funding target before interpreting capital coverage.</p>
+            </div>
+            <span id="coverage-status" class="status-pill">NO TARGET</span>
+          </div>
+          <div class="coverage-metrics">
+            <div><span>Cash received</span><strong id="coverage-received-pct">0%</strong></div>
+            <div><span>Received + committed</span><strong id="coverage-secured-pct">0%</strong></div>
+            <div><span>Recorded reach incl. In motion</span><strong id="coverage-recorded-pct">0%</strong></div>
+            <div><span>Still uncovered after current pipeline</span><strong id="coverage-uncovered">$0</strong></div>
+          </div>
+          <div class="coverage-cash-row"><span>Cash still to arrive against target</span><strong id="coverage-cash-still">$0</strong></div>
+          <p id="coverage-disclaimer" class="coverage-disclaimer">In-motion capital is not a probability-weighted forecast, commitment, or guarantee.</p>
+          <div class="closing-plan-heading">
+            <div>
+              <p class="eyebrow">CLOSEST TO CASH</p>
+              <h3>What has the fewest recorded workflow stages left</h3>
+            </div>
+            <p class="muted">Ordered by recorded financing stage only—not predicted success probability.</p>
+          </div>
+          <div id="closing-plan-list" class="closing-plan-list"></div>
+        </section>
+
+        <section class="capital-timing-card" id="timing" aria-labelledby="capital-timing-heading">
+          <div class="section-heading timing-heading">
+            <div>
+              <p class="eyebrow">CAPITAL TIMING & DEADLINE DISCIPLINE</p>
+              <h2 id="capital-timing-heading">When the money is needed and what is still undated</h2>
+              <p id="timing-explanation" class="muted">Record a need-by date so financing work can be compared against a real deadline.</p>
+            </div>
+            <span id="timing-status" class="status-pill">NO TARGET DATE</span>
+          </div>
+          <div class="timing-metrics">
+            <div><span>Need by</span><strong id="timing-need-date">Not recorded</strong></div>
+            <div><span>Runway estimate</span><strong id="timing-runway-date">Not recorded</strong><small id="timing-runway-asof">No saved runway date</small></div>
+            <div><span>Overdue milestones</span><strong id="timing-overdue">0</strong></div>
+            <div><span>Due next 14 days</span><strong id="timing-due14">0</strong></div>
+            <div><span>Active items missing a date</span><strong id="timing-undated-count">0</strong></div>
+          </div>
+          <p id="timing-disclaimer" class="coverage-disclaimer">Runway timing is based only on saved company inputs and is not a cash-flow or closing forecast.</p>
+          <div class="timing-grid">
+            <div>
+              <div class="timing-subhead"><p class="eyebrow">NEXT DATED MILESTONES</p><h3>What the calendar already says</h3></div>
+              <div id="timing-milestone-list" class="timing-list"></div>
+            </div>
+            <div>
+              <div class="timing-subhead"><p class="eyebrow">MISSING A DATE</p><h3>Active work that can drift silently</h3></div>
+              <div id="timing-undated-list" class="timing-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="capital-blockers-card" id="blockers" aria-labelledby="capital-blockers-heading">
+          <div class="section-heading blocker-heading">
+            <div>
+              <p class="eyebrow">WHY CAPITAL HASN'T ARRIVED</p>
+              <h2 id="capital-blockers-heading">What is actually blocking the money</h2>
+              <p class="muted">Only recorded financing facts are used. Resolve the highest blocker first.</p>
+            </div>
+            <span id="capital-blocker-count" class="status-pill">0 blockers</span>
+          </div>
+          <div id="capital-blocker-list" class="capital-blocker-list"></div>
+        </section>
+
+        <section class="journey-progress-card" aria-labelledby="owner-journey-heading">
+          <div class="journey-progress-head">
+            <div>
+              <p class="eyebrow">YOUR FUNDING PATH</p>
+              <h2 id="owner-journey-heading">Know what remains before the capital plan is protected</h2>
+              <p id="owner-journey-summary" class="muted">0 of 5 steps complete</p>
+            </div>
+            <strong id="owner-journey-percent">0%</strong>
+          </div>
+          <div class="readiness-meter"><span id="owner-journey-meter"></span></div>
+          <div id="owner-journey-steps" class="owner-journey-steps"></div>
+        </section>
+
+        <section class="section" id="tracks" aria-labelledby="tracks-heading">
           <div class="section-heading">
             <div>
               <p class="eyebrow">THREE CAPITAL TRACKS</p>
@@ -63,8 +204,9 @@
           </div>
           <div id="track-grid" class="track-grid"></div>
         </section>
+        </section>
 
-        <section id="strategy" class="section strategy-section" aria-labelledby="strategy-heading">
+        <section id="strategy" class="section strategy-section" aria-labelledby="strategy-heading" data-progressive-module data-professional-module data-module-label="Capital strategy">
           <div class="section-heading">
             <div>
               <p class="eyebrow">CAPITAL STRATEGY</p>
@@ -72,6 +214,21 @@
               <p class="muted">Rule-based planning first. Every allocation shows the reason and the risk.</p>
             </div>
             <button id="recalculate-strategy" class="primary">Recalculate strategy</button>
+          </div>
+          <div class="strategy-freshness-panel">
+            <div>
+              <span class="strategy-freshness-label">Strategy state</span>
+              <strong id="strategy-freshness">NOT CREATED</strong>
+            </div>
+            <div>
+              <span class="strategy-freshness-label">Generated</span>
+              <strong id="strategy-generated-at">Not calculated</strong>
+            </div>
+            <div>
+              <span class="strategy-freshness-label">Current funding need</span>
+              <strong id="strategy-current-need">$0</strong>
+            </div>
+            <p id="strategy-freshness-reason">No capital strategy has been calculated yet.</p>
           </div>
           <div id="strategy-empty" class="empty-state">
             Set a funding goal, then calculate the recommended mix across Grant, Debt and Equity.
@@ -92,7 +249,7 @@
           </div>
         </section>
 
-        <section id="setup" class="section" aria-labelledby="setup-heading">
+        <section id="setup" class="section" aria-labelledby="setup-heading" data-progressive-module data-professional-module data-module-label="Capital plan">
           <div class="section-heading">
             <div>
               <p class="eyebrow">CAPITAL SETUP</p>
@@ -174,7 +331,75 @@
           </div>
         </section>
 
-        <section id="actions" class="section" aria-labelledby="actions-heading">
+        <section id="opportunities" class="section" aria-labelledby="opportunities-heading" data-progressive-module data-professional-module data-module-label="Find money">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">OPPORTUNITY ENGINE</p>
+              <h2 id="opportunities-heading">Decide which money is actually worth pursuing</h2>
+              <p class="muted">Every match is rule-based and explainable. The score is only a summary; the evidence below is the decision record.</p>
+            </div>
+            <button id="recalculate-matches" class="ghost" type="button">Recheck against company facts</button>
+          </div>
+
+          <div id="readiness-card" class="readiness-card"></div>
+
+          <form id="grants-gov-form" class="source-search-card">
+            <div>
+              <span class="source-badge">Official public source</span>
+              <h3>Search Grants.gov</h3>
+              <p>Pull current posted or forecasted federal grant opportunities only when you ask. Imported records keep source ID, official detail link, retrieval time and API terms.</p>
+            </div>
+            <div class="source-search-controls">
+              <label>Keyword<input name="keyword" placeholder="manufacturing innovation" required /></label>
+              <label>Results<select name="rows"><option value="5">5</option><option value="10">10</option></select></label>
+              <button class="primary" type="submit">Search official grants</button>
+            </div>
+            <div id="grants-gov-status" class="source-status" role="status" aria-live="polite" hidden>
+              <div><strong id="grants-gov-status-title"></strong><p id="grants-gov-status-copy"></p></div>
+              <button id="retry-grants-gov" class="ghost" type="button" hidden>Try again</button>
+            </div>
+            <p class="source-attribution">This product uses the Grants.gov API but is not endorsed or certified by the U.S. Department of Health and Human Services.</p>
+          </form>
+
+          <div class="actions-layout opportunity-layout">
+            <form id="opportunity-form" class="form-card compact">
+              <div class="form-card-heading"><span>+</span><div><h3>Add funding opportunity</h3><p>Grant, loan or investor—keep the source facts explicit.</p></div></div>
+              <div class="fields">
+                <label>Type<select name="type"><option value="grant">Grant</option><option value="loan">Loan</option><option value="investor">Investor</option></select></label>
+                <label>Opportunity title<input name="title" required placeholder="State Manufacturing Innovation Grant" /></label>
+                <label>Provider / source<input name="provider" required placeholder="State agency / bank / fund" /></label>
+                <label>Source URL<input name="sourceUrl" type="url" /></label>
+                <label>Geography<input name="geography" placeholder="California, USA" /></label>
+                <label>Sectors<input name="sectors" placeholder="Manufacturing, robotics" /></label>
+                <label>Company stages<input name="stages" placeholder="Seed, Growth" /></label>
+                <label>Minimum amount ($)<input name="amountMin" type="number" min="0" value="0" /></label>
+                <label>Maximum amount ($)<input name="amountMax" type="number" min="0" value="0" /></label>
+                <label>Deadline<input name="deadline" type="date" /></label>
+                <label>Description<textarea name="description" rows="2"></textarea></label>
+                <label>Grant program type<input name="grantProgramType" placeholder="Innovation / R&D / workforce" /></label>
+                <label>Grant eligibility<textarea name="grantEligibility" rows="2" placeholder="Record official eligibility requirements"></textarea></label>
+                <label>Required match funding ($)<input name="matchFundingRequired" type="number" min="0" value="0" /></label>
+                <label>Loan term (months)<input name="loanTermMonths" type="number" min="1" /></label>
+                <label>Annual interest rate (%)<input name="annualInterestRatePct" type="number" min="0" step="0.01" /></label>
+                <label>Loan fees ($)<input name="loanFees" type="number" min="0" value="0" /></label>
+                <label>Minimum DSCR<input name="minimumDscr" type="number" min="0" step="0.01" /></label>
+                <label class="check-row"><input name="collateralRequired" type="checkbox" /> Collateral required</label>
+                <label class="check-row"><input name="personalGuaranteeRequired" type="checkbox" /> Personal guarantee required</label>
+                <label>Linked investor<select name="investorId" id="opportunity-investor-select"><option value="">Not linked</option></select></label>
+                <label>Linked fund<select name="fundId" id="opportunity-fund-select"><option value="">Not linked</option></select></label>
+                <label>Investor type<input name="investorType" placeholder="VC / Angel / Strategic / Family Office" /></label>
+              </div>
+              <button class="primary" type="submit">Add and evaluate</button>
+            </form>
+
+            <div>
+              <div class="list-toolbar"><strong>Funding opportunities</strong><span id="opportunity-count">0 opportunities</span></div>
+              <div id="opportunity-list" class="opportunity-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="actions" class="section" aria-labelledby="actions-heading" data-progressive-module data-professional-module data-module-label="Move actions">
           <div class="section-heading">
             <div>
               <p class="eyebrow">EXECUTION</p>
@@ -206,9 +431,415 @@
             </div>
           </div>
         </section>
+
+        <section id="equity" class="section" aria-labelledby="equity-heading" data-progressive-module data-professional-module data-module-label="Investors">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">EQUITY PIPELINE</p>
+              <h2 id="equity-heading">Know who to contact, where each investor stands, and what happens next</h2>
+              <p class="muted">Targets, meetings and follow-ups are financing records—not a separate CRM or task platform.</p>
+            </div>
+          </div>
+
+          <div class="equity-summary" id="equity-summary"></div>
+
+          <div class="actions-layout equity-layout">
+            <form id="investor-form" class="form-card compact">
+              <div class="form-card-heading"><span>+</span><div><h3>Add investor target</h3><p>Capture fit, relationship and the next move.</p></div></div>
+              <div class="fields">
+                <label>Investor / firm name<input name="name" required placeholder="Northstar Ventures" /></label>
+                <label>Fund<select name="fundId" id="investor-fund-select"><option value="">No fund linked</option></select></label>
+                <label>Fundraising round<select name="roundId" id="investor-round-select"><option value="">No round linked</option></select></label>
+                <label>Pipeline stage<select name="stage"><option value="target">Target</option><option value="research">Research</option><option value="ready-to-contact">Ready to Contact</option><option value="contacted">Contacted</option><option value="replied">Replied</option><option value="meeting">Meeting</option><option value="partner-meeting">Partner Meeting</option><option value="due-diligence">Due Diligence</option><option value="term-sheet">Term Sheet</option><option value="negotiation">Negotiation</option><option value="committed">Committed</option><option value="closed">Closed</option><option value="passed">Passed</option><option value="no-response">No Response</option><option value="not-a-fit">Not a Fit</option></select></label>
+                <label>Priority<select name="priority"><option value="high">High</option><option value="medium">Medium</option><option value="critical">Critical</option><option value="low">Low</option></select></label>
+                <label>Relationship<select name="relationship"><option value="none">None</option><option value="cold">Cold</option><option value="warm">Warm</option><option value="strong">Strong</option></select></label>
+                <label>Warm intro source<input name="warmIntroSource" placeholder="Customer / founder / advisor" /></label>
+                <label>Cheque min ($)<input name="chequeMin" type="number" min="0" step="1" value="0" /></label>
+                <label>Cheque max ($)<input name="chequeMax" type="number" min="0" step="1" value="0" /></label>
+                <label>Geography<input name="geography" placeholder="US / North America" /></label>
+                <label>Sectors<input name="sectors" placeholder="B2B SaaS, AI" /></label>
+                <label>Stages<input name="stages" placeholder="Seed, Series A" /></label>
+                <label>Portfolio / fit notes<textarea name="portfolio" rows="2"></textarea></label>
+                <label>Last contact<input name="lastContactDate" type="date" /></label>
+                <label>Next follow-up<input name="nextFollowUpDate" type="date" /></label>
+                <label>Next action<textarea name="nextAction" rows="2" required placeholder="Ask Alex for a warm intro and send the 8-slide deck"></textarea></label>
+                <label>Owner<input name="owner" value="Owner" /></label>
+                <label>Notes<textarea name="notes" rows="2"></textarea></label>
+              </div>
+              <button class="primary" type="submit">Add investor</button>
+            </form>
+
+            <div>
+              <div class="list-toolbar"><strong>Investor pipeline</strong><span id="investor-count">0 investors</span></div>
+              <div id="investor-list" class="action-list"></div>
+            </div>
+          </div>
+
+          <div class="execution-grid">
+            <form id="followup-form" class="form-card compact">
+              <div class="form-card-heading"><span>→</span><div><h3>Schedule follow-up</h3><p>A dated next move can become Today's Focus.</p></div></div>
+              <div class="fields">
+                <label>Investor<select name="investorId" id="followup-investor-select" required><option value="">Select investor</option></select></label>
+                <label>Due date<input name="dueDate" type="date" required /></label>
+                <label>Channel<select name="channel"><option value="email">Email</option><option value="call">Call</option><option value="intro">Intro</option><option value="meeting">Meeting</option><option value="other">Other</option></select></label>
+                <label>Action<textarea name="action" rows="2" required></textarea></label>
+                <label>Owner<input name="owner" value="Owner" /></label>
+              </div>
+              <button class="primary" type="submit">Schedule follow-up</button>
+            </form>
+
+            <form id="meeting-form" class="form-card compact">
+              <div class="form-card-heading"><span>●</span><div><h3>Schedule financing meeting</h3><p>Keep objective and next decision explicit.</p></div></div>
+              <div class="fields">
+                <label>Investor<select name="investorId" id="meeting-investor-select" required><option value="">Select investor</option></select></label>
+                <label>Round<select name="roundId" id="meeting-round-select"><option value="">No round linked</option></select></label>
+                <label>Date & time<input name="meetingAt" type="datetime-local" required /></label>
+                <label>Type<select name="meetingType"><option value="intro">Intro</option><option value="pitch">Pitch</option><option value="partner">Partner</option><option value="diligence">Diligence</option><option value="terms">Terms</option><option value="other">Other</option></select></label>
+                <label>Attendees<input name="attendees" placeholder="CEO, investor partner" /></label>
+                <label>Objective<textarea name="objective" rows="2" required placeholder="Secure partner meeting"></textarea></label>
+              </div>
+              <button class="primary" type="submit">Schedule meeting</button>
+            </form>
+          </div>
+
+          <div class="execution-grid support-grid">
+            <form id="fund-form" class="form-card compact">
+              <div class="form-card-heading"><span>F</span><div><h3>Add fund</h3><p>Record the firm behind the investor.</p></div></div>
+              <div class="fields">
+                <label>Fund name<input name="name" required /></label>
+                <label>Fund type<input name="fundType" required placeholder="VC / Family Office / Strategic" /></label>
+                <label>Website<input name="website" /></label>
+                <label>Geography<input name="geography" /></label>
+                <label>Portfolio<textarea name="portfolio" rows="2"></textarea></label>
+                <label>Notes<textarea name="notes" rows="2"></textarea></label>
+              </div>
+              <button class="ghost" type="submit">Save fund</button>
+            </form>
+
+            <form id="contact-form" class="form-card compact">
+              <div class="form-card-heading"><span>C</span><div><h3>Add contact</h3><p>Attach the person you actually communicate with.</p></div></div>
+              <div class="fields">
+                <label>Investor<select name="investorId" id="contact-investor-select"><option value="">No investor linked</option></select></label>
+                <label>Fund<select name="fundId" id="contact-fund-select"><option value="">No fund linked</option></select></label>
+                <label>Name<input name="name" required /></label>
+                <label>Title<input name="title" /></label>
+                <label>Email<input name="email" type="email" /></label>
+                <label>Phone<input name="phone" /></label>
+                <label>LinkedIn URL<input name="linkedinUrl" /></label>
+                <label>Notes<textarea name="notes" rows="2"></textarea></label>
+              </div>
+              <button class="ghost" type="submit">Save contact</button>
+            </form>
+
+            <form id="thesis-form" class="form-card compact">
+              <div class="form-card-heading"><span>T</span><div><h3>Investment thesis</h3><p>Keep fit criteria explicit instead of relying on a hidden score.</p></div></div>
+              <div class="fields">
+                <label>Fund<select name="fundId" id="thesis-fund-select"><option value="">No fund linked</option></select></label>
+                <label>Investor<select name="investorId" id="thesis-investor-select"><option value="">No investor linked</option></select></label>
+                <label>Sectors<input name="sectors" required /></label>
+                <label>Stages<input name="stages" required /></label>
+                <label>Geography<input name="geography" /></label>
+                <label>Cheque min ($)<input name="chequeMin" type="number" min="0" value="0" /></label>
+                <label>Cheque max ($)<input name="chequeMax" type="number" min="0" value="0" /></label>
+                <label>Thesis<textarea name="thesis" rows="3" required></textarea></label>
+              </div>
+              <button class="ghost" type="submit">Save thesis</button>
+            </form>
+          </div>
+
+          <div class="execution-grid">
+            <div>
+              <div class="list-toolbar"><strong>Pending follow-ups</strong><span id="followup-count">0 pending</span></div>
+              <div id="followup-list" class="action-list"></div>
+            </div>
+            <div>
+              <div class="list-toolbar"><strong>Meetings</strong><span id="meeting-count">0 scheduled</span></div>
+              <div id="meeting-list" class="action-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="execution" class="section" aria-labelledby="execution-heading" data-progressive-module data-professional-module data-module-label="Execute and close">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">FUNDING EXECUTION</p>
+              <h2 id="execution-heading">Move from “worth pursuing” to money actually received</h2>
+              <p class="muted">Applications, materials, diligence, terms and funding outcomes stay connected to the financing context.</p>
+            </div>
+          </div>
+
+          <div class="execution-grid">
+            <form id="application-form" class="form-card compact">
+              <div class="form-card-heading"><span>A</span><div><h3>Application</h3><p>Track submission, review and decision—not just the opportunity.</p></div></div>
+              <div class="fields">
+                <label>Opportunity<select name="opportunityId" id="application-opportunity-select"><option value="">No opportunity linked</option></select></label>
+                <label>Track<select name="track"><option value="grant">Grant</option><option value="debt">Debt</option><option value="equity">Equity</option></select></label>
+                <label>Application title<input name="title" required /></label>
+                <label>Requested amount ($)<input name="requestedAmount" type="number" min="0" value="0" /></label>
+                <label>Approved amount ($)<input name="approvedAmount" type="number" min="0" value="0" /></label>
+                <label>Status<select name="status"><option value="draft">Draft</option><option value="preparing">Preparing</option><option value="submitted">Submitted</option><option value="under-review">Under Review</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="withdrawn">Withdrawn</option><option value="funded">Funded</option></select></label>
+                <label>Deadline<input name="deadline" type="date" /></label>
+                <label>Submitted date<input name="submittedDate" type="date" /></label>
+                <label>Decision date<input name="decisionDate" type="date" /></label>
+                <label>Owner<input name="owner" value="Owner" /></label>
+                <label>Next action<textarea name="nextAction" rows="2" required></textarea></label>
+                <label>Rejection reason<textarea name="rejectionReason" rows="2"></textarea></label>
+                <label>Notes<textarea name="notes" rows="2"></textarea></label>
+              </div>
+              <button class="primary" type="submit">Create application</button>
+            </form>
+
+            <div>
+              <div class="list-toolbar"><strong>Applications</strong><span id="application-count">0 active</span></div>
+              <div id="application-list" class="action-list"></div>
+            </div>
+          </div>
+
+          <div class="execution-grid">
+            <form id="document-form" class="form-card compact">
+              <div class="form-card-heading"><span>D</span><div><h3>Document workspace</h3><p>Version and readiness are explicit.</p></div></div>
+              <div class="fields">
+                <label>Document type<select name="documentType"><option value="pitch-deck">Pitch Deck</option><option value="executive-summary">Executive Summary</option><option value="business-plan">Business Plan</option><option value="financial-model">Financial Model</option><option value="use-of-funds">Use of Funds</option><option value="funding-memo">Funding Memo</option><option value="grant-narrative">Grant Narrative</option><option value="loan-package">Loan Package</option><option value="investor-update">Investor Update</option><option value="due-diligence">Due Diligence</option><option value="other">Other</option></select></label>
+                <label>Title<input name="title" required /></label>
+                <label>Version<input name="version" value="v1" required /></label>
+                <label>Status<select name="status"><option value="draft">Draft</option><option value="in-review">In Review</option><option value="ready">Ready</option><option value="shared">Shared</option><option value="archived">Archived</option></select></label>
+                <label>Completion %<input name="completionPct" type="number" min="0" max="100" value="0" /></label>
+                <label>Round<select name="roundId" id="document-round-select"><option value="">No round linked</option></select></label>
+                <label>Investor<select name="investorId" id="document-investor-select"><option value="">No investor linked</option></select></label>
+                <label>Application<select name="applicationId" id="document-application-select"><option value="">No application linked</option></select></label>
+                <label>Notes<textarea name="notes" rows="2"></textarea></label>
+              </div>
+              <button class="primary" type="submit">Add document</button>
+            </form>
+            <div>
+              <div class="list-toolbar"><strong>Financing materials</strong><span id="document-count">0 documents</span></div>
+              <div id="document-list" class="action-list"></div>
+            </div>
+          </div>
+
+          <div class="execution-grid">
+            <form id="data-room-form" class="form-card compact">
+              <div class="form-card-heading"><span>R</span><div><h3>Data room</h3><p>Creates the eight standard diligence folders automatically.</p></div></div>
+              <div class="fields">
+                <label>Data room name<input name="name" required placeholder="Seed Round Data Room" /></label>
+                <label>Round<select name="roundId" id="data-room-round-select"><option value="">No round linked</option></select></label>
+              </div>
+              <button class="primary" type="submit">Create data room</button>
+            </form>
+            <form id="data-room-document-form" class="form-card compact">
+              <div class="form-card-heading"><span>+</span><div><h3>Add data room item</h3><p>Track missing, ready, shared and expired material.</p></div></div>
+              <div class="fields">
+                <label>Folder<select name="folderId" id="data-room-folder-select" required><option value="">Select folder</option></select></label>
+                <label>Linked document<select name="documentId" id="data-room-document-select"><option value="">No workspace document linked</option></select></label>
+                <label>Title<input name="title" required /></label>
+                <label>Status<select name="status"><option value="missing">Missing</option><option value="preparing">Preparing</option><option value="ready">Ready</option><option value="shared">Shared</option><option value="expired">Expired</option></select></label>
+                <label>Expires<input name="expiresAt" type="date" /></label>
+                <label>Notes<textarea name="notes" rows="2"></textarea></label>
+              </div>
+              <button class="ghost" type="submit">Add data room item</button>
+            </form>
+          </div>
+          <div id="data-room-list" class="data-room-list"></div>
+
+          <div class="execution-grid">
+            <form id="diligence-form" class="form-card compact">
+              <div class="form-card-heading"><span>DD</span><div><h3>Due diligence request</h3><p>Every request needs an owner, status and deadline.</p></div></div>
+              <div class="fields">
+                <label>Investor<select name="investorId" id="diligence-investor-select" required><option value="">Select investor</option></select></label>
+                <label>Round<select name="roundId" id="diligence-round-select"><option value="">No round linked</option></select></label>
+                <label>Document<select name="documentId" id="diligence-document-select"><option value="">No document linked</option></select></label>
+                <label>Owner<input name="owner" value="Owner" /></label>
+                <label>Deadline<input name="deadline" type="date" /></label>
+                <label>Status<select name="status"><option value="requested">Requested</option><option value="preparing">Preparing</option><option value="ready">Ready</option><option value="shared">Shared</option><option value="accepted">Accepted</option><option value="needs-revision">Needs Revision</option></select></label>
+                <label>Request<textarea name="request" rows="3" required></textarea></label>
+                <label>Response notes<textarea name="responseNotes" rows="2"></textarea></label>
+              </div>
+              <button class="primary" type="submit">Add diligence request</button>
+            </form>
+            <div>
+              <div class="list-toolbar"><strong>Diligence queue</strong><span id="diligence-count">0 open</span></div>
+              <div id="diligence-list" class="action-list"></div>
+            </div>
+          </div>
+
+          <div class="execution-grid">
+            <form id="term-sheet-form" class="form-card compact">
+              <div class="form-card-heading"><span>T</span><div><h3>Term sheet</h3><p>Record terms for comparison; qualified counsel must review material legal terms.</p></div></div>
+              <div class="fields">
+                <label>Investor<select name="investorId" id="term-investor-select" required><option value="">Select investor</option></select></label>
+                <label>Round<select name="roundId" id="term-round-select"><option value="">No round linked</option></select></label>
+                <label>Investment amount ($)<input name="investmentAmount" type="number" min="0" value="0" /></label>
+                <label>Pre-money valuation ($)<input name="preMoneyValuation" type="number" min="0" /></label>
+                <label>Equity %<input name="equityPct" type="number" min="0" max="100" step="0.01" /></label>
+                <label>Liquidation preference<input name="liquidationPreference" placeholder="1x non-participating" /></label>
+                <label>Board seat<input name="boardSeat" /></label>
+                <label>Pro-rata<input name="proRata" /></label>
+                <label>Vesting<input name="vesting" /></label>
+                <label>Option pool<input name="optionPool" /></label>
+                <label>Exclusivity<input name="exclusivity" /></label>
+                <label>Closing conditions<textarea name="closingConditions" rows="2"></textarea></label>
+                <label>Target close date<input name="targetCloseDate" type="date" /><span class="field-help">A closing target, not a predicted wire date.</span></label>
+                <label>Status<select name="status"><option value="received">Received</option><option value="reviewing">Reviewing</option><option value="negotiating">Negotiating</option><option value="accepted">Accepted</option><option value="rejected">Rejected</option><option value="expired">Expired</option></select></label>
+                <label>Notes<textarea name="notes" rows="2"></textarea></label>
+              </div>
+              <button class="primary" type="submit">Save term sheet</button>
+            </form>
+            <div>
+              <div class="list-toolbar"><strong>Term sheet comparison</strong><span>Lawyer review required</span></div>
+              <div id="term-sheet-comparison" class="term-comparison"></div>
+            </div>
+          </div>
+
+          <div class="execution-grid">
+            <form id="closing-condition-form" class="form-card compact">
+              <div class="form-card-heading"><span>C</span><div><h3>Closing condition</h3><p>Turn material closing conditions into dated, owned financing facts. This is not a general task list.</p></div></div>
+              <div class="fields">
+                <label>Term sheet<select name="termSheetId" id="closing-condition-term-select" required><option value="">Select term sheet</option></select></label>
+                <label>Condition<input name="title" required placeholder="e.g. execute definitive documents" /></label>
+                <label>Owner<input name="owner" value="Owner" /></label>
+                <label>Due date<input name="dueDate" type="date" /></label>
+                <label>Status<select name="status"><option value="open">Open</option><option value="in-progress">In progress</option><option value="satisfied">Satisfied</option><option value="waived">Waived</option></select></label>
+                <label>Evidence note<textarea name="evidenceNote" rows="2" placeholder="Required when satisfied or waived"></textarea></label>
+              </div>
+              <button class="primary" type="submit">Add closing condition</button>
+            </form>
+            <div>
+              <div class="list-toolbar"><strong>Closing condition register</strong><span id="closing-condition-count">0 open</span></div>
+              <p class="muted">Clearing this register does not itself prove legal closing or cash receipt. Funding Outcome remains the final financing state.</p>
+              <div id="closing-condition-list" class="action-list"></div>
+            </div>
+          </div>
+
+          <div class="execution-grid">
+            <form id="outcome-form" class="form-card compact">
+              <div class="form-card-heading"><span>$</span><div><h3>Funding outcome</h3><p>Close the loop with approved, committed and actually received capital.</p></div></div>
+              <div class="fields">
+                <label>Track<select name="track"><option value="grant">Grant</option><option value="debt">Debt</option><option value="equity">Equity</option></select></label>
+                <label>Application<select name="applicationId" id="outcome-application-select"><option value="">No application linked</option></select></label>
+                <label>Investor<select name="investorId" id="outcome-investor-select"><option value="">No investor linked</option></select></label>
+                <label>Round<select name="roundId" id="outcome-round-select"><option value="">No round linked</option></select></label>
+                <label>Status<select name="status"><option value="won">Won</option><option value="lost">Lost</option><option value="withdrawn">Withdrawn</option><option value="closed">Closed</option></select></label>
+                <label>Approved ($)<input name="approvedAmount" type="number" min="0" value="0" /></label>
+                <label>Committed ($)<input name="committedAmount" type="number" min="0" value="0" /></label>
+                <label>Commitment evidence<input name="commitmentEvidence" placeholder="Signed agreement, award notice, closing memo reference" /><span class="field-help">Required when committed capital is greater than $0.</span></label>
+                <label>Received ($)<input name="receivedAmount" type="number" min="0" value="0" /></label>
+                <label>Received date<input name="receivedDate" type="date" /></label>
+                <label>Receipt evidence<input name="receiptEvidence" placeholder="Bank transaction, statement, settlement reference" /><span class="field-help">Required when received capital is greater than $0.</span></label>
+                <label>Conditions<textarea name="conditions" rows="2"></textarea></label>
+                <label>Loss reason<textarea name="lossReason" rows="2"></textarea></label>
+                <label>Feedback<textarea name="feedback" rows="2"></textarea></label>
+                <label>Retry date<input name="retryDate" type="date" /></label>
+              </div>
+              <p class="muted">Evidence fields store a reference or concise note only. If an initial received amount is entered, BossAI Funding creates the first Receipt Tranche automatically. Later receipts belong in the Receipt Tranche Register.</p>
+              <button class="primary" type="submit">Record outcome</button>
+            </form>
+            <div>
+              <div class="list-toolbar"><strong>Funding outcomes</strong><span id="outcome-count">0 outcomes</span></div>
+              <div id="outcome-list" class="action-list"></div>
+            </div>
+          </div>
+
+          <div class="execution-grid">
+            <form id="receipt-tranche-form" class="form-card compact">
+              <div class="form-card-heading"><span>R</span><div><h3>Receipt tranche</h3><p>Record each actual funding receipt separately and reconcile it to the Funding Outcome.</p></div></div>
+              <div class="fields">
+                <label>Funding outcome<select name="outcomeId" id="receipt-tranche-outcome-select" required><option value="">Select outcome</option></select></label>
+                <label>Amount received ($)<input name="amount" type="number" min="0.01" step="0.01" required /></label>
+                <label>Received date<input name="receivedDate" type="date" required /></label>
+                <label>Receipt evidence<input name="receiptEvidence" required placeholder="Bank transaction, statement, settlement reference" /></label>
+                <label>Note<textarea name="note" rows="2" placeholder="Optional context for this receipt"></textarea></label>
+              </div>
+              <p class="muted">This register is financing receipt reconciliation, not a general accounting ledger. Active tranches must never exceed committed capital.</p>
+              <button class="primary" type="submit">Record receipt tranche</button>
+            </form>
+            <div>
+              <div class="list-toolbar"><strong>Receipt tranche register</strong><span id="receipt-tranche-count">0 receipts</span></div>
+              <p class="muted">Voided tranches remain visible as history but stop contributing to the Funding Outcome received total.</p>
+              <div id="receipt-tranche-list" class="action-list"></div>
+            </div>
+          </div>
+
+          <div class="execution-grid">
+            <form id="receipt-expectation-form" class="form-card compact">
+              <div class="form-card-heading"><span>E</span><div><h3>Committed capital arrival</h3><p>Record an explicit wire or settlement expectation for capital that is already committed but not yet received.</p></div></div>
+              <div class="fields">
+                <label>Funding outcome<select name="outcomeId" id="receipt-expectation-outcome-select" required><option value="">Select outcome</option></select></label>
+                <label>Expected amount ($)<input name="amount" type="number" min="0.01" step="0.01" required /></label>
+                <label>Expected receipt date<input name="expectedDate" type="date" required /></label>
+                <label>Expectation basis<input name="basisNote" required placeholder="e.g. signed closing schedule / payer-confirmed wire date" /></label>
+                <label>Owner<input name="owner" value="Owner" required /></label>
+                <label>Note<textarea name="note" rows="2" placeholder="Optional follow-up context"></textarea></label>
+              </div>
+              <p class="muted">Only record a date you actually have from a payer, signed closing schedule, award notice or equivalent financing evidence. This is not a forecast or guarantee, and it never counts as received cash.</p>
+              <button class="primary" type="submit">Add arrival expectation</button>
+            </form>
+            <div>
+              <div class="list-toolbar"><strong>Committed capital arrival schedule</strong><span id="receipt-expectation-count">0 expected</span></div>
+              <p class="muted">Actual cash is authoritative. A Receipt Tranche reduces a specific expectation only after you explicitly allocate that actual receipt below; BossAI Funding never auto-matches by date or amount.</p>
+              <div id="receipt-expectation-list" class="action-list"></div>
+            </div>
+          </div>
+
+          <div class="execution-grid">
+            <form id="receipt-expectation-allocation-form" class="form-card compact">
+              <div class="form-card-heading"><span>A</span><div><h3>Expectation → actual receipt</h3><p>Explicitly record which real Receipt Tranche fulfilled which arrival expectation.</p></div></div>
+              <div class="fields">
+                <label>Arrival expectation<select name="expectationId" id="receipt-allocation-expectation-select" required><option value="">Select expectation</option></select></label>
+                <label>Actual receipt tranche<select name="trancheId" id="receipt-allocation-tranche-select" required><option value="">Select actual receipt</option></select></label>
+                <label>Amount allocated ($)<input name="amount" type="number" min="0.01" step="0.01" required /></label>
+                <label>Note<textarea name="note" rows="2" placeholder="Why this actual receipt fulfills this expectation"></textarea></label>
+              </div>
+              <p class="muted">No automatic matching. The selected expectation and tranche must belong to the same Funding Outcome, and the allocation cannot exceed either side's unallocated amount.</p>
+              <button class="primary" type="submit">Link actual receipt</button>
+            </form>
+            <div>
+              <div class="list-toolbar"><strong>Expectation / receipt reconciliation</strong><span id="receipt-allocation-count">0 links</span></div>
+              <p class="muted">Voided links stay visible as history. If an actual Receipt Tranche is later corrected or voided, the financing truth wins and the affected expectation becomes a reconciliation item.</p>
+              <div id="receipt-allocation-list" class="action-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="continuity" class="section" aria-labelledby="continuity-heading" data-progressive-module data-professional-module data-module-label="History and safety">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">HISTORY & RECOVERY</p>
+              <h2 id="continuity-heading">Know what changed. Keep a recovery point.</h2>
+              <p class="muted">Business history is local to this funding workspace. Backups stay on this computer.</p>
+            </div>
+            <div class="continuity-actions">
+              <button id="create-backup" class="primary" type="button">Create local backup</button>
+              <button id="export-funding-data" class="ghost" type="button">Export funding data</button>
+              <button id="export-pipeline-csv" class="ghost" type="button">Export pipeline CSV</button>
+              <button id="export-owner-summary" class="ghost" type="button">Export owner / board summary</button>
+            </div>
+          </div>
+
+          <div class="continuity-stats">
+            <article><span>Access</span><strong id="continuity-access">Local only</strong></article>
+            <article><span>Schema</span><strong id="continuity-schema">v2</strong></article>
+            <article><span>Backups</span><strong id="continuity-backup-count">0</strong></article>
+            <article><span>Latest backup</span><strong id="continuity-latest">None yet</strong></article>
+            <article><span>Workspace ID</span><strong id="continuity-workspace">Loading…</strong></article>
+            <article><span>Identity authority</span><strong id="continuity-identity">External authority required</strong></article>
+          </div>
+          <p class="legal-note">Remote network access remains blocked until production authentication and tenant isolation are implemented. This local workspace does not issue user accounts or commercial identities.</p>
+
+          <div class="continuity-grid">
+            <div>
+              <div class="list-toolbar"><strong>Recovery points</strong><span>Restore creates a pre-restore backup first</span></div>
+              <div id="backup-list" class="action-list"></div>
+            </div>
+            <div>
+              <div class="list-toolbar"><strong>Funding activity</strong><span id="activity-count">0 events</span></div>
+              <div id="activity-list" class="activity-list"></div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
 
+    <button id="return-to-overview" class="owner-return" type="button" hidden>Back to capital overview</button>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script type="module" src="/app.js"></script>
   </body>

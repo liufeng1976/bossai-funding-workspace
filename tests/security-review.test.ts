@@ -1,0 +1,84 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { resolve } from "node:path";
+import type { AddressInfo } from "node:net";
+import { createFundingServer } from "../src/server/app.ts";
+import { FundingRepository } from "../src/server/database.ts";
+
+test("default local runtime reports implemented local controls but keeps production security review blocked", async () => {
+  const repo = new FundingRepository(":memory:");
+  const server = createFundingServer(repo, resolve(process.cwd(), "public"));
+  await new Promise<void>((resolveListen) => server.listen(0, "127.0.0.1", resolveListen));
+  const address = server.address() as AddressInfo;
+  try {
+    const response = await fetch(`http://127.0.0.1:${address.port}/api/security/review-readiness`);
+    assert.equal(response.status, 200);
+    const body = await response.json() as {
+      status: string;
+      remoteAccessDecision: string;
+      authorizationEnforcementMode: string;
+      tenantPersistence: { ready: boolean; scopedTables: number; requiredTables: number; foreignKeyViolationCount: number };
+      apiSecurityManifest: { routeCount: number; unclassifiedApiFailClosed: boolean };
+      identityVerification: { adapterConfigured: boolean; approvedCryptographicProviderConfigured: boolean };
+      browserRequestIntegrity: { ready: boolean; sameOriginMutationRequired: boolean; jsonMutationRequired: boolean; crossSiteFetchMetadataBlocked: boolean; nativeJsonClientsWithoutOriginAllowed: boolean };
+      workspaceRevision: { ready: boolean; trackedBusinessTableCount: number; expectedTriggerCount: number; installedTriggerCount: number; databaseDriven: boolean; browserPreconditionRequired: boolean; mutationSerializationReady: boolean };
+      startupSecurityInvariants: { routeManifestReady: boolean; routeCount: number; publicRouteCount: number; tenantSchemaReady: boolean; tenantTableCount: number; workspaceGuardTableCount: number; referenceGuardCount: number; foreignKeyViolationCount: number };
+      httpResourceLimits: { ready: boolean; maxHeaderSizeBytes: number; maxHeaderCount: number; headersTimeoutMs: number; requestTimeoutMs: number; keepAliveTimeoutMs: number; maxRequestsPerSocket: number; maxJsonBodyBytes: number };
+      securityDecisionEvidence: { ready: boolean; restorePreservesEvidence: boolean; tenantPrunedBackup: boolean; retention: { ready: boolean; currentEventCount: number; maxEventsPerWorkspace: number; withinRetentionLimit: boolean; pruningMode: string } };
+      securityReviewAttested: boolean;
+      blockers: string[];
+    };
+
+    assert.equal(body.status, "not-approved");
+    assert.equal(body.remoteAccessDecision, "blocked");
+    assert.equal(body.authorizationEnforcementMode, "local-owner");
+    assert.equal(body.tenantPersistence.ready, true);
+    assert.equal(body.tenantPersistence.scopedTables, 27);
+    assert.equal(body.tenantPersistence.requiredTables, 27);
+    assert.equal(body.tenantPersistence.foreignKeyViolationCount, 0);
+    assert.ok(body.apiSecurityManifest.routeCount > 40);
+    assert.equal(body.apiSecurityManifest.unclassifiedApiFailClosed, true);
+    assert.equal(body.identityVerification.adapterConfigured, false);
+    assert.equal(body.identityVerification.approvedCryptographicProviderConfigured, false);
+    assert.equal(body.browserRequestIntegrity.ready, true);
+    assert.equal(body.browserRequestIntegrity.sameOriginMutationRequired, true);
+    assert.equal(body.browserRequestIntegrity.jsonMutationRequired, true);
+    assert.equal(body.browserRequestIntegrity.crossSiteFetchMetadataBlocked, true);
+    assert.equal(body.browserRequestIntegrity.nativeJsonClientsWithoutOriginAllowed, true);
+    assert.equal(body.workspaceRevision.ready, true);
+    assert.equal(body.workspaceRevision.trackedBusinessTableCount, 27);
+    assert.equal(body.workspaceRevision.expectedTriggerCount, 81);
+    assert.equal(body.workspaceRevision.installedTriggerCount, 81);
+    assert.equal(body.workspaceRevision.databaseDriven, true);
+    assert.equal(body.workspaceRevision.browserPreconditionRequired, true);
+    assert.equal(body.workspaceRevision.mutationSerializationReady, true);
+    assert.equal(body.startupSecurityInvariants.routeManifestReady, true);
+    assert.equal(body.startupSecurityInvariants.publicRouteCount, 1);
+    assert.equal(body.startupSecurityInvariants.tenantSchemaReady, true);
+    assert.equal(body.startupSecurityInvariants.tenantTableCount, 27);
+    assert.equal(body.startupSecurityInvariants.workspaceGuardTableCount, 27);
+    assert.equal(body.startupSecurityInvariants.referenceGuardCount, 34);
+    assert.equal(body.startupSecurityInvariants.foreignKeyViolationCount, 0);
+    assert.equal(body.httpResourceLimits.ready, true);
+    assert.equal(body.httpResourceLimits.maxHeaderSizeBytes, 16 * 1024);
+    assert.equal(body.httpResourceLimits.maxHeaderCount, 100);
+    assert.equal(body.httpResourceLimits.headersTimeoutMs, 10_000);
+    assert.equal(body.httpResourceLimits.requestTimeoutMs, 30_000);
+    assert.equal(body.httpResourceLimits.keepAliveTimeoutMs, 5_000);
+    assert.equal(body.httpResourceLimits.maxRequestsPerSocket, 100);
+    assert.equal(body.httpResourceLimits.maxJsonBodyBytes, 1_000_000);
+    assert.equal(body.securityDecisionEvidence.ready, true);
+    assert.equal(body.securityDecisionEvidence.retention.ready, true);
+    assert.equal(body.securityDecisionEvidence.retention.currentEventCount, 0);
+    assert.equal(body.securityDecisionEvidence.retention.maxEventsPerWorkspace, 5_000);
+    assert.equal(body.securityDecisionEvidence.retention.withinRetentionLimit, true);
+    assert.equal(body.securityDecisionEvidence.retention.pruningMode, "oldest-first-per-workspace");
+    assert.equal(body.securityReviewAttested, false);
+    assert.ok(body.blockers.includes("APPROVED_CRYPTOGRAPHIC_IDENTITY_ADAPTER_NOT_CONFIGURED"));
+    assert.ok(body.blockers.includes("PRODUCTION_SECURITY_REVIEW_NOT_ATTESTED"));
+    assert.ok(body.blockers.includes("REMOTE_BINDING_REMAINS_BLOCKED"));
+  } finally {
+    await new Promise<void>((resolveClose) => server.close(() => resolveClose()));
+    repo.close();
+  }
+});

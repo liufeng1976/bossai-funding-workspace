@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { calculateCapitalStrategy } from "../src/domain/strategy.ts";
 import { chooseTodayFocus } from "../src/domain/focus.ts";
 import { projectDashboard } from "../src/domain/dashboard.ts";
-import type { CompanyProfile, FundingAction, FundingGoal, FundraisingRound } from "../src/domain/types.ts";
+import type { CompanyProfile, FundingAction, FundingGoal, FundraisingRound, Investor, TermSheet } from "../src/domain/types.ts";
 
 const now = new Date("2026-08-15T12:00:00.000Z");
 
@@ -97,8 +97,73 @@ test("Today's Focus prioritizes a near-deadline financing action", () => {
 
   const focus = chooseTodayFocus(profile, goal, actions, now);
   assert.equal(focus.actionId, 2);
+  assert.equal(focus.entityType, "funding-action");
+  assert.equal(focus.entityId, 2);
+  assert.equal(focus.workStatus, "prepare");
+  assert.equal(focus.workOwner, "Owner");
+  assert.equal(focus.workDueAt, "2026-08-17");
   assert.equal(focus.urgency, "urgent");
   assert.match(focus.reason, /due in/);
+});
+
+test("active term sheet becomes an exact high-value focus when no nearer deadline outranks it", () => {
+  const investor: Investor = {
+    id: 9,
+    name: "Atlas Ventures",
+    fundId: null,
+    roundId: null,
+    stage: "term-sheet",
+    priority: "high",
+    relationship: "warm",
+    warmIntroSource: "Customer CEO",
+    chequeMinCents: 25_000_000,
+    chequeMaxCents: 75_000_000,
+    geography: "USA",
+    sectors: "industrial automation",
+    stages: "growth",
+    portfolio: "",
+    lastContactDate: "2026-08-14",
+    nextFollowUpDate: null,
+    nextAction: "",
+    owner: "Owner",
+    notes: "",
+    rejectionReason: "",
+    createdAt: now.toISOString(),
+    updatedAt: now.toISOString(),
+  };
+  const termSheet: TermSheet = {
+    id: 17,
+    investorId: investor.id,
+    roundId: null,
+    investmentAmountCents: 50_000_000,
+    preMoneyValuationCents: 450_000_000,
+    equityPct: null,
+    liquidationPreference: "1x non-participating",
+    boardSeat: "Observer",
+    proRata: "Standard pro-rata",
+    vesting: "",
+    optionPool: "10% pre-money",
+    exclusivity: "30-day no-shop",
+    closingConditions: "Diligence and definitive documents",
+    targetCloseDate: null,
+    status: "reviewing",
+    notes: "",
+    createdAt: now.toISOString(),
+    updatedAt: now.toISOString(),
+  };
+  const focus = chooseTodayFocus(profile, goal, [], now, [investor], [], [], [], [], [], [], [termSheet]);
+  assert.equal(focus.entityType, "term-sheet");
+  assert.equal(focus.entityId, termSheet.id);
+  assert.equal(focus.workStatus, "reviewing");
+  assert.equal(focus.workOwner, null);
+  assert.equal(focus.workDueAt, null);
+  assert.match(focus.nextStep, /lawyer review/i);
+
+  const acceptedFocus = chooseTodayFocus(profile, goal, [], now, [investor], [], [], [], [], [], [], [{ ...termSheet, status: "accepted" }]);
+  assert.equal(acceptedFocus.entityType, "term-sheet");
+  assert.equal(acceptedFocus.workStatus, "accepted");
+  assert.match(acceptedFocus.nextStep, /closing conditions/i);
+  assert.match(acceptedFocus.nextStep, /committed or received capital/i);
 });
 
 test("dashboard keeps committed and received capital separate and computes remaining gap", () => {

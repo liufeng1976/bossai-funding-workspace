@@ -1,0 +1,29 @@
+{
+  "schema": "bossai.product-ui-preflight.v1",
+  "date": "2026-08-17",
+  "product": "BossAI Funding",
+  "highestCommercialGoal": "让企业老板从融资缺口判断一路推进到资本实际到账，并且每天知道最重要的下一动作。",
+  "largestUserGap": "当前工作树正在进行大规模融资闭环与安全批次，主入口源码已经被并行修改；本批最大风险不是视觉缺失，而是错误覆盖并行融资事实模型，或者把仅有页面文案误报成老板融资闭环已成立。",
+  "userProblem": "老板首页必须用真实记录回答四个问题：还差多少钱、哪些资金路径值得追、今天做什么、为什么钱还没到账。",
+  "userVisibleChange": "不覆盖当前并行 UI；验证现有入口顺序、资金缺口、Today Focus、资本覆盖、到账时点、阻塞原因和三类资金来源均由 domain/server 状态投影驱动，并验证相应恢复路径。",
+  "scope": [
+    "只读审查 public/index.html / public/app.ts / domain projections",
+    "运行 Funding 现有 UI/journey/domain/security/build 固定门禁",
+    "将真实验收证据写回公司 UI rollout"
+  ],
+  "outOfScope": [
+    "任何 OpenBcon 文件、历史、UI、schema、文档或实现",
+    "覆盖当前并行修改的 public/index.html、public/app.ts、public/styles.css",
+    "修改融资算法、SQLite、身份租户、安全策略和外部数据源",
+    "发布、部署、签名、支付或生产成熟度升级"
+  ],
+  "realEntryAcceptance": [
+    "默认入口首屏能直接看到 Today Focus 与 Remaining Capital Gap",
+    "资本覆盖/到账时点/阻塞原因/资金来源均来自现有 domain projection 而不是前端演示常量",
+    "四个老板问题均有对应 UI/journey 测试或 domain 测试覆盖",
+    "失败和空状态有 setup/focus/recovery 路径",
+    "npm verify 通过；若并行现场存在真实失败则原样记录，不清理或绕过"
+  ],
+  "targetCompletionLevel": 2,
+  "completionClaimBoundary": "本批只声明现有老板融资入口与机器合同的验证结果；不声明资本真实到账、真实用户验证、生产身份就绪或融资成功。"
+}

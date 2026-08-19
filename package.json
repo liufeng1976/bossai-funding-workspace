@@ -1,6 +1,6 @@
 {
   "name": "bossai-funding-workspace",
-  "version": "0.1.0",
+  "version": "0.47.0",
   "private": true,
   "description": "BossAI Funding — owner capital decision and execution workspace",
   "type": "module",
@@ -15,7 +15,13 @@
     "lint": "node scripts/lint.mjs",
     "test": "node --test --experimental-strip-types tests/*.test.ts",
     "test:journey": "node --test --experimental-strip-types tests/journey.test.ts",
-    "verify": "npm run lint && npm run typecheck && npm test && npm run build"
+    "test:chrome-repair": "node scripts/chrome-repair-smoke.cjs",
+    "test:ui-browser": "node scripts/ui-browser-acceptance.cjs",
+    "test:owner-mobile": "node scripts/ui-browser-acceptance.cjs --mobile-owner-readiness",
+    "test:locales": "node scripts/ui-browser-acceptance.cjs --locale-acceptance",
+    "test:locale-leaks": "node scripts/ui-browser-acceptance.cjs --locale-leak-audit",
+    "verify": "npm run lint && npm run typecheck && npm test && npm run build",
+    "verify:owner-readiness": "npm run verify && npm run test:ui-browser && npm run test:owner-mobile && npm run test:locales && npm run test:locale-leaks && npm run test:chrome-repair"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",

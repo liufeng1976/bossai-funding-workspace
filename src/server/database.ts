@@ -12,6 +12,7 @@ import type {
   FundraisingRound,
   FundraisingRoundInput,
 } from "../domain/types.ts";
+import { detectWorkspaceId } from "./repository-scope.ts";
 
 interface CompanyRow {
   id: number;
@@ -177,12 +178,24 @@ function asAction(row: ActionRow): FundingAction {
 
 export class FundingRepository {
   readonly db: DatabaseSync;
+  readonly databasePath: string;
+  private workspaceId: string | null = null;
 
   constructor(databasePath: string) {
+    this.databasePath = databasePath;
     if (databasePath !== ":memory:") mkdirSync(dirname(databasePath), { recursive: true });
     this.db = new DatabaseSync(databasePath);
     this.db.exec("PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL;");
     this.initializeSchema();
+    this.workspaceId = detectWorkspaceId(this.db);
+  }
+
+  bindWorkspace(workspaceId: string): void {
+    this.workspaceId = workspaceId;
+  }
+
+  getWorkspaceBinding(): string | null {
+    return this.workspaceId;
   }
 
   close(): void {
@@ -277,123 +290,164 @@ export class FundingRepository {
   }
 
   getCompanyProfile(): CompanyProfile | null {
-    const row = this.db.prepare("SELECT * FROM company_profile WHERE id = 1").get() as CompanyRow | undefined;
+    const row = this.workspaceId
+      ? this.db.prepare("SELECT * FROM company_profile WHERE id=1 AND workspace_id=?").get(this.workspaceId) as CompanyRow | undefined
+      : this.db.prepare("SELECT * FROM company_profile WHERE id=1").get() as CompanyRow | undefined;
     return row ? asCompany(row) : null;
   }
 
   saveCompanyProfile(input: CompanyProfileInput): CompanyProfile {
     const updatedAt = nowIso();
-    this.db.prepare(`
-      INSERT INTO company_profile (
-        id, name, industry, stage, geography, founded_year, annual_revenue_cents, mrr_cents, arr_cents,
-        growth_rate_pct, gross_margin_pct, cash_balance_cents, monthly_burn_cents, runway_months, team_size,
-        product, business_model, funding_history, existing_debt_cents, cap_table_summary, use_of_funds,
-        target_funding_cents, target_funding_date, updated_at
-      ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      ON CONFLICT(id) DO UPDATE SET
-        name=excluded.name, industry=excluded.industry, stage=excluded.stage, geography=excluded.geography,
-        founded_year=excluded.founded_year, annual_revenue_cents=excluded.annual_revenue_cents,
-        mrr_cents=excluded.mrr_cents, arr_cents=excluded.arr_cents, growth_rate_pct=excluded.growth_rate_pct,
-        gross_margin_pct=excluded.gross_margin_pct, cash_balance_cents=excluded.cash_balance_cents,
-        monthly_burn_cents=excluded.monthly_burn_cents, runway_months=excluded.runway_months,
-        team_size=excluded.team_size, product=excluded.product, business_model=excluded.business_model,
-        funding_history=excluded.funding_history, existing_debt_cents=excluded.existing_debt_cents,
-        cap_table_summary=excluded.cap_table_summary, use_of_funds=excluded.use_of_funds,
-        target_funding_cents=excluded.target_funding_cents, target_funding_date=excluded.target_funding_date,
-        updated_at=excluded.updated_at
-    `).run(
+    const values = [
       input.name, input.industry, input.stage, input.geography, input.foundedYear, input.annualRevenueCents,
       input.mrrCents, input.arrCents, input.growthRatePct, input.grossMarginPct, input.cashBalanceCents,
       input.monthlyBurnCents, input.runwayMonths, input.teamSize, input.product, input.businessModel,
       input.fundingHistory, input.existingDebtCents, input.capTableSummary, input.useOfFunds,
       input.targetFundingCents, input.targetFundingDate, updatedAt,
-    );
+    ] as const;
+    if (this.workspaceId) {
+      this.db.prepare(`
+        INSERT INTO company_profile (
+          workspace_id, id, name, industry, stage, geography, founded_year, annual_revenue_cents, mrr_cents, arr_cents,
+          growth_rate_pct, gross_margin_pct, cash_balance_cents, monthly_burn_cents, runway_months, team_size,
+          product, business_model, funding_history, existing_debt_cents, cap_table_summary, use_of_funds,
+          target_funding_cents, target_funding_date, updated_at
+        ) VALUES (?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(workspace_id, id) DO UPDATE SET
+          name=excluded.name, industry=excluded.industry, stage=excluded.stage, geography=excluded.geography,
+          founded_year=excluded.founded_year, annual_revenue_cents=excluded.annual_revenue_cents,
+          mrr_cents=excluded.mrr_cents, arr_cents=excluded.arr_cents, growth_rate_pct=excluded.growth_rate_pct,
+          gross_margin_pct=excluded.gross_margin_pct, cash_balance_cents=excluded.cash_balance_cents,
+          monthly_burn_cents=excluded.monthly_burn_cents, runway_months=excluded.runway_months,
+          team_size=excluded.team_size, product=excluded.product, business_model=excluded.business_model,
+          funding_history=excluded.funding_history, existing_debt_cents=excluded.existing_debt_cents,
+          cap_table_summary=excluded.cap_table_summary, use_of_funds=excluded.use_of_funds,
+          target_funding_cents=excluded.target_funding_cents, target_funding_date=excluded.target_funding_date,
+          updated_at=excluded.updated_at
+      `).run(this.workspaceId, ...values);
+    } else {
+      this.db.prepare(`
+        INSERT INTO company_profile (
+          id, name, industry, stage, geography, founded_year, annual_revenue_cents, mrr_cents, arr_cents,
+          growth_rate_pct, gross_margin_pct, cash_balance_cents, monthly_burn_cents, runway_months, team_size,
+          product, business_model, funding_history, existing_debt_cents, cap_table_summary, use_of_funds,
+          target_funding_cents, target_funding_date, updated_at
+        ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+          name=excluded.name, industry=excluded.industry, stage=excluded.stage, geography=excluded.geography,
+          founded_year=excluded.founded_year, annual_revenue_cents=excluded.annual_revenue_cents,
+          mrr_cents=excluded.mrr_cents, arr_cents=excluded.arr_cents, growth_rate_pct=excluded.growth_rate_pct,
+          gross_margin_pct=excluded.gross_margin_pct, cash_balance_cents=excluded.cash_balance_cents,
+          monthly_burn_cents=excluded.monthly_burn_cents, runway_months=excluded.runway_months,
+          team_size=excluded.team_size, product=excluded.product, business_model=excluded.business_model,
+          funding_history=excluded.funding_history, existing_debt_cents=excluded.existing_debt_cents,
+          cap_table_summary=excluded.cap_table_summary, use_of_funds=excluded.use_of_funds,
+          target_funding_cents=excluded.target_funding_cents, target_funding_date=excluded.target_funding_date,
+          updated_at=excluded.updated_at
+      `).run(...values);
+    }
     return this.getCompanyProfile() as CompanyProfile;
   }
 
   getFundingGoal(): FundingGoal | null {
-    const row = this.db.prepare("SELECT * FROM funding_goal WHERE id = 1").get() as GoalRow | undefined;
+    const row = this.workspaceId
+      ? this.db.prepare("SELECT * FROM funding_goal WHERE id=1 AND workspace_id=?").get(this.workspaceId) as GoalRow | undefined
+      : this.db.prepare("SELECT * FROM funding_goal WHERE id=1").get() as GoalRow | undefined;
     return row ? asGoal(row) : null;
   }
 
   saveFundingGoal(input: FundingGoalInput): FundingGoal {
     const updatedAt = nowIso();
-    this.db.prepare(`
-      INSERT INTO funding_goal (
-        id, target_amount_cents, need_by_date, purpose, accepts_dilution,
-        max_monthly_debt_service_cents, growth_plan, updated_at
-      ) VALUES (1, ?, ?, ?, ?, ?, ?, ?)
-      ON CONFLICT(id) DO UPDATE SET
-        target_amount_cents=excluded.target_amount_cents,
-        need_by_date=excluded.need_by_date,
-        purpose=excluded.purpose,
-        accepts_dilution=excluded.accepts_dilution,
-        max_monthly_debt_service_cents=excluded.max_monthly_debt_service_cents,
-        growth_plan=excluded.growth_plan,
-        updated_at=excluded.updated_at
-    `).run(
-      input.targetAmountCents, input.needByDate, input.purpose, input.acceptsDilution ? 1 : 0,
-      input.maxMonthlyDebtServiceCents, input.growthPlan, updatedAt,
-    );
+    const values = [input.targetAmountCents, input.needByDate, input.purpose, input.acceptsDilution ? 1 : 0, input.maxMonthlyDebtServiceCents, input.growthPlan, updatedAt] as const;
+    if (this.workspaceId) {
+      this.db.prepare(`
+        INSERT INTO funding_goal (
+          workspace_id, id, target_amount_cents, need_by_date, purpose, accepts_dilution,
+          max_monthly_debt_service_cents, growth_plan, updated_at
+        ) VALUES (?, 1, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(workspace_id, id) DO UPDATE SET
+          target_amount_cents=excluded.target_amount_cents,
+          need_by_date=excluded.need_by_date,
+          purpose=excluded.purpose,
+          accepts_dilution=excluded.accepts_dilution,
+          max_monthly_debt_service_cents=excluded.max_monthly_debt_service_cents,
+          growth_plan=excluded.growth_plan,
+          updated_at=excluded.updated_at
+      `).run(this.workspaceId, ...values);
+    } else {
+      this.db.prepare(`
+        INSERT INTO funding_goal (
+          id, target_amount_cents, need_by_date, purpose, accepts_dilution,
+          max_monthly_debt_service_cents, growth_plan, updated_at
+        ) VALUES (1, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(id) DO UPDATE SET
+          target_amount_cents=excluded.target_amount_cents,
+          need_by_date=excluded.need_by_date,
+          purpose=excluded.purpose,
+          accepts_dilution=excluded.accepts_dilution,
+          max_monthly_debt_service_cents=excluded.max_monthly_debt_service_cents,
+          growth_plan=excluded.growth_plan,
+          updated_at=excluded.updated_at
+      `).run(...values);
+    }
     return this.getFundingGoal() as FundingGoal;
   }
 
   listRounds(): FundraisingRound[] {
-    return (this.db.prepare("SELECT * FROM fundraising_round ORDER BY created_at DESC").all() as unknown as RoundRow[]).map(asRound);
+    const rows = this.workspaceId
+      ? this.db.prepare("SELECT * FROM fundraising_round WHERE workspace_id=? ORDER BY created_at DESC").all(this.workspaceId)
+      : this.db.prepare("SELECT * FROM fundraising_round ORDER BY created_at DESC").all();
+    return (rows as unknown as RoundRow[]).map(asRound);
   }
 
   createRound(input: FundraisingRoundInput): FundraisingRound {
     const timestamp = nowIso();
-    const result = this.db.prepare(`
-      INSERT INTO fundraising_round (
-        round_name, round_type, target_amount_cents, minimum_amount_cents, committed_amount_cents,
-        received_amount_cents, pre_money_valuation_cents, post_money_valuation_cents,
-        target_close_date, status, use_of_funds, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(
-      input.roundName, input.roundType, input.targetAmountCents, input.minimumAmountCents,
-      input.committedAmountCents, input.receivedAmountCents, input.preMoneyValuationCents,
-      input.postMoneyValuationCents, input.targetCloseDate, input.status, input.useOfFunds, timestamp, timestamp,
-    );
-    const row = this.db.prepare("SELECT * FROM fundraising_round WHERE id = ?").get(result.lastInsertRowid) as unknown as RoundRow;
-    return asRound(row);
+    const values = [input.roundName, input.roundType, input.targetAmountCents, input.minimumAmountCents, input.committedAmountCents, input.receivedAmountCents, input.preMoneyValuationCents, input.postMoneyValuationCents, input.targetCloseDate, input.status, input.useOfFunds, timestamp, timestamp] as const;
+    const result = this.workspaceId
+      ? this.db.prepare(`INSERT INTO fundraising_round (workspace_id,round_name,round_type,target_amount_cents,minimum_amount_cents,committed_amount_cents,received_amount_cents,pre_money_valuation_cents,post_money_valuation_cents,target_close_date,status,use_of_funds,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`).run(this.workspaceId, ...values)
+      : this.db.prepare(`INSERT INTO fundraising_round (round_name,round_type,target_amount_cents,minimum_amount_cents,committed_amount_cents,received_amount_cents,pre_money_valuation_cents,post_money_valuation_cents,target_close_date,status,use_of_funds,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`).run(...values);
+    const row = this.workspaceId
+      ? this.db.prepare("SELECT * FROM fundraising_round WHERE id=? AND workspace_id=?").get(result.lastInsertRowid, this.workspaceId)
+      : this.db.prepare("SELECT * FROM fundraising_round WHERE id=?").get(result.lastInsertRowid);
+    return asRound(row as unknown as RoundRow);
   }
 
   listActions(): FundingAction[] {
-    return (this.db.prepare("SELECT * FROM funding_action ORDER BY updated_at DESC").all() as unknown as ActionRow[]).map(asAction);
+    const rows = this.workspaceId
+      ? this.db.prepare("SELECT * FROM funding_action WHERE workspace_id=? ORDER BY updated_at DESC").all(this.workspaceId)
+      : this.db.prepare("SELECT * FROM funding_action ORDER BY updated_at DESC").all();
+    return (rows as unknown as ActionRow[]).map(asAction);
   }
 
   createAction(input: FundingActionInput): FundingAction {
     const timestamp = nowIso();
-    const result = this.db.prepare(`
-      INSERT INTO funding_action (
-        track, title, amount_cents, stage, priority, deadline, next_step, owner, result, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(
-      input.track, input.title, input.amountCents, input.stage, input.priority, input.deadline,
-      input.nextStep, input.owner, input.result, timestamp, timestamp,
-    );
-    const row = this.db.prepare("SELECT * FROM funding_action WHERE id = ?").get(result.lastInsertRowid) as unknown as ActionRow;
-    return asAction(row);
+    const values = [input.track, input.title, input.amountCents, input.stage, input.priority, input.deadline, input.nextStep, input.owner, input.result, timestamp, timestamp] as const;
+    const result = this.workspaceId
+      ? this.db.prepare("INSERT INTO funding_action (workspace_id,track,title,amount_cents,stage,priority,deadline,next_step,owner,result,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)").run(this.workspaceId, ...values)
+      : this.db.prepare("INSERT INTO funding_action (track,title,amount_cents,stage,priority,deadline,next_step,owner,result,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)").run(...values);
+    const row = this.workspaceId
+      ? this.db.prepare("SELECT * FROM funding_action WHERE id=? AND workspace_id=?").get(result.lastInsertRowid, this.workspaceId)
+      : this.db.prepare("SELECT * FROM funding_action WHERE id=?").get(result.lastInsertRowid);
+    return asAction(row as unknown as ActionRow);
   }
 
   updateAction(id: number, input: FundingActionInput): FundingAction | null {
     const timestamp = nowIso();
-    const result = this.db.prepare(`
-      UPDATE funding_action SET
-        track=?, title=?, amount_cents=?, stage=?, priority=?, deadline=?, next_step=?, owner=?, result=?, updated_at=?
-      WHERE id=?
-    `).run(
-      input.track, input.title, input.amountCents, input.stage, input.priority, input.deadline,
-      input.nextStep, input.owner, input.result, timestamp, id,
-    );
+    const values = [input.track, input.title, input.amountCents, input.stage, input.priority, input.deadline, input.nextStep, input.owner, input.result, timestamp] as const;
+    const result = this.workspaceId
+      ? this.db.prepare("UPDATE funding_action SET track=?,title=?,amount_cents=?,stage=?,priority=?,deadline=?,next_step=?,owner=?,result=?,updated_at=? WHERE id=? AND workspace_id=?").run(...values, id, this.workspaceId)
+      : this.db.prepare("UPDATE funding_action SET track=?,title=?,amount_cents=?,stage=?,priority=?,deadline=?,next_step=?,owner=?,result=?,updated_at=? WHERE id=?").run(...values, id);
     if (result.changes === 0) return null;
-    const row = this.db.prepare("SELECT * FROM funding_action WHERE id = ?").get(id) as unknown as ActionRow;
-    return asAction(row);
+    const row = this.workspaceId
+      ? this.db.prepare("SELECT * FROM funding_action WHERE id=? AND workspace_id=?").get(id, this.workspaceId)
+      : this.db.prepare("SELECT * FROM funding_action WHERE id=?").get(id);
+    return asAction(row as unknown as ActionRow);
   }
 
   getCapitalStrategy(): CapitalStrategy | null {
-    const row = this.db.prepare("SELECT * FROM capital_strategy WHERE id = 1").get() as StrategyRow | undefined;
+    const row = this.workspaceId
+      ? this.db.prepare("SELECT * FROM capital_strategy WHERE id=1 AND workspace_id=?").get(this.workspaceId) as StrategyRow | undefined
+      : this.db.prepare("SELECT * FROM capital_strategy WHERE id=1").get() as StrategyRow | undefined;
     if (!row) return null;
     return {
       id: row.id,
@@ -407,25 +461,32 @@ export class FundingRepository {
   }
 
   saveCapitalStrategy(strategy: CapitalStrategy): CapitalStrategy {
-    this.db.prepare(`
-      INSERT INTO capital_strategy (
-        id, total_need_cents, allocations_json, unfunded_residual_cents, assumptions_json, warnings_json, generated_at
-      ) VALUES (1, ?, ?, ?, ?, ?, ?)
-      ON CONFLICT(id) DO UPDATE SET
-        total_need_cents=excluded.total_need_cents,
-        allocations_json=excluded.allocations_json,
-        unfunded_residual_cents=excluded.unfunded_residual_cents,
-        assumptions_json=excluded.assumptions_json,
-        warnings_json=excluded.warnings_json,
-        generated_at=excluded.generated_at
-    `).run(
-      strategy.totalNeedCents,
-      JSON.stringify(strategy.allocations),
-      strategy.unfundedResidualCents,
-      JSON.stringify(strategy.assumptions),
-      JSON.stringify(strategy.warnings),
-      strategy.generatedAt,
-    );
+    const values = [strategy.totalNeedCents, JSON.stringify(strategy.allocations), strategy.unfundedResidualCents, JSON.stringify(strategy.assumptions), JSON.stringify(strategy.warnings), strategy.generatedAt] as const;
+    if (this.workspaceId) {
+      this.db.prepare(`
+        INSERT INTO capital_strategy (workspace_id,id,total_need_cents,allocations_json,unfunded_residual_cents,assumptions_json,warnings_json,generated_at)
+        VALUES (?,1,?,?,?,?,?,?)
+        ON CONFLICT(workspace_id,id) DO UPDATE SET
+          total_need_cents=excluded.total_need_cents,
+          allocations_json=excluded.allocations_json,
+          unfunded_residual_cents=excluded.unfunded_residual_cents,
+          assumptions_json=excluded.assumptions_json,
+          warnings_json=excluded.warnings_json,
+          generated_at=excluded.generated_at
+      `).run(this.workspaceId, ...values);
+    } else {
+      this.db.prepare(`
+        INSERT INTO capital_strategy (id,total_need_cents,allocations_json,unfunded_residual_cents,assumptions_json,warnings_json,generated_at)
+        VALUES (1,?,?,?,?,?,?)
+        ON CONFLICT(id) DO UPDATE SET
+          total_need_cents=excluded.total_need_cents,
+          allocations_json=excluded.allocations_json,
+          unfunded_residual_cents=excluded.unfunded_residual_cents,
+          assumptions_json=excluded.assumptions_json,
+          warnings_json=excluded.warnings_json,
+          generated_at=excluded.generated_at
+      `).run(...values);
+    }
     return this.getCapitalStrategy() as CapitalStrategy;
   }
 }

@@ -15,7 +15,13 @@ Strong-copyleft dependencies such as AGPL, GPL, and SSPL must not be introduced 
 
 ## Application runtime packages
 
-No npm application runtime package is required by the Phase 1 implementation. The server uses Node built-in modules and `node:sqlite`.
+No npm application runtime package is required by the current implementation. The server uses Node built-in modules and `node:sqlite`.
+
+## External data services
+
+External funding data is not treated as a software dependency. Source terms, permitted use, attribution, provenance fields, and admission rules are maintained separately in `DATA_SOURCES.md`.
+
+The current Grants.gov integration adds no npm package and uses the built-in `fetch` API. Its data/API terms must be reviewed as source terms rather than represented as a software license.
 
 ## Maintenance rule
 
