@@ -1,4 +1,5 @@
 export const FUNDING_COMMERCIAL_PRODUCT_ID = "bossai-funding";
+export const FUNDING_COMMERCIAL_FEATURE_ID = "bossai-funding.commercial";
 export const HEADQUARTERS_ENTITLEMENT_SCHEMA = "bossai.commercial-entitlement.v1";
 
 export type FundingDistributionMode = "community" | "commercial";
@@ -28,11 +29,13 @@ export interface FundingDistributionAuthorization {
 
 export class CommercialEntitlementError extends Error {
   readonly code: string;
+  readonly httpStatus: number | null;
 
-  constructor(code: string, message: string) {
+  constructor(code: string, message: string, options: { httpStatus?: number | null } = {}) {
     super(message);
     this.name = "CommercialEntitlementError";
     this.code = code;
+    this.httpStatus = options.httpStatus ?? null;
   }
 }
 
@@ -121,7 +124,10 @@ export function resolveFundingDistributionConfig(options: ResolveFundingDistribu
     };
   }
 
-  const bearerToken = requireSafeIdentifier(env.BOSSAI_FUNDING_HEADQUARTERS_BEARER_TOKEN, "BossAI Headquarters Commerce bearer token");
+  const rawBearerToken = String(env.BOSSAI_FUNDING_HEADQUARTERS_BEARER_TOKEN ?? "").trim();
+  const bearerToken = rawBearerToken
+    ? requireSafeIdentifier(rawBearerToken, "BossAI Headquarters Commerce bearer token")
+    : null;
   const installationId = requireSafeIdentifier(options.installationId ?? env.BOSSAI_FUNDING_INSTALLATION_ID, "BossAI Funding installation ID");
 
   return {
@@ -172,6 +178,12 @@ function requireEntitlementEnvelope(value: unknown, config: FundingDistributionC
   const membershipStatus = typeof data.entitlement.membershipStatus === "string" ? data.entitlement.membershipStatus : null;
   if (!licenseActive || membershipStatus !== "active" || accessReason !== "AUTHORIZED") {
     throw new CommercialEntitlementError("COMMERCIAL_ENTITLEMENT_DENIED", `BossAI commercial entitlement denied: ${accessReason}.`);
+  }
+  const features = Array.isArray(data.entitlement.features)
+    ? data.entitlement.features.filter((item): item is string => typeof item === "string")
+    : [];
+  if (!features.includes(FUNDING_COMMERCIAL_FEATURE_ID)) {
+    throw new CommercialEntitlementError("COMMERCIAL_ENTITLEMENT_FEATURE_REQUIRED", `BossAI commercial entitlement does not include ${FUNDING_COMMERCIAL_FEATURE_ID}.`);
   }
 
   return {
@@ -236,7 +248,11 @@ export async function verifyFundingDistributionAuthorization(
     }
 
     if (!response.ok) {
-      throw new CommercialEntitlementError("COMMERCIAL_ENTITLEMENT_HTTP_ERROR", `BossAI Headquarters Commerce entitlement request failed with HTTP ${response.status}.`);
+      throw new CommercialEntitlementError(
+        "COMMERCIAL_ENTITLEMENT_HTTP_ERROR",
+        `BossAI Headquarters Commerce entitlement request failed with HTTP ${response.status}.`,
+        { httpStatus: response.status },
+      );
     }
 
     let payload: unknown;

@@ -2,13 +2,14 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   CommercialEntitlementError,
+  FUNDING_COMMERCIAL_FEATURE_ID,
   FUNDING_COMMERCIAL_PRODUCT_ID,
   HEADQUARTERS_ENTITLEMENT_SCHEMA,
   resolveFundingDistributionConfig,
   verifyFundingDistributionAuthorization,
 } from "../src/server/commercial-entitlement.ts";
 
-const VERSION = "0.49.0";
+const VERSION = "0.50.0";
 const INSTALLATION = "bossai-funding-test-installation";
 const TOKEN = "bossai_session_test_token_123456";
 
@@ -52,7 +53,7 @@ function entitlementEnvelope(overrides: Record<string, unknown> = {}): Record<st
         planCode: "commercial",
         planName: "Commercial",
         membershipStatus: "active",
-        features: ["bossai-funding"],
+        features: [FUNDING_COMMERCIAL_FEATURE_ID],
         expiresAt: null,
         offlineGraceUntil: null,
       },
@@ -117,7 +118,24 @@ test("commercial distribution sends the canonical Headquarters entitlement reque
   assert.equal(result.planCode, "commercial");
 });
 
-test("commercial distribution fails closed when configuration is missing or transport is insecure", () => {
+test("commercial distribution resolves without an injected bearer for desktop sign-in but verifier still fails closed without a session", async () => {
+  const config = resolveFundingDistributionConfig({
+    productVersion: VERSION,
+    env: {
+      BOSSAI_FUNDING_DISTRIBUTION: "commercial",
+      BOSSAI_FUNDING_HEADQUARTERS_BASE_URL: "https://commerce.example.test",
+      BOSSAI_FUNDING_INSTALLATION_ID: INSTALLATION,
+    },
+  });
+  assert.equal(config.mode, "commercial");
+  assert.equal(config.bearerToken, null);
+  await assert.rejects(
+    () => verifyFundingDistributionAuthorization(config),
+    (error: unknown) => error instanceof CommercialEntitlementError && error.code === "COMMERCIAL_CONFIG_MISSING",
+  );
+});
+
+test("commercial distribution fails closed when required non-session configuration is missing or transport is insecure", () => {
   assert.throws(
     () => resolveFundingDistributionConfig({ productVersion: VERSION, env: { BOSSAI_FUNDING_DISTRIBUTION: "commercial" } }),
     (error: unknown) => error instanceof CommercialEntitlementError && error.code === "COMMERCIAL_CONFIG_MISSING",
@@ -180,6 +198,18 @@ test("commercial distribution rejects inactive licensing, mismatched product/dev
       },
     })), { status: 200 })),
     (error: unknown) => error instanceof CommercialEntitlementError && error.code === "COMMERCIAL_ENTITLEMENT_AUTHORITY_INVALID",
+  );
+
+  await assert.rejects(
+    () => verifyFundingDistributionAuthorization(config, async () => new Response(JSON.stringify(entitlementEnvelope({
+      entitlement: {
+        licenseActive: true,
+        membershipStatus: "active",
+        accessReason: "AUTHORIZED",
+        features: [],
+      },
+    })), { status: 200 })),
+    (error: unknown) => error instanceof CommercialEntitlementError && error.code === "COMMERCIAL_ENTITLEMENT_FEATURE_REQUIRED",
   );
 });
 

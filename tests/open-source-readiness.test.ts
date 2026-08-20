@@ -59,8 +59,11 @@ test("commercial licensing is an alternative permission path rather than a false
   assert.match(entitlementBoundary, /BossAI Headquarters Commerce/i);
   assert.match(entitlementBoundary, /must not create a second source of truth/i);
   assert.match(entitlementBoundary, /bossai\.commercial-entitlement\.v1/i);
-  assert.match(entitlementBoundary, /secure operating-system credential handling/i);
+  assert.match(entitlementBoundary, /bossai-funding\.commercial/i);
+  assert.match(entitlementBoundary, /safeStorage\.encryptString/i);
+  assert.match(entitlementBoundary, /real paid-account end-to-end acceptance/i);
   assert.match(entitlementConsumer, /FUNDING_COMMERCIAL_PRODUCT_ID = "bossai-funding"/);
+  assert.match(entitlementConsumer, /FUNDING_COMMERCIAL_FEATURE_ID = "bossai-funding\.commercial"/);
   assert.match(entitlementConsumer, /HEADQUARTERS_ENTITLEMENT_SCHEMA = "bossai\.commercial-entitlement\.v1"/);
   assert.doesNotMatch(entitlementConsumer, /FundingRepository|database\.ts|sqlite/i);
 });

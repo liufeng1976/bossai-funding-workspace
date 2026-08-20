@@ -24,7 +24,7 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] GitHub dependency vulnerability alerts enabled and verified; automated security fixes enabled.
 - [x] GitHub Discussions enabled; Issues remain enabled.
 - [x] Remote `Source CI / verify` passes on `main`.
-- [x] Remote `Windows Desktop / desktop` passes on `windows-latest` for v0.49: desktop contract, Community/commercial Electron smoke, packaging, Community packaged smoke and commercial packaged smoke all PASS. Unsigned artifact upload is best-effort because the account artifact-storage quota is currently full.
+- [x] Remote `Windows Desktop / desktop` passes on `windows-latest` for v0.49. v0.50 adds paid-feature and OS-encrypted commercial-session gates and must re-pass remotely after commit. Unsigned artifact upload is best-effort because the account artifact-storage quota is currently full.
 - [ ] Private vulnerability reporting: the private-repository endpoint currently returns 404; configure/verify immediately when preparing the Public visibility change.
 - [ ] Branch protection / required `verify`: GitHub API returned 403 (`Upgrade to GitHub Pro or make this repository public to enable this feature`) while the repository is Private. Enable immediately after Public visibility, before accepting external changes.
 
@@ -39,7 +39,7 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] User data is not deleted on uninstall by installer policy.
 - [x] Development Electron smoke PASS with isolated temporary userData, default English and no horizontal overflow.
 - [x] Packaged `win-unpacked` smoke PASS with packaged runtime and isolated temporary userData.
-- [x] v0.49.0 NSIS installer generated. Current SHA-256: `93120CBDC9E0F455470EA11474669A1AADCD5946B055CB05C3D4690EBD75CF3E`.
+- [x] v0.50.0 NSIS installer generated after final local gates. SHA-256: `835A950EFCEAF1B9267DDC166815903EE31267FBB6783D4BFEBAD70D63A7A42B`.
 - [x] Real isolated lifecycle PASS: install → first launch → single-instance rejection → save → restart → data persists → uninstall → data preserved → reinstall → data restored → final uninstall preserves data.
 - [x] Packaged distribution contains Electron and Chromium bundled license files (`LICENSE.electron.txt`, `LICENSES.chromium.html`).
 - [ ] Official icon and Windows metadata reviewed. Current engineering installer still uses the default Electron icon.
@@ -50,7 +50,7 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Fresh install default locale is English.
 - [x] Explicit locale selection remains persistent UI preference only.
 - [x] English / Simplified Chinese / Traditional Chinese / Spanish are production-complete locales.
-- [x] Full v0.49 owner-readiness re-run: 266/266 tests PASS; desktop/responsive Chrome, 390×844 owner path, four production locales, zero-leak audit and receipt-reconciliation Chrome PASS.
+- [x] Full v0.50 owner-readiness re-run: 273/273 tests PASS; desktop/responsive Chrome, 390×844 owner path, four production locales, zero-leak audit and receipt-reconciliation Chrome PASS.
 - [x] Human owner installs the v0.48 desktop build, confirms it opens and runs normally, and uninstalls successfully on the target machine (2026-08-20). Machine-only evidence remains separately scoped for restart/reinstall data persistence.
 
 ## Commercial authority
@@ -58,9 +58,12 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Community AGPL build does not require proprietary entitlement and performs no Headquarters entitlement call.
 - [x] Funding does not create a second account/payment/license/entitlement ledger.
 - [x] Online `bossai.commercial-entitlement.v1` consumer is implemented for explicit commercial mode with product/install/version binding and fail-closed Headquarters authority checks.
-- [x] Real Electron commercial integration smoke PASS against an isolated Headquarters mock: authorized response starts Funding; suspended license fails before SQLite creation; request body is empty; bearer material is neither logged nor persisted.
-- [x] Packaged commercial EXE smoke PASS with the same success/denial boundary.
-- [ ] Official proprietary commercial desktop still needs approved account-session acquisition, secure OS credential handling, real production Headquarters entitlement acceptance, commercial agreement approval, and signed Windows release.
+- [x] Proprietary mode additionally requires Headquarters paid capability `bossai-funding.commercial`; active product license alone is insufficient.
+- [x] BossAI commercial-account password login and Headquarters MFA client implemented without Funding business-data access.
+- [x] Commercial desktop session is encrypted with Electron `safeStorage`; passwords/MFA proofs/raw sessions do not enter Funding SQLite.
+- [x] Real development Electron secure-session smoke PASS: first login encrypted, second launch reused secure session, entitlement revalidated each launch, 401 removed stale session, raw session not logged.
+- [x] Packaged commercial secure-session smoke PASS with the same encrypted-session and stale-session boundary.
+- [ ] Official proprietary commercial desktop still needs a real production Headquarters plan/account granting `bossai-funding.commercial`, production paid-account E2E acceptance, commercial/legal approval, official icon, and publicly trusted Windows signing.
 
 ## Publication gate
 

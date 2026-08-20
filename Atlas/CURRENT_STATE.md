@@ -3746,3 +3746,31 @@ Official proprietary release remains blocked on desktop account/session acquisit
 
 
 GitHub-hosted v0.49 closure is also green. Commit `597cab19135437cbbb8c85a1358c9eb209fe1a18` passed Source CI run `32336912053` and Windows Desktop run `32336929853`. The Windows runner completed Community/commercial development Electron verification, packaging, Community packaged smoke and commercial packaged entitlement success/denial smoke. Artifact upload remains a non-blocking warning because the GitHub Actions artifact quota is full. v0.49 Technical Acceptance is PASS for the implemented entitlement-consumer scope; official proprietary commercial release remains blocked by desktop account/session acquisition, secure OS credential handling, real production Headquarters paid-license acceptance, legal approval, official icon and publicly trusted Windows signing.
+
+
+
+## 2026-08-20 — v0.50 Secure Commercial Session
+
+BossAI Funding proprietary desktop mode now uses the existing Headquarters Commerce account/login/MFA contracts and OS-encrypted session persistence instead of requiring an operator-injected bearer token on every launch. Community remains the default AGPL distribution and performs no Headquarters account or entitlement call.
+
+A commercial authorization hardening issue was identified in the Headquarters contract: account login may ensure an active product-license row exists, so `licenseActive=true` alone cannot prove that proprietary BossAI Funding rights were purchased. Funding therefore now requires the authoritative Headquarters membership feature `bossai-funding.commercial` in addition to active license, active membership and `AUTHORIZED` entitlement status.
+
+Commercial desktop sequence is now: BossAI account login → optional MFA → `bossai_session_...` → Electron `safeStorage` encryption → encrypted `commercial-session.bin` → entitlement revalidation → only then Funding SQLite/Repository startup. Passwords, MFA proof, raw sessions, membership, license, payment and entitlement truth never enter Funding SQLite. The sign-in renderer is isolated and has no direct filesystem/shell/network/business authority. English is its default language with Simplified Chinese, Traditional Chinese and Spanish also available.
+
+A stale encrypted session is removed when Headquarters returns HTTP 401; every launch still revalidates current entitlement. The environment bearer path remains an engineering override only.
+
+Final local v0.50 evidence:
+
+- full tests 273/273 PASS;
+- all owner-readiness Chrome gates PASS;
+- Community Electron smoke PASS;
+- commercial environment-token success/denial smoke PASS;
+- commercial safeStorage first-login/reuse/401-removal smoke PASS;
+- Community packaged EXE smoke PASS;
+- commercial environment-token packaged smoke PASS;
+- commercial safeStorage packaged smoke PASS;
+- NSIS install/restart/uninstall/reinstall lifecycle PASS;
+- installer `out/desktop/BossAI-Funding-Setup-0.50.0-x64.exe` SHA-256 `835A950EFCEAF1B9267DDC166815903EE31267FBB6783D4BFEBAD70D63A7A42B`;
+- installer and packaged app EXE Authenticode `NotSigned`.
+
+Official proprietary release remains blocked on a real production Headquarters plan/account granting `bossai-funding.commercial`, paid-account E2E acceptance, legal approval, official icon, and publicly trusted Windows signing. Public source visibility remains a separate gated decision and has not been executed.

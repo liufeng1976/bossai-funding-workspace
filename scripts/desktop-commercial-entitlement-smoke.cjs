@@ -72,7 +72,7 @@ function entitlementEnvelope({ authorized }) {
         planCode: "commercial",
         planName: "Commercial",
         membershipStatus: "active",
-        features: ["bossai-funding"],
+        features: ["bossai-funding.commercial"],
         walletAvailable: 0,
         walletReserved: 0,
         walletFrozen: false,

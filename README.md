@@ -105,13 +105,20 @@ The proprietary commercial integration mode is explicit and fail-closed:
 ```text
 BOSSAI_FUNDING_DISTRIBUTION=commercial
 BOSSAI_FUNDING_HEADQUARTERS_BASE_URL=https://<approved-headquarters-host>
-BOSSAI_FUNDING_HEADQUARTERS_BEARER_TOKEN=<account-session-or-customer-key>
 BOSSAI_FUNDING_INSTALLATION_ID=<optional-stable-installation-id>
 ```
 
-It consumes only the Headquarters `GET /api/v1/commerce/entitlement` contract (`bossai.commercial-entitlement.v1`) and verifies that the entitlement is for `bossai-funding`, the current product version and the current installation before Funding persistence starts. Financing records and local SQLite business state are not sent to Headquarters for license validation.
+On desktop, if no valid commercial session exists, BossAI Funding opens a dedicated BossAI commercial-account sign-in window and supports Headquarters MFA. The resulting `bossai_session_...` value is encrypted with Electron `safeStorage` (Windows DPAPI on the supported Windows target) before it is written to the desktop user-data directory. Passwords, MFA proofs, raw sessions, entitlement truth, and financing records are not written to Funding SQLite.
 
-The environment-provided bearer credential is an **engineering integration path**, not the final production credential UX. An official proprietary desktop release still requires approved account/session acquisition and secure operating-system credential handling; do not bake a bearer token into the installer, source tree, `.env`, command history, or release artifact.
+Every desktop launch revalidates the session through Headquarters `GET /api/v1/commerce/entitlement` (`bossai.commercial-entitlement.v1`) before Funding persistence starts. Proprietary access requires the exact `bossai-funding` product/install/version binding plus an active membership entitlement whose feature allowlist contains:
+
+```text
+bossai-funding.commercial
+```
+
+This extra paid-capability gate is required because an active product-license record alone is not treated as proof that the customer purchased proprietary BossAI Funding rights. Financing records and local SQLite business state are never sent to Headquarters for license validation.
+
+`BOSSAI_FUNDING_HEADQUARTERS_BEARER_TOKEN` remains an **engineering integration override only**. Do not bake a bearer token into the installer, source tree, `.env`, command history, CI artifact, or release asset. An official proprietary release still requires real production Headquarters paid-account acceptance, approved commercial/legal terms, an official icon, and publicly trusted Windows code signing.
 
 ## Contributing
 

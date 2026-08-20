@@ -2,6 +2,26 @@
 
 All notable BossAI Funding changes are recorded here at release-summary level. Detailed evidence remains in `Atlas/`.
 
+## [0.50.0] - 2026-08-20
+
+### Added
+
+- BossAI commercial-account password login and Headquarters MFA confirmation for proprietary desktop distribution.
+- Four-language isolated commercial sign-in window with no renderer network/filesystem authority.
+- Electron `safeStorage` encrypted commercial-session persistence, entitlement revalidation on every launch, and stale-session removal on Headquarters 401.
+- Paid capability gate requiring Headquarters membership feature `bossai-funding.commercial` in addition to active license/membership authorization.
+- Development and packaged secure-session smoke tests proving first login encryption, second-launch session reuse, token non-disclosure, and fail-closed stale-session handling.
+
+### Commercial boundary
+
+- Community remains the default and does not contact Headquarters or load proprietary account/session state.
+- Funding SQLite stores no password, MFA proof, account session, membership, license, payment, subscription or entitlement authority.
+- Active product license alone no longer suffices to unlock proprietary Funding; Headquarters must explicitly grant `bossai-funding.commercial`.
+
+### Release status
+
+- Official proprietary release still requires a real production Headquarters plan/account granting the paid feature, end-to-end paid-account acceptance, legal approval, official icon and publicly trusted Windows signing.
+
 ## [0.49.0] - 2026-08-20
 
 ### Added

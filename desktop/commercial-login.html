@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; form-action 'none'; base-uri 'none'" />
+    <title>BossAI Funding — Commercial sign in</title>
+    <link rel="stylesheet" href="./commercial-login.css" />
+  </head>
+  <body>
+    <main class="auth-shell">
+      <header class="auth-header">
+        <div>
+          <p class="eyebrow">BOSSAI FUNDING</p>
+          <h1 data-i18n="title">Commercial sign in</h1>
+        </div>
+        <label class="language-picker" for="commercial-login-locale">
+          <span data-i18n="language">Language</span>
+          <select id="commercial-login-locale" aria-label="Language">
+            <option value="en" selected>English</option>
+            <option value="zh-CN">简体中文</option>
+            <option value="zh-TW">繁體中文</option>
+            <option value="es">Español</option>
+          </select>
+        </label>
+      </header>
+
+      <p class="lead" data-i18n="lead">Sign in with the BossAI commercial account that owns this proprietary BossAI Funding entitlement.</p>
+      <p class="privacy" data-i18n="privacy">Your financing records stay on this device. Sign-in sends only commercial account credentials and product/install identifiers to BossAI Headquarters Commerce.</p>
+
+      <section id="login-panel" class="card">
+        <form id="commercial-login-form" autocomplete="on">
+          <label>
+            <span data-i18n="identifier">Phone or email</span>
+            <input id="commercial-login-identifier" name="username" autocomplete="username" inputmode="email" required maxlength="254" />
+          </label>
+          <label>
+            <span data-i18n="password">Password</span>
+            <input id="commercial-login-password" name="password" type="password" autocomplete="current-password" required maxlength="1024" />
+          </label>
+          <p id="commercial-login-error" class="error" role="alert" aria-live="polite"></p>
+          <div class="actions">
+            <button id="commercial-login-submit" type="submit" data-i18n="signIn">Sign in</button>
+            <button class="secondary" type="button" data-cancel data-i18n="cancel">Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="mfa-panel" class="card" hidden>
+        <h2 data-i18n="mfaTitle">Verify your account</h2>
+        <p data-i18n="mfaLead">Enter either your 6-digit authenticator code or one unused recovery code.</p>
+        <form id="commercial-mfa-form" autocomplete="off">
+          <label>
+            <span data-i18n="authCode">Authenticator code</span>
+            <input id="commercial-mfa-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" />
+          </label>
+          <div class="or" data-i18n="or">or</div>
+          <label>
+            <span data-i18n="recoveryCode">Recovery code</span>
+            <input id="commercial-mfa-recovery" autocomplete="off" maxlength="256" />
+          </label>
+          <p id="commercial-mfa-error" class="error" role="alert" aria-live="polite"></p>
+          <div class="actions">
+            <button id="commercial-mfa-submit" type="submit" data-i18n="verify">Verify</button>
+            <button class="secondary" type="button" data-cancel data-i18n="cancel">Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <footer>
+        <p data-i18n="community">The AGPL Community edition does not require this proprietary commercial sign-in.</p>
+      </footer>
+    </main>
+    <script src="./commercial-login.js"></script>
+  </body>
+</html>

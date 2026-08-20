@@ -29,6 +29,7 @@ jobs:
       - run: npm run desktop:pack
       - run: npm run desktop:packaged-smoke
       - run: npm run desktop:commercial-packaged-smoke
+      - run: npm run desktop:commercial-session-packaged-smoke
 
       # Producing an unpacked artifact is evidence only. Official releases
       # remain blocked until the approved Windows code-signing path is active.
