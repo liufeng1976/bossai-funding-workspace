@@ -1,6 +1,6 @@
 # BossAI Funding Project Directive
 
-This repository is the independent commercial implementation of BossAI Funding.
+This repository is the independent clean-room implementation of BossAI Funding. The product supports an AGPL-3.0-or-later Community distribution and a separate proprietary commercial-licensing path; both use the same financing-domain implementation and must preserve the authority boundaries below.
 
 ## Authority
 
@@ -47,7 +47,7 @@ Do not optimize for consultant, CRM administrator, or platform administrator wor
 - Matching and strategy rules must be explainable and auditable.
 - Legal-sensitive output must never be presented as legal advice.
 - Prefer MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, or ISC dependencies.
-- Do not introduce AGPL, GPL, SSPL, or other strong-copyleft dependencies without explicit CEO approval.
+- BossAI Funding itself is intentionally AGPL-3.0-or-later under the approved dual-license strategy. Do not introduce new AGPL, GPL, SSPL, or other strong-copyleft **third-party dependencies** without explicit CEO approval and legal/license review.
 
 ## Identity and tenant boundary
 

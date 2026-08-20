@@ -1,8 +1,19 @@
 {
   "name": "bossai-funding-workspace",
-  "version": "0.47.0",
+  "version": "0.48.0",
   "private": true,
   "description": "BossAI Funding — owner capital decision and execution workspace",
+  "license": "AGPL-3.0-or-later",
+  "author": "BossAI",
+  "homepage": "https://github.com/liufeng1976/bossai-funding-workspace#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liufeng1976/bossai-funding-workspace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/liufeng1976/bossai-funding-workspace/issues"
+  },
+  "main": "desktop/main.cjs",
   "type": "module",
   "engines": {
     "node": ">=24.0.0"
@@ -20,6 +31,16 @@
     "test:owner-mobile": "node scripts/ui-browser-acceptance.cjs --mobile-owner-readiness",
     "test:locales": "node scripts/ui-browser-acceptance.cjs --locale-acceptance",
     "test:locale-leaks": "node scripts/ui-browser-acceptance.cjs --locale-leak-audit",
+    "test:desktop-contract": "node --test --experimental-strip-types tests/desktop-distribution-contract.test.ts tests/open-source-readiness.test.ts",
+    "desktop:run": "npm run build && npx --yes electron@43.4.1 .",
+    "desktop:smoke": "npm run build && node scripts/desktop-smoke.cjs",
+    "desktop:pack": "npm run build && npx --yes electron-builder@26.15.3 --dir",
+    "desktop:installer": "npm run build && npx --yes electron-builder@26.15.3 --win nsis",
+    "desktop:packaged-smoke": "node scripts/desktop-packaged-smoke.cjs",
+    "desktop:installer-lifecycle": "node scripts/desktop-installer-lifecycle.cjs",
+    "verify:desktop": "npm run test:desktop-contract && npm run desktop:smoke",
+    "verify:desktop-package": "npm run desktop:pack && npm run desktop:packaged-smoke",
+    "verify:desktop-installer": "npm run desktop:installer && npm run desktop:installer-lifecycle",
     "verify": "npm run lint && npm run typecheck && npm test && npm run build",
     "verify:owner-readiness": "npm run verify && npm run test:ui-browser && npm run test:owner-mobile && npm run test:locales && npm run test:locale-leaks && npm run test:chrome-repair"
   },

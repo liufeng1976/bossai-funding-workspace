@@ -437,4 +437,10 @@ export const ZH_CN_EXACT: Readonly<Record<string, string>> = {
   "e.g. signed closing schedule / payer-confirmed wire date": "例如：已签交割安排 / 付款方确认的打款日期",
   "Optional follow-up context": "可选跟进说明",
   "Why this actual receipt fulfills this expectation": "说明这笔实际到账为什么对应此到账预期",
+  "Open-source and licensing information": "开源与许可信息",
+  "License links": "许可链接",
+  "BossAI Funding · AGPL-3.0-or-later · No warranty under the open-source license.": "BossAI Funding · AGPL-3.0-or-later · 开源许可不提供担保。",
+  "Source code": "源代码",
+  "Open-source license": "开源许可证",
+  "Commercial licensing": "商业授权",
 };

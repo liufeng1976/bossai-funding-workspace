@@ -360,6 +360,10 @@ button { cursor: pointer; }
 .activity-meta { display: flex; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: .72rem; margin-bottom: 5px; }
 .activity-summary { color: var(--muted); margin-top: 5px; line-height: 1.45; }
 .backup-actions { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 10px; }
+.legal-footer { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 28px; padding: 16px 0 4px; border-top: 1px solid var(--line); color: var(--muted); font-size: .76rem; }
+.legal-footer nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
+.legal-footer a { color: var(--text); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.legal-footer a:hover { color: var(--accent); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -436,4 +440,6 @@ button { cursor: pointer; }
   .strategy-freshness-panel > p { grid-column: 1; }
   .next-step, .action-next { grid-template-columns: 1fr; }
   .receipt-reconciliation-guidance small { grid-column: 1; }
+  .legal-footer { flex-direction: column; align-items: flex-start; }
+  .legal-footer nav { justify-content: flex-start; }
 }

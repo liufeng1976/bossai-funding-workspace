@@ -3613,3 +3613,84 @@ Acceptance truth remains strict pending the final v0.47 machine gate and a new h
 
 
 Final v0.47 machine closure is green: `git diff --check && npm run verify:owner-readiness && git diff --check` passed with 251/251 tests, lint/typecheck/build, desktop/responsive Chrome, independent fresh-database mobile journey, four-production-locale switching/reload, full-DOM zero-English-leak checks for zh-CN/zh-TW/es, and receipt-reconciliation Chrome all PASS. Technical Acceptance and Machine Owner Readiness are PASS for local v0.47 scope. Real User Experience Acceptance remains RETEST REQUIRED and `realUserValidated=false` until the owner repeats the unassisted session.
+
+
+
+## 2026-08-20 — v0.48 Desktop Distribution + Open-Source / Commercial Licensing Preparation
+
+CEO decisions now reflected in the working tree:
+
+- v0.47 owner validation is explicitly confirmed by the owner as completed;
+- fresh BossAI Funding installations default to English;
+- the project is being prepared for public open-source release only after the desktop-installable product form is evidence-backed;
+- open-source license target is `AGPL-3.0-or-later`;
+- proprietary permissions outside AGPL require a separate BossAI commercial license;
+- AGPL-compliant commercial activity is not falsely prohibited;
+- Community AGPL distribution does not require proprietary entitlement;
+- official proprietary commercial distribution must consume entitlement from the approved external BossAI commercial authority rather than creating a Funding license/payment/entitlement ledger.
+
+v0.48 version metadata is `0.48.0`. `package.json.private=true` is retained intentionally to prevent accidental npm publication; this is unrelated to GitHub repository visibility and does not prevent an AGPL public source repository.
+
+Desktop is implemented as a distribution shell over the canonical Funding server and SQLite state, not a second product implementation. Electron starts the existing compiled server on an OS-assigned random `127.0.0.1` port, stores SQLite under Electron per-user `userData/data/bossai-funding.sqlite`, uses a single-instance lock, keeps renderer Node integration disabled, uses context isolation/sandbox, and sends external links to the system browser.
+
+Windows engineering packaging is implemented with Electron 43.4.1 and electron-builder 26.15.3 targeting assisted per-user x64 NSIS installation. Uninstall policy preserves owner data.
+
+Machine evidence at this checkpoint:
+
+- AGPL LICENSE vs GitHub standard license text: exact match / zero diff;
+- focused desktop/open-source/i18n contracts: PASS;
+- full test suite: 260/260 PASS;
+- lint/typecheck/build: PASS;
+- full owner-readiness Chrome suite: PASS;
+- zh-CN / zh-TW / es full-DOM unchanged-English leak count: 0;
+- development Electron smoke: PASS;
+- packaged win-unpacked EXE smoke: PASS;
+- real isolated NSIS lifecycle: install / first launch / single-instance rejection / save / restart persistence / uninstall data preservation / reinstall data restoration / final uninstall preservation — PASS;
+- bundled Electron/Chromium license artifacts present;
+- current installer SHA-256: `F22714F06F1369CF49E7A19C14FEED2DAD4F4B432B4609A88BFD54C2386C8178`;
+- app EXE Authenticode: `NotSigned`;
+- installer Authenticode: `NotSigned`;
+- Git-history sensitive filenames: 0;
+- high-risk token/private-key pattern commit hits: 0;
+- OpenBcon implementation provenance hits: 0 after excluding the protective lint rule;
+- repository history at scan: 2 commits, one known commit author.
+
+The GitHub repository remains Private. Public transition is not yet authorized by this checkpoint and remains blocked on approved icon/Windows metadata, code signing for official binary release, qualified legal review of dual licensing and CLA, contributor-signing workflow, final pre-public history scan, GitHub public security-reporting controls, branch protection after CI check contexts exist, external commercial-entitlement adapter for the proprietary edition, and real owner target-device validation of the installed desktop product.
+
+Current completion truth for v0.48:
+
+- Technical Acceptance: PASS for the implemented local desktop/source-preparation scope;
+- Machine Owner Readiness: PASS;
+- v0.47 Real User Experience Acceptance: PASS (owner-confirmed);
+- v0.48 Installed Desktop Real User Experience Acceptance: NOT YET PASSED;
+- Business Acceptance: PARTIAL for the new desktop/commercial distribution scope;
+- `productionReady=false`;
+- `actuallyLaunched=false`;
+- public repository visibility: not yet changed;
+- official desktop release: blocked / unsigned;
+- Completion Level for the current v0.48 desktop distribution remains 2 until target-device installed-product validation is completed.
+
+
+
+## 2026-08-20 — v0.48 Human Desktop Installation Evidence
+
+Owner-reported real-device evidence for the current Windows desktop installer:
+
+- installation completed successfully;
+- the installed BossAI Funding application opened and behaved normally;
+- uninstall completed successfully.
+
+This is valid human evidence for the basic desktop install/open/uninstall path.
+
+It does **not** convert machine-only lifecycle checks into human claims. Restart persistence, single-instance enforcement, uninstall-data preservation, and reinstall-data recovery remain machine-verified unless separately confirmed by the owner.
+
+Current acceptance truth:
+
+- v0.47 owner-facing core experience: human validated by owner;
+- v0.48 basic desktop installation/open/uninstall: human PASS;
+- v0.48 extended desktop lifecycle persistence/reinstall: machine PASS, human not separately attested;
+- code signing: NOT SIGNED;
+- official application icon: NOT YET PROVIDED;
+- legal review of AGPL/commercial-license/CLA structure: NOT YET ATTESTED;
+- GitHub visibility: PRIVATE;
+- public release: NOT YET AUTHORIZED.

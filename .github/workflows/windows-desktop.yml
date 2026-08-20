@@ -1,0 +1,38 @@
+name: Windows Desktop
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "desktop/**"
+      - "scripts/desktop-*.cjs"
+      - "electron-builder.yml"
+      - "package.json"
+      - "public/**"
+      - "src/**"
+      - ".github/workflows/windows-desktop.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  desktop:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run verify:desktop
+      - run: npm run desktop:pack
+      - run: npm run desktop:packaged-smoke
+
+      # Producing an unpacked artifact is evidence only. Official releases
+      # remain blocked until the approved Windows code-signing path is active.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bossai-funding-win-unpacked-unsigned
+          path: out/desktop/win-unpacked
+          if-no-files-found: error

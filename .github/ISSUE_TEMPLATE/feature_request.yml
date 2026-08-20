@@ -1,0 +1,44 @@
+name: Product / feature request
+description: Propose an owner-visible improvement to BossAI Funding
+title: "[Request] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Owner problem
+      description: What financing problem is the owner trying to solve?
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current behavior
+      description: What happens today?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired result
+      description: Describe the user-visible outcome rather than implementation details.
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Capital plan
+        - Find money
+        - Financing actions
+        - Investors
+        - Execute and close
+        - Receipts / reconciliation
+        - Desktop distribution
+        - Localization
+        - Security / continuity
+        - Other
+    validations:
+      required: true

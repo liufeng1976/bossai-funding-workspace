@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/liufeng1976/bossai-funding-workspace/security
+    about: Use private security reporting; do not disclose vulnerabilities in public issues.
+  - name: Commercial licensing
+    url: https://github.com/liufeng1976/bossai-funding-workspace/blob/main/COMMERCIAL_LICENSE.md
+    about: Read the AGPL and commercial-license boundary before asking about proprietary use.

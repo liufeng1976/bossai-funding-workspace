@@ -1,8 +1,12 @@
-name: ci
+name: Source CI
 
 on:
   push:
+    branches: [main]
   pull_request:
+
+permissions:
+  contents: read
 
 jobs:
   verify:
@@ -15,4 +19,4 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run verify
-      - run: git diff --check
+      - run: npm run test:desktop-contract

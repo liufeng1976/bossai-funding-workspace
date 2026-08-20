@@ -1,0 +1,28 @@
+appId: com.bossai.funding
+productName: BossAI Funding
+electronVersion: 43.4.1
+asar: true
+directories:
+  output: out/desktop
+files:
+  - desktop/**/*
+  - dist/**/*
+  - package.json
+  - LICENSE
+  - COMMERCIAL_LICENSE.md
+  - README.md
+  - NOTICE.md
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  artifactName: BossAI-Funding-Setup-${version}-${arch}.${ext}
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: BossAI Funding
+  deleteAppDataOnUninstall: false

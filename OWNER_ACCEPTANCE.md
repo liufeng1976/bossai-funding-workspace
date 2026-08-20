@@ -264,6 +264,80 @@ Machine prerequisite includes:
 
 Machine evidence is documented in `Atlas/V0_47_LOCALE_COMPLETENESS_AND_LEAK_GATE.md`.
 
+### v0.47 real-owner result
+
+On 2026-08-20 the owner explicitly confirmed **“已验证”** after the v0.47 mixed-language correction and retest cycle.
+
+```text
+v0.47 Technical Acceptance: PASS
+v0.47 Machine Owner Readiness: PASS
+v0.47 Real User Experience Acceptance: PASS
+```
+
+This closes the v0.47 local Web owner-validation defect chain. It does not automatically validate the new v0.48 installed desktop product form.
+
+---
+
+## v0.48 — Windows Desktop Installed-Product Acceptance
+
+v0.48 changes the distribution form and fresh-locale default, so the installed desktop build needs its own real-owner confirmation even though the financing business implementation remains the same.
+
+Machine evidence already proves:
+
+```text
+[PASS] Development Electron starts the canonical local Funding server.
+[PASS] Packaged win-unpacked EXE starts successfully.
+[PASS] Fresh desktop profile defaults to English.
+[PASS] Second desktop instance is rejected while the primary instance remains healthy.
+[PASS] Company Profile survives installed-app restart.
+[PASS] Uninstall removes the application but preserves the isolated financing database.
+[PASS] Reinstall reopens the same preserved Company Profile.
+[PASS] Final uninstall preserves the financing database.
+[PASS] NSIS installer generated and SHA-256 recorded.
+[BLOCKED] Official icon is not yet supplied; engineering build uses the default Electron icon.
+[BLOCKED] Windows Authenticode signing is not configured; app and installer report NotSigned.
+```
+
+Real-owner target-device checklist:
+
+```text
+[ ] Run the actual BossAI Funding Windows installer on the target machine.
+[ ] Confirm the install language/product name/path/shortcut choices are understandable.
+[ ] Launch from the installed shortcut without a terminal or developer tool.
+[ ] Confirm the first product surface is English by default and language can be changed intentionally.
+[ ] Complete a normal owner financing action and confirm the desktop shell does not expose developer/runtime concepts.
+[ ] Close and reopen from the installed shortcut; confirm the saved financing state remains.
+[ ] Attempt to launch a second instance; confirm the existing app is reused rather than creating a second independent workspace.
+[ ] Uninstall the app and confirm the owner understands that financing data is preserved.
+[ ] Reinstall and confirm the prior financing state returns.
+[ ] Record any SmartScreen/signing/icon/trust friction before claiming an official release.
+```
+
+Until this installed-product session is completed, v0.48 remains machine-ready but not real-user-validated.
+
+---
+
+## v0.48 — Human Desktop Installation Evidence
+
+Owner-reported real Windows evidence on 2026-08-20:
+
+```text
+[x] Installer completed successfully.
+[x] Installed BossAI Funding opened normally.
+[x] Uninstall completed successfully.
+[ ] Human separately confirmed restart persistence.
+[ ] Human separately confirmed uninstall → reinstall data recovery.
+```
+
+Machine evidence already proves single-instance enforcement, restart persistence, uninstall-data preservation, and reinstall-data recovery in an isolated lifecycle harness. Those machine checks remain distinct from the owner's direct observations above.
+
+Result for this specific human scope:
+
+```text
+Desktop install/open/uninstall UX: PASS
+Extended desktop lifecycle human attestation: NOT YET COMPLETE
+```
+
 ---
 
 ## Final acceptance result

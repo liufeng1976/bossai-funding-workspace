@@ -436,4 +436,10 @@ export const ES_EXACT: Readonly<Record<string, string>> = {
   "e.g. signed closing schedule / payer-confirmed wire date": "p. ej., calendario de cierre firmado / fecha de transferencia confirmada por el pagador",
   "Optional follow-up context": "Contexto opcional de seguimiento",
   "Why this actual receipt fulfills this expectation": "Por qué este cobro real cumple esta expectativa",
+  "Open-source and licensing information": "Información de código abierto y licencias",
+  "License links": "Enlaces de licencia",
+  "BossAI Funding · AGPL-3.0-or-later · No warranty under the open-source license.": "BossAI Funding · AGPL-3.0-or-later · Sin garantía bajo la licencia de código abierto.",
+  "Source code": "Código fuente",
+  "Open-source license": "Licencia de código abierto",
+  "Commercial licensing": "Licencia comercial",
 };

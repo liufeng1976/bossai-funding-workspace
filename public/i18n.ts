@@ -1075,10 +1075,6 @@ function writeLocalePreference(locale: SupportedLocale): void {
 function detectLocale(): SupportedLocale {
   const stored = readLocalePreference();
   if (stored) return stored;
-  for (const candidate of navigator.languages ?? [navigator.language]) {
-    const locale = normalizeLocale(candidate);
-    if (locale) return locale;
-  }
   return "en";
 }
 
