@@ -3831,3 +3831,18 @@ Contributor-rights live proof PR #7 then demonstrated the trusted-base governanc
 - PR #7 merged only after both required contexts passed; merge commit `3abea5918d18c47137b0420710c03f23731126c9`.
 
 The contributor-rights workflow is therefore operational, not merely documented. No lawyer approval is claimed; CEO waiver/approval remains the recorded project decision.
+
+## 2026-08-20 · v0.51 public source release and external-boundary closure
+
+BossAI Funding `v0.51.0` is now a real public AGPL source release.
+
+- release commit: `4a2d9f5121e282bba91a1d0aa23b9c9090d7e90f`;
+- annotated tag object: `4a627ac8867b9a43829948a0b530356a1d57f044`;
+- Source Release workflow run `32345532712`: PASS;
+- GitHub Release is non-draft/non-prerelease;
+- release assets: empty, so no unsigned Windows installer was published as an official binary;
+- main protection remains strict required `verify` + `contributor-rights` with admins enforced.
+
+A real Headquarters Commerce server contract (actual `createCommerceServer`, fresh SQLite, real HTTP route) separately proved the proprietary feature boundary: only an explicitly configured Plan/Membership emits `bossai-funding.commercial` through `bossai.commercial-entitlement.v1`. The Funding feature contract itself passes. Headquarters PR #1 remains Draft because the Headquarters repository has three pre-existing CI tests that require sibling BossAI repositories not checked out by its GitHub workflow; Ubuntu and Windows each reach 117 PASS / 3 sibling-path FAIL after the existing 0.21 verification-identity repair.
+
+The remaining proprietary-production blockers are external and must stay explicit: Headquarters production auth/entitlement routes are not deployed at `cloud.destinykit.com` (health 200; ready/auth/session/entitlement routes 404 on 2026-08-20), no local HQ production runtime variables are configured, and no public-trust Windows code-signing credential/GitHub signing secrets exist. Community source release and desktop engineering acceptance are complete; signed Windows GA and real production paid-account E2E are not.

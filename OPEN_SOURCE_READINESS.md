@@ -20,7 +20,7 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Issue and pull-request templates exist.
 - [x] CI and Windows desktop workflows exist.
 - [x] Dependabot configuration exists.
-- [x] Final pre-public scan completed on 2026-08-20 across the 10 existing commits plus the candidate waiver/publication working tree: 0 sensitive credential/private-key filenames, 0 high-risk token/private-key pattern paths, and no OpenBcon implementation-path provenance. OpenBcon text matches are limited to explicit clean-room/provenance governance documents.
+- [x] Final exact-main pre-tag scan completed on 2026-08-20 at `4a2d9f5121e282bba91a1d0aa23b9c9090d7e90f`: 0 sensitive credential/private-key filenames, 0 common private-key/AWS/GitHub/OpenAI secret-pattern paths, and 0 OpenBcon implementation-path provenance. Historical BossAI session-shaped matches are known synthetic commercial-smoke fixtures only; the current source no longer contains that raw fixture literal.
 - [x] GitHub dependency vulnerability alerts enabled and verified; automated security fixes enabled.
 - [x] GitHub Discussions enabled; Issues remain enabled.
 - [x] Remote `Source CI / verify` passes on `main`.
@@ -64,7 +64,8 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Commercial desktop session is encrypted with Electron `safeStorage`; passwords/MFA proofs/raw sessions do not enter Funding SQLite.
 - [x] Real development Electron secure-session smoke PASS: first login encrypted, second launch reused secure session, entitlement revalidated each launch, 401 removed stale session, raw session not logged.
 - [x] Packaged commercial secure-session smoke PASS with the same encrypted-session and stale-session boundary.
-- [ ] Official proprietary commercial desktop still needs a real production Headquarters plan/account granting `bossai-funding.commercial`, production paid-account E2E acceptance, and publicly trusted Windows signing. Outside-counsel review and desktop icon are no longer blockers.
+- [x] Real Headquarters Commerce HTTP contract (not a mock) proved on its clean isolated worktree: a normal Plan does not invent `bossai-funding.commercial`; an explicitly configured active Plan/Membership returns that feature through canonical `bossai.commercial-entitlement.v1`; Headquarters business-execution/provider-routing flags remain false. Headquarters PR #1 carries the contract test and is intentionally Draft because the HQ repository has pre-existing cross-repository CI topology failures unrelated to Funding.
+- [ ] Official proprietary commercial desktop still needs a deployed production Headquarters plan/account granting `bossai-funding.commercial`, production paid-account E2E acceptance, and publicly trusted Windows signing. On 2026-08-20, `https://cloud.destinykit.com/health` returned 200 while `/ready`, `/api/v1/auth/session`, and `/api/v1/commerce/entitlement` returned 404; no local `BOSSAI_HQ_*` production environment variables were present. Outside-counsel review and desktop icon are no longer blockers.
 
 ## Publication gate
 
@@ -74,6 +75,6 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Secret Scanning Push Protection enabled.
 - [ ] GitHub extended non-provider secret patterns and validity checks remain disabled by the current account/platform capability; this is not represented as enabled.
 - [x] Tag-bound AGPL Source Release workflow implemented with package/tag identity verification and an explicit no-signed-Windows-binary claim.
-- [ ] First tag-driven Source Release (`v0.51.0`) is pending this release-seal PR, an exact-main final history/provenance scan, and tag creation.
+- [x] First tag-driven Source Release `v0.51.0` completed from exact `main@4a2d9f5121e282bba91a1d0aa23b9c9090d7e90f`. Source Release workflow run `32345532712` PASS; GitHub Release is non-draft/non-prerelease and has `assets=[]`, so no unsigned Windows installer was published as an official binary.
 
 The public-source publication decision is separate from a production/GA claim. The CEO legal-review waiver is recorded and must never be described as lawyer approval. An unsigned installer may be used as engineering evidence but must not be represented as an official production release.
