@@ -11,6 +11,7 @@ const pkg = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8")) as {
   homepage?: string;
 };
 const license = readFileSync(resolve(root, "LICENSE"), "utf8");
+const normalizedLicense = license.replace(/\r\n/g, "\n");
 const commercial = readFileSync(resolve(root, "COMMERCIAL_LICENSE.md"), "utf8");
 const contributing = readFileSync(resolve(root, "CONTRIBUTING.md"), "utf8");
 const cla = readFileSync(resolve(root, "CLA.md"), "utf8");
@@ -42,10 +43,10 @@ test("repository metadata declares AGPL open-source licensing while preventing a
 });
 
 test("LICENSE is the unmodified GNU Affero GPL version 3 text and not the abandoned Apache proposal", () => {
-  assert.match(license, /GNU AFFERO GENERAL PUBLIC LICENSE\n\s+Version 3, 19 November 2007/);
-  assert.match(license, /13\. Remote Network Interaction; Use with the GNU General Public License\./);
-  assert.match(license, /END OF TERMS AND CONDITIONS/);
-  assert.doesNotMatch(license, /Apache License/);
+  assert.match(normalizedLicense, /GNU AFFERO GENERAL PUBLIC LICENSE\n\s+Version 3, 19 November 2007/);
+  assert.match(normalizedLicense, /13\. Remote Network Interaction; Use with the GNU General Public License\./);
+  assert.match(normalizedLicense, /END OF TERMS AND CONDITIONS/);
+  assert.doesNotMatch(normalizedLicense, /Apache License/);
 });
 
 test("commercial licensing is an alternative permission path rather than a false ban on AGPL commercial use", () => {
