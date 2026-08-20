@@ -3794,3 +3794,22 @@ Recorded truth:
 - source publication remains separate from publicly trusted Windows signing, official Funding release branding/icon, and production proprietary-commercial paid-account acceptance.
 
 Decision record: `Atlas/CEO_LEGAL_REVIEW_WAIVER_2026-08-20.md`.
+
+
+## 2026-08-20 · Public source repository live
+
+BossAI Funding GitHub visibility is now `PUBLIC` at `https://github.com/liufeng1976/bossai-funding-workspace`.
+
+Immediate public-repository controls were applied and verified:
+
+- `main` strict required status check: `verify`;
+- linear history required;
+- force-push disabled;
+- branch deletion disabled;
+- conversation resolution required;
+- Private Vulnerability Reporting enabled;
+- Secret Scanning enabled;
+- Secret Scanning Push Protection enabled;
+- Dependabot security updates remain enabled.
+
+The source-publication state does not change the separate unsigned Windows, official icon, production Headquarters paid-entitlement, paid-account E2E, or remote-production security gates.

@@ -25,8 +25,8 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] GitHub Discussions enabled; Issues remain enabled.
 - [x] Remote `Source CI / verify` passes on `main`.
 - [x] Remote `Windows Desktop / desktop` passes on `windows-latest` for v0.50: Community, commercial environment-token, and commercial OS-encrypted-session development paths plus all three packaged paths PASS. Unsigned artifact upload is best-effort because the account artifact-storage quota is currently full.
-- [ ] Private vulnerability reporting: the private-repository endpoint currently returns 404; configure/verify immediately when preparing the Public visibility change.
-- [ ] Branch protection / required `verify`: GitHub API returned 403 (`Upgrade to GitHub Pro or make this repository public to enable this feature`) while the repository is Private. Enable immediately after Public visibility, before accepting external changes.
+- [x] GitHub Private Vulnerability Reporting enabled and verified after Public visibility.
+- [x] `main` branch protection enabled after Public visibility: strict required status check `verify`, linear history required, force-push disabled, branch deletion disabled, and conversation resolution required.
 
 ## Desktop product form
 
@@ -67,6 +67,10 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 
 ## Publication gate
 
-Do not change GitHub visibility from Private to Public until all blocking items above that affect source hygiene, user-installability and security reporting are resolved or explicitly waived by the CEO with recorded evidence. Legal-counsel review has been explicitly waived for source publication by the CEO; this waiver must never be described as lawyer approval.
+- [x] GitHub repository visibility changed from Private to **Public** on 2026-08-20 after the final candidate history/worktree scan and a successful `Source CI / verify` run on commit `7fd588e`.
+- [x] GitHub recognizes the repository license as GNU Affero General Public License v3.0 / AGPL-3.0.
+- [x] Secret Scanning enabled.
+- [x] Secret Scanning Push Protection enabled.
+- [ ] GitHub extended non-provider secret patterns and validity checks remain disabled by the current account/platform capability; this is not represented as enabled.
 
-A source-publication decision is separate from a production/GA claim. An unsigned installer may be used as engineering evidence but must not be represented as an official production release.
+The public-source publication decision is separate from a production/GA claim. The CEO legal-review waiver is recorded and must never be described as lawyer approval. An unsigned installer may be used as engineering evidence but must not be represented as an official production release.
