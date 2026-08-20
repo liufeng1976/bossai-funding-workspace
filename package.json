@@ -45,7 +45,7 @@
     "verify:owner-readiness": "npm run verify && npm run test:ui-browser && npm run test:owner-mobile && npm run test:locales && npm run test:locale-leaks && npm run test:chrome-repair"
   },
   "devDependencies": {
-    "@types/node": "^24.3.0",
+    "@types/node": "^26.2.0",
     "typescript": "^5.9.2"
   }
 }
