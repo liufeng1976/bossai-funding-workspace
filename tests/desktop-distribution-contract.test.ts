@@ -41,6 +41,15 @@ test("desktop persists business data under Electron userData and test modes use 
   assert.match(main, /BOSSAI_FUNDING_DESKTOP_LIFECYCLE/);
 });
 
+test("desktop commercial mode consumes Headquarters entitlement before opening Funding persistence", () => {
+  assert.match(main, /dist\/src\/server\/commercial-entitlement\.js/);
+  assert.match(main, /resolveCommercialInstallationId\(userDataDir\)/);
+  assert.match(main, /verifyFundingDistributionAuthorization\(distributionConfig\)/);
+  assert.ok(main.indexOf("verifyFundingDistributionAuthorization(distributionConfig)") < main.indexOf("new FundingRepository(databasePath)"));
+  assert.match(main, /commercial-installation-id\.txt/);
+  assert.doesNotMatch(main, /writeFileSync\([^\n]*bearer|writeFileSync\([^\n]*entitlement/i);
+});
+
 test("Windows distribution is pinned and produces an NSIS x64 installer without deleting user data on uninstall", () => {
   assert.match(builder, /appId: com\.bossai\.funding/);
   assert.match(builder, /electronVersion: 43\.4\.1/);
@@ -49,8 +58,12 @@ test("Windows distribution is pinned and produces an NSIS x64 installer without 
   assert.match(builder, /deleteAppDataOnUninstall: false/);
   assert.match(builder, /allowToChangeInstallationDirectory: true/);
   assert.match(gitignore, /^out\/$/m);
+  assert.equal(pkg.scripts?.["desktop:commercial-smoke"], "npm run build && node scripts/desktop-commercial-entitlement-smoke.cjs");
+  assert.match(pkg.scripts?.["verify:desktop"] ?? "", /desktop:commercial-smoke/);
   assert.equal(pkg.scripts?.["desktop:installer"], "npm run build && npx --yes electron-builder@26.15.3 --win nsis");
   assert.equal(pkg.scripts?.["desktop:packaged-smoke"], "node scripts/desktop-packaged-smoke.cjs");
+  assert.equal(pkg.scripts?.["desktop:commercial-packaged-smoke"], "node scripts/desktop-commercial-entitlement-smoke.cjs --packaged");
+  assert.match(pkg.scripts?.["verify:desktop-package"] ?? "", /desktop:commercial-packaged-smoke/);
   assert.equal(pkg.scripts?.["desktop:installer-lifecycle"], "node scripts/desktop-installer-lifecycle.cjs");
   assert.equal(pkg.scripts?.["verify:desktop-installer"], "npm run desktop:installer && npm run desktop:installer-lifecycle");
 });

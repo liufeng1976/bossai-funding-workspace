@@ -3717,3 +3717,29 @@ Remote evidence:
 GitHub branch protection could not be enabled while the repository remains Private under the current account plan. The API returned: `Upgrade to GitHub Pro or make this repository public to enable this feature.` The `verify` check name is now evidence-backed and must be required immediately after visibility becomes Public, before external changes are accepted.
 
 The repository remains Private. No public release, signed release, GA claim, or production commercial entitlement claim is made by this closure.
+
+
+
+## 2026-08-20 — v0.49 Commercial Entitlement Consumer
+
+BossAI Funding now consumes the existing BossAI Headquarters Commerce `bossai.commercial-entitlement.v1` contract for an explicitly configured proprietary commercial distribution while preserving the Community AGPL path as the default no-entitlement/no-Headquarters path.
+
+Authority remains external: Funding does not issue or persist customer identity, membership, license, subscription, payment, entitlement, commercial ledger or billing balance. It sends only bearer authentication plus product/install/version identifiers to `GET /api/v1/commerce/entitlement`; financing records and local SQLite business state are not sent for license validation.
+
+Commercial startup is fail-closed before `FundingRepository` construction. It requires exact schema/product/version/installation binding, Headquarters authority identity, no Headquarters business/provider/customer-content/remote-action authority expansion, active license, active membership and `AUTHORIZED` access reason. HTTPS is required except explicit loopback development endpoints.
+
+Community mode remains default and never calls Headquarters Commerce. Electron commercial mode may persist only a generated non-secret installation ID if one is not externally supplied. The current bearer path is runtime-injected engineering integration and is not the final production credential UX.
+
+Final local v0.49 evidence:
+
+- full tests 266/266 PASS;
+- owner-readiness Chrome suite PASS;
+- Community Electron smoke PASS;
+- Commercial Electron success/denial smoke PASS;
+- Community packaged EXE smoke PASS;
+- Commercial packaged EXE success/denial smoke PASS;
+- NSIS install/restart/uninstall/reinstall lifecycle PASS;
+- installer `out/desktop/BossAI-Funding-Setup-0.49.0-x64.exe` SHA-256 `93120CBDC9E0F455470EA11474669A1AADCD5946B055CB05C3D4690EBD75CF3E`;
+- installer and packaged app EXE Authenticode `NotSigned`.
+
+Official proprietary release remains blocked on desktop account/session acquisition, secure OS credential handling, real production Headquarters paid-license acceptance, legal/commercial approval, official icon and trusted Windows code signing. Public source visibility remains a separate gated decision.

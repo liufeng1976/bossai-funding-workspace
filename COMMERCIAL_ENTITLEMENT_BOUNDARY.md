@@ -8,26 +8,76 @@ The Community build runs under `AGPL-3.0-or-later` and **must not require a prop
 
 The Community build may be used commercially when the user complies with the AGPL. BossAI Funding must not add a local license-key gate that contradicts or narrows those AGPL rights.
 
-## Official proprietary commercial distribution
-
-An official proprietary/commercial BossAI Funding distribution may exercise permissions granted by a separate BossAI commercial agreement. That distribution must consume entitlement from the approved external BossAI commercial authority before commercial release.
-
-BossAI Funding must not become that authority.
-
-The Funding application may eventually consume a narrow entitlement decision such as:
+The implemented runtime default is:
 
 ```text
-subject
-product = bossai-funding
-edition
-entitlement status
-feature grants
-issuedAt
-expiresAt
-issuer / verification evidence
+BOSSAI_FUNDING_DISTRIBUTION=community
 ```
 
-It must not create a second source of truth for:
+Community mode does not call Headquarters Commerce and does not require any BossAI commercial token.
+
+## Official proprietary commercial distribution
+
+An official proprietary/commercial BossAI Funding distribution may exercise permissions granted by a separate BossAI commercial agreement. That distribution consumes entitlement from the approved external BossAI commercial authority:
+
+```text
+BossAI Headquarters Commerce
+GET /api/v1/commerce/entitlement
+schemaVersion = bossai.commercial-entitlement.v1
+```
+
+BossAI Funding does not become that authority.
+
+The implemented consumer sends only:
+
+```text
+Authorization: Bearer <BossAI headquarters account session or customer key>
+x-bossai-product-id: bossai-funding
+x-bossai-installation-id: <non-secret installation identifier>
+x-bossai-product-version: <current Funding version>
+```
+
+It sends no financing records, prompts, files, customer business content, Provider credentials, payment data, or local SQLite state.
+
+## Implemented fail-closed checks
+
+When:
+
+```text
+BOSSAI_FUNDING_DISTRIBUTION=commercial
+```
+
+startup requires all of the following before the local Funding server is created:
+
+1. a configured Headquarters Commerce base URL;
+2. HTTPS transport, except an explicit loopback HTTP endpoint for development/testing;
+3. an externally supplied Headquarters bearer credential;
+4. a stable installation identifier;
+5. HTTP success from `/api/v1/commerce/entitlement`;
+6. `schemaVersion = bossai.commercial-entitlement.v1`;
+7. `product.id = bossai-funding` and matching product version;
+8. matching installation/device ID;
+9. `headquartersCommerce.authority = bossai-headquarters-commerce`;
+10. Headquarters explicitly states that it does not control business execution, Provider routing, customer business content, or remote business actions;
+11. `entitlement.licenseActive = true`;
+12. `entitlement.membershipStatus = active`;
+13. `entitlement.accessReason = AUTHORIZED`.
+
+Missing, malformed, unavailable, denied, wrong-product, wrong-device, wrong-authority, or expanded-authority responses fail closed.
+
+No Funding code mints or infers a replacement entitlement.
+
+## Persistence and secret boundary
+
+BossAI Funding does **not** persist the commercial bearer credential, entitlement response, membership, license, billing balance, subscription, or payment truth in Funding SQLite.
+
+Electron commercial mode may persist only a generated non-secret installation identifier in its normal `userData` directory when an installation ID is not externally supplied.
+
+The bearer credential is currently an injected runtime credential for engineering integration. It is never printed by the entitlement consumer and is not written to disk by that consumer.
+
+## Authority that remains external
+
+Funding must not create a second source of truth for:
 
 - customer identity;
 - account ownership;
@@ -38,29 +88,37 @@ It must not create a second source of truth for:
 - commercial ledger;
 - billing balance.
 
-## Fail-closed rule for proprietary distribution
-
-When an official proprietary build is configured to require a commercial entitlement:
-
-1. entitlement must come from the approved external BossAI commercial authority;
-2. the entitlement must be cryptographically/verifiably bound to the expected product/subject/issuer contract;
-3. unverifiable, expired, wrong-product or wrong-subject entitlement must fail closed;
-4. an unavailable authority must not cause the app to mint or infer a local commercial entitlement;
-5. any offline allowance must be based on an approved signed entitlement/cache policy, not an editable local boolean;
-6. financing business data must not be sent to the commercial authority merely to validate a license.
+Headquarters Commerce remains the only authority for those states.
 
 ## Current implementation status
 
-The Community AGPL build is implemented and has no proprietary entitlement dependency.
+Implemented:
 
-The proprietary commercial-entitlement adapter is **not yet implemented**, because no approved external entitlement verification contract/endpoints/keys are defined in this repository. This is a commercial-release blocker, not a reason to invent a local license system.
+- Community AGPL distribution with no proprietary entitlement dependency;
+- `bossai.commercial-entitlement.v1` online consumer;
+- exact product / installation / version binding;
+- fail-closed commercial startup policy;
+- Headquarters authority-boundary validation;
+- token-minimizing error handling;
+- Community and commercial unit/contract coverage;
+- CLI and Electron startup integration.
+
+Still required before an official proprietary commercial desktop release:
+
+- approved customer account/session acquisition inside the official desktop experience;
+- secure operating-system credential handling/brokerage instead of operator-injected environment credentials;
+- real end-to-end acceptance against the approved production Headquarters Commerce endpoint and a real paid BossAI Funding license;
+- commercial agreement/legal approval;
+- signed official Windows distribution.
+
+No offline commercial entitlement cache is implemented. Commercial mode is intentionally online fail-closed until an approved signed/offline policy exists.
 
 ## Release separation
 
-These are separate gates:
+These remain separate gates:
 
 - Public AGPL source release: governed by `LICENSE` and open-source readiness.
 - Official Community desktop binary: must comply with AGPL object-code/source obligations and release-supply-chain requirements.
-- Official proprietary/commercial desktop binary: additionally requires an executed commercial licensing path and approved external entitlement verification.
+- Official proprietary/commercial desktop binary: additionally requires the approved commercial agreement, real Headquarters account/session integration, entitlement evidence, and signed distribution.
 
-See `COMMERCIAL_LICENSE.md`, `OPEN_SOURCE_READINESS.md`, and the company-wide commercial authority governance before implementing the proprietary entitlement adapter.
+See `COMMERCIAL_LICENSE.md`, `OPEN_SOURCE_READINESS.md`, and Headquarters Commerce governance.

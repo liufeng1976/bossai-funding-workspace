@@ -2,6 +2,20 @@
 
 All notable BossAI Funding changes are recorded here at release-summary level. Detailed evidence remains in `Atlas/`.
 
+## [0.49.0] - 2026-08-20
+
+### Added
+
+- Read-only `bossai.commercial-entitlement.v1` consumer for explicit proprietary commercial distribution mode.
+- Fail-closed Headquarters Commerce product/version/installation/license/membership authority checks before Funding persistence starts.
+- Commercial entitlement contract tests that prove Community AGPL mode never calls Headquarters Commerce and that denied/mismatched responses cannot unlock the proprietary path.
+
+### Commercial boundary
+
+- Community remains the default distribution and has no proprietary entitlement dependency.
+- Funding stores no commercial bearer token, membership, license, payment, subscription or entitlement authority in SQLite.
+- Official proprietary desktop release still requires approved account-session acquisition, secure OS credential handling, real production Headquarters acceptance, commercial agreement approval and signed Windows distribution.
+
 ## [0.48.0] - 2026-08-20
 
 ### Added

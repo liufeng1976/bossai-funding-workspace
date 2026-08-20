@@ -4,7 +4,8 @@ const os = require("node:os");
 const path = require("node:path");
 
 const root = path.resolve(__dirname, "..");
-const installer = path.join(root, "out", "desktop", "BossAI-Funding-Setup-0.48.0-x64.exe");
+const packageVersion = require(path.join(root, "package.json")).version;
+const installer = path.join(root, "out", "desktop", `BossAI-Funding-Setup-${packageVersion}-x64.exe`);
 if (!fs.existsSync(installer)) {
   console.error("BOSSAI_FUNDING_INSTALLER_LIFECYCLE_MISSING", installer);
   process.exit(1);

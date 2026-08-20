@@ -88,7 +88,30 @@ The AGPL permits commercial activity when its terms are followed.
 
 If you need permissions outside the AGPL—for example proprietary/closed-source embedding, proprietary OEM redistribution, or negotiated enterprise rights—you need a separate commercial license from BossAI. See `COMMERCIAL_LICENSE.md`.
 
-The project itself does not create a second commercial account, payment, subscription, license, or entitlement ledger. The Community AGPL build does not require a proprietary entitlement; an official proprietary commercial build must consume entitlement from the approved external BossAI commercial authority. See `COMMERCIAL_ENTITLEMENT_BOUNDARY.md`.
+The project itself does not create a second commercial account, payment, subscription, license, or entitlement ledger. The Community AGPL build does not require a proprietary entitlement; an official proprietary commercial build consumes entitlement from the approved external BossAI commercial authority. See `COMMERCIAL_ENTITLEMENT_BOUNDARY.md`.
+
+### Distribution modes
+
+Community mode is the default:
+
+```text
+BOSSAI_FUNDING_DISTRIBUTION=community
+```
+
+It does not contact BossAI Headquarters Commerce and does not require a proprietary BossAI token.
+
+The proprietary commercial integration mode is explicit and fail-closed:
+
+```text
+BOSSAI_FUNDING_DISTRIBUTION=commercial
+BOSSAI_FUNDING_HEADQUARTERS_BASE_URL=https://<approved-headquarters-host>
+BOSSAI_FUNDING_HEADQUARTERS_BEARER_TOKEN=<account-session-or-customer-key>
+BOSSAI_FUNDING_INSTALLATION_ID=<optional-stable-installation-id>
+```
+
+It consumes only the Headquarters `GET /api/v1/commerce/entitlement` contract (`bossai.commercial-entitlement.v1`) and verifies that the entitlement is for `bossai-funding`, the current product version and the current installation before Funding persistence starts. Financing records and local SQLite business state are not sent to Headquarters for license validation.
+
+The environment-provided bearer credential is an **engineering integration path**, not the final production credential UX. An official proprietary desktop release still requires approved account/session acquisition and secure operating-system credential handling; do not bake a bearer token into the installer, source tree, `.env`, command history, or release artifact.
 
 ## Contributing
 
