@@ -19,8 +19,8 @@ jobs:
   desktop:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
@@ -31,7 +31,9 @@ jobs:
 
       # Producing an unpacked artifact is evidence only. Official releases
       # remain blocked until the approved Windows code-signing path is active.
-      - uses: actions/upload-artifact@v4
+      - name: Upload unsigned unpacked evidence (best effort)
+        continue-on-error: true
+        uses: actions/upload-artifact@v7
         with:
           name: bossai-funding-win-unpacked-unsigned
           path: out/desktop/win-unpacked
