@@ -12,7 +12,7 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Third-party software licenses are documented.
 - [x] CEO explicitly waived qualified outside/legal-counsel review for source publication on 2026-08-20; no lawyer approval is claimed. See `Atlas/CEO_LEGAL_REVIEW_WAIVER_2026-08-20.md`.
 - [x] CEO explicitly waived qualified outside/legal-counsel review of the contributor-rights documents for source publication; the CLA remains fail-closed and is not represented as lawyer-approved.
-- [ ] Contributor-signing workflow is operational before external PR merging.
+- [ ] v0.51 contributor-rights workflow, active CLA v2026-08-20.1 and exact PR attestation are implemented on the protected-PR candidate branch; mark operational only after merge to `main`, live status evidence, and branch-protection addition of required `contributor-rights`.
 
 ## Repository hygiene
 
@@ -24,7 +24,7 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] GitHub dependency vulnerability alerts enabled and verified; automated security fixes enabled.
 - [x] GitHub Discussions enabled; Issues remain enabled.
 - [x] Remote `Source CI / verify` passes on `main`.
-- [x] Remote `Windows Desktop / desktop` passes on `windows-latest` for v0.50: Community, commercial environment-token, and commercial OS-encrypted-session development paths plus all three packaged paths PASS. Unsigned artifact upload is best-effort because the account artifact-storage quota is currently full.
+- [x] Remote `Windows Desktop / desktop` passes on `windows-latest` for v0.50: Community, commercial environment-token, and commercial OS-encrypted-session development paths plus all three packaged paths PASS. v0.51 remote Windows evidence is pending protected-PR CI. Unsigned artifact upload is best-effort because the account artifact-storage quota is currently full.
 - [x] GitHub Private Vulnerability Reporting enabled and verified after Public visibility.
 - [x] `main` branch protection enabled after Public visibility: strict required status check `verify`, linear history required, force-push disabled, branch deletion disabled, and conversation resolution required.
 
@@ -39,18 +39,19 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] User data is not deleted on uninstall by installer policy.
 - [x] Development Electron smoke PASS with isolated temporary userData, default English and no horizontal overflow.
 - [x] Packaged `win-unpacked` smoke PASS with packaged runtime and isolated temporary userData.
-- [x] v0.50.0 NSIS installer generated after final local gates. SHA-256: `835A950EFCEAF1B9267DDC166815903EE31267FBB6783D4BFEBAD70D63A7A42B`.
+- [x] v0.51.0 NSIS engineering installer generated after final local gates. SHA-256: `3CD9B0BF4F873F81CEBF70872C644A5036A632A27D19C89C0306B17B67A1578C`.
 - [x] Real isolated lifecycle PASS: install → first launch → single-instance rejection → save → restart → data persists → uninstall → data preserved → reinstall → data restored → final uninstall preserves data.
 - [x] Packaged distribution contains Electron and Chromium bundled license files (`LICENSE.electron.txt`, `LICENSES.chromium.html`).
-- [ ] Official icon and Windows metadata reviewed. Current engineering installer still uses the default Electron icon.
-- [ ] Windows code-signing certificate/path approved and signed build verified. Current app EXE and installer both report `NotSigned`.
+- [x] BossAI Funding Windows identity is deterministic and source-generated: 7-size ICO, `ProductName=BossAI Funding`, `FileDescription=BossAI Funding`, `LegalCopyright=Copyright (c) 2026 BossAI`, `LegalTrademarks=BossAI`, `requestedExecutionLevel=asInvoker`. Electron Builder no longer reports the default Electron icon fallback.
+- [x] Fail-closed signed Windows release workflow exists and requires `Authenticode=Valid`, an approved signer-subject contract, full owner/desktop gates, and installer lifecycle before upload.
+- [ ] Public-trust Windows code-signing credential is still external: local certificate store contains only self-signed BossAI development/preview certificates and GitHub currently has no `WINDOWS_CSC_LINK`, `WINDOWS_CSC_KEY_PASSWORD`, or `WINDOWS_SIGNING_EXPECTED_SUBJECT` secrets. Current v0.51 app EXE and installer both report `NotSigned`.
 
 ## Product / language
 
 - [x] Fresh install default locale is English.
 - [x] Explicit locale selection remains persistent UI preference only.
 - [x] English / Simplified Chinese / Traditional Chinese / Spanish are production-complete locales.
-- [x] Full v0.50 owner-readiness re-run: 273/273 tests PASS; desktop/responsive Chrome, 390×844 owner path, four production locales, zero-leak audit and receipt-reconciliation Chrome PASS.
+- [x] Full v0.51 owner-readiness re-run: 280/280 tests PASS; desktop/responsive Chrome, 390×844 owner path, four production locales, zero-leak audit and receipt-reconciliation Chrome PASS.
 - [x] Human owner installs the v0.48 desktop build, confirms it opens and runs normally, and uninstalls successfully on the target machine (2026-08-20). Machine-only evidence remains separately scoped for restart/reinstall data persistence.
 
 ## Commercial authority
@@ -63,7 +64,7 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Commercial desktop session is encrypted with Electron `safeStorage`; passwords/MFA proofs/raw sessions do not enter Funding SQLite.
 - [x] Real development Electron secure-session smoke PASS: first login encrypted, second launch reused secure session, entitlement revalidated each launch, 401 removed stale session, raw session not logged.
 - [x] Packaged commercial secure-session smoke PASS with the same encrypted-session and stale-session boundary.
-- [ ] Official proprietary commercial desktop still needs a real production Headquarters plan/account granting `bossai-funding.commercial`, production paid-account E2E acceptance, an executed commercial permission path where applicable, official icon, and publicly trusted Windows signing. Outside-counsel review is not a blocker because the CEO waiver is recorded.
+- [ ] Official proprietary commercial desktop still needs a real production Headquarters plan/account granting `bossai-funding.commercial`, production paid-account E2E acceptance, and publicly trusted Windows signing. Outside-counsel review and desktop icon are no longer blockers.
 
 ## Publication gate
 
@@ -72,5 +73,7 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Secret Scanning enabled.
 - [x] Secret Scanning Push Protection enabled.
 - [ ] GitHub extended non-provider secret patterns and validity checks remain disabled by the current account/platform capability; this is not represented as enabled.
+- [x] Tag-bound AGPL Source Release workflow implemented with package/tag identity verification and an explicit no-signed-Windows-binary claim.
+- [ ] First tag-driven Source Release (`v0.51.0`) is pending protected-PR merge and tag creation.
 
 The public-source publication decision is separate from a production/GA claim. The CEO legal-review waiver is recorded and must never be described as lawyer approval. An unsigned installer may be used as engineering evidence but must not be represented as an official production release.

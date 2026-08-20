@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "bossai.contributor-rights-policy.v1",
+  "claVersion": "2026-08-20.1",
+  "requiredAttestation": "I agree to the BossAI Funding CLA v2026-08-20.1 in CLA.md and I am authorized to make this contribution.",
+  "trustedGitHubLogins": [
+    "liufeng1976"
+  ],
+  "trustedBots": [
+    "dependabot[bot]"
+  ]
+}

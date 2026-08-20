@@ -1,5 +1,6 @@
 appId: com.bossai.funding
 productName: BossAI Funding
+copyright: Copyright (c) 2026 BossAI
 electronVersion: 43.4.1
 asar: true
 directories:
@@ -13,12 +14,18 @@ files:
   - README.md
   - NOTICE.md
 win:
+  icon: out/desktop-assets/bossai-funding.ico
+  legalTrademarks: BossAI
+  requestedExecutionLevel: asInvoker
   target:
     - target: nsis
       arch:
         - x64
   artifactName: BossAI-Funding-Setup-${version}-${arch}.${ext}
 nsis:
+  installerIcon: out/desktop-assets/bossai-funding.ico
+  uninstallerIcon: out/desktop-assets/bossai-funding.ico
+  installerHeaderIcon: out/desktop-assets/bossai-funding.ico
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true
