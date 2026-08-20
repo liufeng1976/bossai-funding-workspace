@@ -22,8 +22,12 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Dependabot configuration exists.
 - [x] Full current Git-history secret/provenance scan completed: 2 commits, one known author, 0 sensitive filenames, 0 high-risk token/private-key pattern hits, 0 OpenBcon implementation provenance hits after excluding the protective lint rule.
 - [ ] Re-run the Git-history secret/provenance scan immediately before the final visibility change if additional commits are added.
-- [ ] GitHub private vulnerability reporting enabled. Current private-repository API returns 404; configure/verify at public-release preparation.
-- [ ] Branch protection / required checks enabled after the new CI workflows are committed and have produced named checks.
+- [x] GitHub dependency vulnerability alerts enabled and verified; automated security fixes enabled.
+- [x] GitHub Discussions enabled; Issues remain enabled.
+- [x] Remote `Source CI / verify` passes on `main`.
+- [x] Remote `Windows Desktop / desktop` passes on `windows-latest`: desktop contract, Electron smoke, packaging and packaged smoke all PASS. Unsigned artifact upload is best-effort because the account artifact-storage quota is currently full.
+- [ ] Private vulnerability reporting: the private-repository endpoint currently returns 404; configure/verify immediately when preparing the Public visibility change.
+- [ ] Branch protection / required `verify`: GitHub API returned 403 (`Upgrade to GitHub Pro or make this repository public to enable this feature`) while the repository is Private. Enable immediately after Public visibility, before accepting external changes.
 
 ## Desktop product form
 

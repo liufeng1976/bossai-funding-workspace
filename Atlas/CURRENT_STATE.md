@@ -3694,3 +3694,26 @@ Current acceptance truth:
 - legal review of AGPL/commercial-license/CLA structure: NOT YET ATTESTED;
 - GitHub visibility: PRIVATE;
 - public release: NOT YET AUTHORIZED.
+
+
+
+## 2026-08-20 — v0.48 GitHub remote governance closure
+
+The v0.48 desktop/open-source batch has been committed and pushed to the private canonical GitHub repository. Remote source and Windows workflows were then exercised on GitHub-hosted runners rather than relying only on local evidence.
+
+Remote evidence:
+
+- `Source CI / verify` on `main` — PASS;
+- `Windows Desktop / desktop` on `windows-latest` — PASS after cross-platform line-ending hardening;
+- Windows runner completed desktop contract verification, Electron smoke, packaging, and packaged smoke successfully;
+- unsigned artifact upload is best-effort because the GitHub Actions artifact-storage quota is currently full; this no longer converts a successful product/build gate into a false failure;
+- GitHub Actions were updated to current v7 major actions to remove Node 20 action-runtime deprecation warnings;
+- dependency vulnerability alerts enabled and verified;
+- automated security fixes enabled;
+- Discussions enabled; Issues enabled;
+- repository topics/description updated for the open-source product identity;
+- two automatic npm major-version Dependabot PRs (TypeScript 5→7 and @types/node 24→26) were closed because the v0.48 runtime baseline is Node 24 / TypeScript 5 and major migrations require an explicit product batch; Dependabot now ignores npm semver-major updates while continuing normal maintenance.
+
+GitHub branch protection could not be enabled while the repository remains Private under the current account plan. The API returned: `Upgrade to GitHub Pro or make this repository public to enable this feature.` The `verify` check name is now evidence-backed and must be required immediately after visibility becomes Public, before external changes are accepted.
+
+The repository remains Private. No public release, signed release, GA claim, or production commercial entitlement claim is made by this closure.
