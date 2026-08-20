@@ -127,8 +127,9 @@ Read `CONTRIBUTING.md` before opening a pull request. The versioned `CLA.md` con
 ## Source and project links
 
 - Repository: https://github.com/liufeng1976/bossai-funding-workspace
+- Source releases: https://github.com/liufeng1976/bossai-funding-workspace/releases
 - Issues: https://github.com/liufeng1976/bossai-funding-workspace/issues
 
 ## Current release status
 
-The repository is public under AGPL-3.0-or-later. Tag-bound source releases and official signed Windows releases are separate gates. The desktop icon is generated deterministically from repository source; unsigned engineering installers remain non-production evidence. Passing tests or producing an installer is not by itself a production/GA claim.
+The repository is public under AGPL-3.0-or-later. `v0.51.0` is the current public **source release**. Tag-bound source releases and official signed Windows releases are separate gates. The desktop icon is generated deterministically from repository source; unsigned engineering installers remain non-production evidence and are intentionally absent from the official source Release. Passing tests or producing an installer is not by itself a production/GA claim.
