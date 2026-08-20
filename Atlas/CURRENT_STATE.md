@@ -3813,3 +3813,21 @@ Immediate public-repository controls were applied and verified:
 - Dependabot security updates remain enabled.
 
 The source-publication state does not change the separate unsigned Windows, official icon, production Headquarters paid-entitlement, paid-account E2E, or remote-production security gates.
+
+
+## 2026-08-20 · v0.51 contributor-rights live protection evidence
+
+v0.51 release-hardening PR #6 merged through protected `main` after Source CI run `32344535006` PASS and Windows Desktop run `32344535015` PASS. The Windows run covered Community, commercial environment-entitlement and commercial Windows-safeStorage session packaged paths.
+
+Contributor-rights live proof PR #7 then demonstrated the trusted-base governance path:
+
+- initial head `3d3d5fa4404f2fb7e94daefd0c71ea28c6e078aa`;
+- `Contributor Rights` pull_request_target run `32344905425`: PASS;
+- independent PR-head status `contributor-rights`: SUCCESS;
+- `main` protection updated to strict required contexts `verify` + `contributor-rights`;
+- proof branch updated to head `10ebf302f0551c3aaa5d06ea01d6fa5299f7075c` after protection was active;
+- updated head `contributor-rights`: PASS;
+- updated-head Source CI run `32345016566`: PASS;
+- PR #7 merged only after both required contexts passed; merge commit `3abea5918d18c47137b0420710c03f23731126c9`.
+
+The contributor-rights workflow is therefore operational, not merely documented. No lawyer approval is claimed; CEO waiver/approval remains the recorded project decision.
