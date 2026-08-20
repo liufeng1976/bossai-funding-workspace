@@ -12,7 +12,7 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Third-party software licenses are documented.
 - [x] CEO explicitly waived qualified outside/legal-counsel review for source publication on 2026-08-20; no lawyer approval is claimed. See `Atlas/CEO_LEGAL_REVIEW_WAIVER_2026-08-20.md`.
 - [x] CEO explicitly waived qualified outside/legal-counsel review of the contributor-rights documents for source publication; the CLA remains fail-closed and is not represented as lawyer-approved.
-- [ ] v0.51 contributor-rights workflow, active CLA v2026-08-20.1 and exact PR attestation are implemented on the protected-PR candidate branch; mark operational only after merge to `main`, live status evidence, and branch-protection addition of required `contributor-rights`.
+- [x] v0.51 contributor-rights workflow is operational on `main`: active CLA v2026-08-20.1, exact PR attestation, trusted-base `pull_request_target` evaluation, and independent `contributor-rights` PR-head status. Live proof PR #7 passed `Contributor Rights` run `32344905425`; its updated head then passed both required `verify` and `contributor-rights` before merge.
 
 ## Repository hygiene
 
@@ -24,9 +24,9 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] GitHub dependency vulnerability alerts enabled and verified; automated security fixes enabled.
 - [x] GitHub Discussions enabled; Issues remain enabled.
 - [x] Remote `Source CI / verify` passes on `main`.
-- [x] Remote `Windows Desktop / desktop` passes on `windows-latest` for v0.50: Community, commercial environment-token, and commercial OS-encrypted-session development paths plus all three packaged paths PASS. v0.51 remote Windows evidence is pending protected-PR CI. Unsigned artifact upload is best-effort because the account artifact-storage quota is currently full.
+- [x] Remote v0.51 protected-PR evidence: Source CI run `32344535006` PASS and Windows Desktop run `32344535015` PASS on PR #6, including Community, commercial environment-token, commercial OS-encrypted-session development/package paths. Unsigned artifact upload remains best-effort because the account artifact-storage quota may be full.
 - [x] GitHub Private Vulnerability Reporting enabled and verified after Public visibility.
-- [x] `main` branch protection enabled after Public visibility: strict required status check `verify`, linear history required, force-push disabled, branch deletion disabled, and conversation resolution required.
+- [x] `main` branch protection is strict and admin-enforced: required status checks are `verify` and `contributor-rights`; linear history required; force-push disabled; branch deletion disabled; conversation resolution required. PR #7 was merged only after its post-protection head satisfied both required checks.
 
 ## Desktop product form
 
@@ -74,6 +74,6 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Secret Scanning Push Protection enabled.
 - [ ] GitHub extended non-provider secret patterns and validity checks remain disabled by the current account/platform capability; this is not represented as enabled.
 - [x] Tag-bound AGPL Source Release workflow implemented with package/tag identity verification and an explicit no-signed-Windows-binary claim.
-- [ ] First tag-driven Source Release (`v0.51.0`) is pending protected-PR merge and tag creation.
+- [ ] First tag-driven Source Release (`v0.51.0`) is pending this release-seal PR, an exact-main final history/provenance scan, and tag creation.
 
 The public-source publication decision is separate from a production/GA claim. The CEO legal-review waiver is recorded and must never be described as lawyer approval. An unsigned installer may be used as engineering evidence but must not be represented as an official production release.

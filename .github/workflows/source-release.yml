@@ -31,5 +31,4 @@ jobs:
           gh release create "$GITHUB_REF_NAME"
           --verify-tag
           --title "BossAI Funding $GITHUB_REF_NAME — Source Release"
-          --generate-notes
           --notes "Community source release under AGPL-3.0-or-later. This source release does not include or imply a publicly trusted signed Windows binary. Official proprietary/commercial desktop distribution is governed separately by COMMERCIAL_LICENSE.md and Headquarters entitlement."
