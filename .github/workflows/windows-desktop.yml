@@ -31,7 +31,7 @@ jobs:
 
       # Producing an unpacked artifact is evidence only. Official releases
       # remain blocked until the approved Windows code-signing path is active.
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: bossai-funding-win-unpacked-unsigned
           path: out/desktop/win-unpacked
