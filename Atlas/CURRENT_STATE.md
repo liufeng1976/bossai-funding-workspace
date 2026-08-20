@@ -1,22 +1,47 @@
 # BossAI Funding — Current State
 
-Last updated: 2026-08-17
-Constitution: `2026.08.14.1`
+Last updated: 2026-08-20
+Constitution policy reference: `2026.08.20.1` (machine-active chain remains governed by the applicable Constitution Harness)
 Product: BossAI Funding
 Repository: `D:\BossAI-Projects\bossai-funding-workspace`
-Version: `0.33.0`
+Version: `0.51.0`
 Branch: `main`
+Latest verified Source CI SHA: `6600da2899d83eddcfc43efbc2d81805d662d77a`
 
 ## Classification
 
 - Product type: Owner-facing financing decision and execution workspace
 - Primary user: Enterprise owner / founder
-- AI classification in Phase 1: AI Feature only; no AI Employee has been created
+- AI classification: AI Feature only; no AI Employee has been created
 - Agent Platform: No; BossAI OS remains the only Agent Platform
 - Current completion level: 2 — Functional MVP
 - `productionReady=false`
 - `actuallyLaunched=false`
 - `realUserValidated=false`
+
+## Current release truth — v0.51.0
+
+### What users can use now
+
+- The public AGPL-3.0-or-later Community source release is available at `https://github.com/liufeng1976/bossai-funding-workspace`.
+- A new owner can enter the local Funding workspace, understand the capital position and next priority action, and complete the persisted owner journey in English, Simplified Chinese, Traditional Chinese or Spanish.
+- The official source Release is `v0.51.0`; it is source-only and deliberately contains no Windows binary assets.
+
+### Verified technical / business / experience status
+
+- Technical acceptance: PASS for the v0.51 source-release and Community desktop-engineering scope. The exact `main` commit above passed Source CI run `32347121593`; 280/280 local tests and the desktop, package and installer-lifecycle gates are recorded in `V0_51_RELEASE_HARDENING.md`.
+- Business acceptance: PARTIAL. Community source distribution and the commercial-entitlement technical contract are complete, but a real production paid-account commercial journey is not yet available.
+- Real user-experience acceptance: no new completion-level claim. Owner Chrome/mobile and locale journeys passed as engineering acceptance; this is not represented as independent new-user production validation.
+
+### Release boundary and active blockers
+
+- `v0.51.0` source Release: COMPLETE. GitHub release assets are intentionally empty; GitHub source archives are the distribution artifact.
+- Windows engineering installer: available for internal evidence only; installer and app EXE are `NotSigned` and must not be represented as a public-trust official release.
+- Official signed Windows release: BLOCKED pending a real public-trust Windows code-signing identity and configured signing secrets/service.
+- Proprietary production paid-account E2E: BLOCKED pending a deployed Headquarters Commerce production account/session and entitlement endpoint plus an actual paid account granting `bossai-funding.commercial`.
+- 2026-08-20 recheck: `https://cloud.destinykit.com/health` returned `200`; `/ready`, `/api/v1/auth/session`, and `/api/v1/commerce/entitlement` returned `404`. No `BOSSAI_HQ_*` runtime variables, public-trust code-signing certificate, or Funding GitHub signing secret/variable names were present.
+
+The v0.51 release-hardening batch did not increase the product completion level. It closes source-release governance and engineering evidence only; the two external production blockers above remain fail-closed.
 
 ## Clean-room status
 

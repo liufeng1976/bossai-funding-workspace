@@ -110,3 +110,16 @@ Accordingly:
 - Proprietary entitlement technical integration: COMPLETE locally and with real HQ server contract;
 - official signed Windows binary release: BLOCKED on public-trust signing credential;
 - real proprietary production paid-account E2E: BLOCKED on Headquarters production deployment/configuration.
+
+## Post-release state recheck — 2026-08-20
+
+The state was rechecked after the final `main` evidence commit:
+
+- `main` is `6600da2899d83eddcfc43efbc2d81805d662d77a` locally and at `origin/main`;
+- Source CI run `32347121593` for that exact SHA completed successfully;
+- the `v0.51.0` GitHub Release remains published, non-draft and non-prerelease with an empty asset list;
+- Headquarters public probes remain `/health=200`, `/ready=404`, `/api/v1/auth/session=404`, `/api/v1/commerce/entitlement=404`;
+- the current-user certificate store still exposes only BossAI Development / Internal Preview code-signing certificates, not a publicly trusted signing identity;
+- no Funding repository signing-secret or signing-variable names are configured.
+
+This recheck creates no production completion claim and does not authorize an unsigned binary release or a simulated paid-account result.
