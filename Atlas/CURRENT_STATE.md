@@ -3743,3 +3743,6 @@ Final local v0.49 evidence:
 - installer and packaged app EXE Authenticode `NotSigned`.
 
 Official proprietary release remains blocked on desktop account/session acquisition, secure OS credential handling, real production Headquarters paid-license acceptance, legal/commercial approval, official icon and trusted Windows code signing. Public source visibility remains a separate gated decision.
+
+
+GitHub-hosted v0.49 closure is also green. Commit `597cab19135437cbbb8c85a1358c9eb209fe1a18` passed Source CI run `32336912053` and Windows Desktop run `32336929853`. The Windows runner completed Community/commercial development Electron verification, packaging, Community packaged smoke and commercial packaged entitlement success/denial smoke. Artifact upload remains a non-blocking warning because the GitHub Actions artifact quota is full. v0.49 Technical Acceptance is PASS for the implemented entitlement-consumer scope; official proprietary commercial release remains blocked by desktop account/session acquisition, secure OS credential handling, real production Headquarters paid-license acceptance, legal approval, official icon and publicly trusted Windows signing.

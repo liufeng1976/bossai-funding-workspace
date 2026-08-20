@@ -202,3 +202,40 @@ The online consumer does not complete the official proprietary product path. Rem
 - Public visibility security sequencing (private vulnerability reporting and branch protection/required `verify`).
 
 Machine Technical Acceptance for the v0.49 local integration scope is PASS. Official proprietary commercial release readiness is NOT PASS. Public source release remains gated separately.
+
+
+
+## GitHub-hosted remote closure
+
+The committed v0.49 implementation at:
+
+```text
+597cab19135437cbbb8c85a1358c9eb209fe1a18
+```
+
+was verified on GitHub-hosted runners.
+
+Remote runs:
+
+```text
+Source CI
+run: 32336912053
+result: PASS
+
+Windows Desktop
+run: 32336929853
+result: PASS
+```
+
+The Windows-hosted job completed all of:
+
+- `npm ci`;
+- `npm run verify:desktop` (Community + commercial development Electron smoke);
+- `npm run desktop:pack`;
+- `npm run desktop:packaged-smoke`;
+- `npm run desktop:commercial-packaged-smoke`.
+
+Therefore the `bossai.commercial-entitlement.v1` integration has independent GitHub Windows evidence for both development and packaged Electron paths. Artifact upload remains best-effort because the account Actions artifact-storage quota is full; the upload warning does not change the successful build/smoke result.
+
+v0.49 Technical Acceptance for the implemented entitlement-consumer scope: PASS.
+Official proprietary commercial release readiness: NOT PASS for the remaining account/session, secure credential, production entitlement, legal, icon and public-trust signing blockers.
