@@ -10,8 +10,8 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] README explains that AGPL itself permits commercial use when its terms are followed.
 - [x] Trademark rights are separated from copyright license.
 - [x] Third-party software licenses are documented.
-- [ ] Qualified legal counsel approves the dual-license structure.
-- [ ] Qualified legal counsel approves the contributor agreement.
+- [x] CEO explicitly waived qualified outside/legal-counsel review for source publication on 2026-08-20; no lawyer approval is claimed. See `Atlas/CEO_LEGAL_REVIEW_WAIVER_2026-08-20.md`.
+- [x] CEO explicitly waived qualified outside/legal-counsel review of the contributor-rights documents for source publication; the CLA remains fail-closed and is not represented as lawyer-approved.
 - [ ] Contributor-signing workflow is operational before external PR merging.
 
 ## Repository hygiene
@@ -20,7 +20,7 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Issue and pull-request templates exist.
 - [x] CI and Windows desktop workflows exist.
 - [x] Dependabot configuration exists.
-- [ ] Re-run the full Git-history secret/provenance scan immediately before the final visibility change. The earlier clean scan predates later desktop/GitHub-governance commits and is retained only as historical evidence.
+- [x] Final pre-public scan completed on 2026-08-20 across the 10 existing commits plus the candidate waiver/publication working tree: 0 sensitive credential/private-key filenames, 0 high-risk token/private-key pattern paths, and no OpenBcon implementation-path provenance. OpenBcon text matches are limited to explicit clean-room/provenance governance documents.
 - [x] GitHub dependency vulnerability alerts enabled and verified; automated security fixes enabled.
 - [x] GitHub Discussions enabled; Issues remain enabled.
 - [x] Remote `Source CI / verify` passes on `main`.
@@ -63,10 +63,10 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Commercial desktop session is encrypted with Electron `safeStorage`; passwords/MFA proofs/raw sessions do not enter Funding SQLite.
 - [x] Real development Electron secure-session smoke PASS: first login encrypted, second launch reused secure session, entitlement revalidated each launch, 401 removed stale session, raw session not logged.
 - [x] Packaged commercial secure-session smoke PASS with the same encrypted-session and stale-session boundary.
-- [ ] Official proprietary commercial desktop still needs a real production Headquarters plan/account granting `bossai-funding.commercial`, production paid-account E2E acceptance, commercial/legal approval, official icon, and publicly trusted Windows signing.
+- [ ] Official proprietary commercial desktop still needs a real production Headquarters plan/account granting `bossai-funding.commercial`, production paid-account E2E acceptance, an executed commercial permission path where applicable, official icon, and publicly trusted Windows signing. Outside-counsel review is not a blocker because the CEO waiver is recorded.
 
 ## Publication gate
 
-Do not change GitHub visibility from Private to Public until all blocking items above that affect legal rights, source hygiene, user-installability and security reporting are resolved or explicitly waived by the CEO with recorded evidence.
+Do not change GitHub visibility from Private to Public until all blocking items above that affect source hygiene, user-installability and security reporting are resolved or explicitly waived by the CEO with recorded evidence. Legal-counsel review has been explicitly waived for source publication by the CEO; this waiver must never be described as lawyer approval.
 
 A source-publication decision is separate from a production/GA claim. An unsigned installer may be used as engineering evidence but must not be represented as an official production release.

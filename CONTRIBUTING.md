@@ -6,7 +6,7 @@ Thank you for considering a contribution.
 
 BossAI Funding is dual-licensed under AGPL-3.0-or-later and separate commercial terms. Preserving that model requires BossAI to have sufficient rights to relicense accepted contributions.
 
-**Until the contributor-license process in `CLA.md` is legally approved and operational, external code/documentation pull requests may be reviewed but must not be merged.** Issues, bug reports, reproducible test cases, product feedback and security reports remain welcome.
+**Until the contributor-rights process in `CLA.md` is explicitly approved by BossAI and operational, external code/documentation pull requests may be reviewed but must not be merged.** Outside-counsel review was waived by the CEO for source publication; this is not lawyer approval. Issues, bug reports, reproducible test cases, product feedback and security reports remain welcome.
 
 Do not submit code copied or derived from repositories whose license or provenance is incompatible with this project. In particular, follow the clean-room boundary in `AGENTS.md` and `CLEAN_ROOM_POLICY.md`.
 

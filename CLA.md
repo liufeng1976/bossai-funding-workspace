@@ -1,8 +1,8 @@
 # BossAI Funding Contributor License Agreement — Draft
 
-> **LEGAL REVIEW REQUIRED — NOT YET ACTIVE.**
+> **CONTRIBUTOR-RIGHTS WORKFLOW NOT YET ACTIVE — NO LAWYER APPROVAL CLAIMED.**
 >
-> This draft exists so the dual-license project has an explicit contributor-rights plan before public release. External code or documentation contributions must not be merged until BossAI has approved and activated a contributor-signing workflow with legally reviewed terms.
+> The CEO explicitly waived outside-counsel review for source publication on 2026-08-20. This draft remains inactive for contribution merging until BossAI approves the final contributor-rights terms and activates a verifiable contributor-signing workflow. External code or documentation contributions may be reviewed but must not be merged before that workflow is operational.
 
 ## Purpose
 
@@ -14,7 +14,7 @@ By signing the approved version of this agreement for a contribution, the Contri
 
 Where the Contributor owns patent claims necessarily infringed by their contribution, the approved agreement is also expected to include a worldwide, perpetual, irrevocable, non-exclusive, royalty-free patent license sufficient for BossAI and downstream recipients to make, use, sell, offer for sale, import and otherwise exercise rights in the contribution.
 
-The Contributor should retain ownership of their contribution. The agreement is intended to grant licensing rights, not require copyright assignment unless BossAI later makes an explicit legally reviewed policy decision.
+The Contributor should retain ownership of their contribution. The agreement is intended to grant licensing rights, not require copyright assignment unless BossAI later makes an explicit company/CEO policy decision.
 
 ## Required representations
 
@@ -33,8 +33,8 @@ Contributing to BossAI Funding does not grant commercial support, SLA, warranty,
 
 Before public contribution merging is enabled:
 
-1. qualified legal counsel reviews the CLA and dual-license structure;
-2. BossAI approves the final CLA text;
+1. the CEO legal-review waiver remains recorded and no lawyer approval is claimed;
+2. BossAI approves the final contributor-rights text;
 3. a verifiable contributor identity/signature workflow is enabled;
 4. repository branch protection requires the contributor-rights check;
 5. `CONTRIBUTING.md` is updated from "review only" to the approved merge process.

@@ -68,10 +68,10 @@ test("commercial licensing is an alternative permission path rather than a false
   assert.doesNotMatch(entitlementConsumer, /FundingRepository|database\.ts|sqlite/i);
 });
 
-test("dual-license contribution rights fail closed until the CLA workflow is legally approved", () => {
+test("dual-license contribution rights fail closed until the CLA workflow is approved and operational", () => {
   assert.match(contributing, /must not be merged/i);
   assert.match(contributing, /CLA\.md/);
-  assert.match(cla, /LEGAL REVIEW REQUIRED — NOT YET ACTIVE/);
+  assert.match(cla, /CONTRIBUTOR-RIGHTS WORKFLOW NOT YET ACTIVE — NO LAWYER APPROVAL CLAIMED/);
   assert.match(cla, /sublicense, relicense/i);
 });
 

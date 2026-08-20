@@ -3777,3 +3777,20 @@ Official proprietary release remains blocked on a real production Headquarters p
 
 
 GitHub-hosted v0.50 closure is green. Commit `0304763d5aeec93ea382b01be8096693b7c53c14` passed Source CI run `32338882960` and Windows Desktop run `32338910817`. The Windows runner passed Community, commercial environment-token, and commercial safeStorage session development paths, then passed Community packaged, commercial packaged, and commercial safeStorage packaged smoke. v0.50 Technical Acceptance is PASS for the implemented secure-commercial-session scope. The repository remains Private; signed/public release readiness remains blocked by the separately recorded legal, paid-production-entitlement, official-branding, public-trust-signing, and Public-visibility security gates.
+
+
+## 2026-08-20 · CEO legal-review waiver for source publication
+
+The CEO explicitly instructed BossAI Funding to skip outside/legal-counsel approval as a source-publication gate.
+
+Recorded truth:
+
+- outside-counsel review of the AGPL/commercial dual-license structure is waived for source publication;
+- outside-counsel review of the contributor-rights draft is waived for source publication;
+- no repository text may claim lawyer approval;
+- AGPL-3.0-or-later remains the canonical open-source license;
+- the contributor-rights workflow remains inactive/fail-closed until BossAI approves final contributor terms and an operational signing/check workflow exists;
+- external PRs may be reviewed but must not be merged while that workflow is inactive;
+- source publication remains separate from publicly trusted Windows signing, official Funding release branding/icon, and production proprietary-commercial paid-account acceptance.
+
+Decision record: `Atlas/CEO_LEGAL_REVIEW_WAIVER_2026-08-20.md`.
