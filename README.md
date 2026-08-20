@@ -118,11 +118,11 @@ bossai-funding.commercial
 
 This extra paid-capability gate is required because an active product-license record alone is not treated as proof that the customer purchased proprietary BossAI Funding rights. Financing records and local SQLite business state are never sent to Headquarters for license validation.
 
-`BOSSAI_FUNDING_HEADQUARTERS_BEARER_TOKEN` remains an **engineering integration override only**. Do not bake a bearer token into the installer, source tree, `.env`, command history, CI artifact, or release asset. An official proprietary release still requires real production Headquarters paid-account acceptance, approved commercial/legal terms, an official icon, and publicly trusted Windows code signing.
+`BOSSAI_FUNDING_HEADQUARTERS_BEARER_TOKEN` remains an **engineering integration override only**. Do not bake a bearer token into the installer, source tree, `.env`, command history, CI artifact, or release asset. An official proprietary release still requires real production Headquarters paid-account acceptance and publicly trusted Windows code signing. Outside-counsel review is not a release gate for this project under the recorded CEO waiver.
 
 ## Contributing
 
-Read `CONTRIBUTING.md` before opening a pull request. Because BossAI Funding is dual-licensed, contributions cannot be merged until the required contributor-rights agreement is complete. See `CLA.md`.
+Read `CONTRIBUTING.md` before opening a pull request. The versioned `CLA.md` contributor-rights agreement is active under CEO approval. External pull requests require the exact CLA checkbox and must pass both protected `verify` and `contributor-rights` gates before merge.
 
 ## Source and project links
 
@@ -131,4 +131,4 @@ Read `CONTRIBUTING.md` before opening a pull request. Because BossAI Funding is 
 
 ## Current release status
 
-The repository may be prepared for public release before it is actually made public. A public source release and an official signed desktop release are separate gates. Passing tests or producing an installer is not by itself a production-release claim.
+The repository is public under AGPL-3.0-or-later. Tag-bound source releases and official signed Windows releases are separate gates. The desktop icon is generated deterministically from repository source; unsigned engineering installers remain non-production evidence. Passing tests or producing an installer is not by itself a production/GA claim.

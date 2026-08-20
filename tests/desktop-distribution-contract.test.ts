@@ -79,17 +79,25 @@ test("commercial desktop session is OS-encrypted and login/MFA renderer has a na
 
 test("Windows distribution is pinned and produces an NSIS x64 installer without deleting user data on uninstall", () => {
   assert.match(builder, /appId: com\.bossai\.funding/);
+  assert.match(builder, /copyright: Copyright \(c\) 2026 BossAI/);
   assert.match(builder, /electronVersion: 43\.4\.1/);
+  assert.match(builder, /icon: out\/desktop-assets\/bossai-funding\.ico/);
+  assert.match(builder, /legalTrademarks: BossAI/);
+  assert.match(builder, /requestedExecutionLevel: asInvoker/);
   assert.match(builder, /target: nsis/);
   assert.match(builder, /- x64/);
+  assert.match(builder, /installerIcon: out\/desktop-assets\/bossai-funding\.ico/);
+  assert.match(builder, /uninstallerIcon: out\/desktop-assets\/bossai-funding\.ico/);
   assert.match(builder, /deleteAppDataOnUninstall: false/);
   assert.match(builder, /allowToChangeInstallationDirectory: true/);
   assert.match(gitignore, /^out\/$/m);
-  assert.equal(pkg.scripts?.["desktop:commercial-smoke"], "npm run build && node scripts/desktop-commercial-entitlement-smoke.cjs");
-  assert.equal(pkg.scripts?.["desktop:commercial-session-smoke"], "npm run build && node scripts/desktop-commercial-session-smoke.cjs");
+  assert.equal(pkg.scripts?.["desktop:prepare-assets"], "node scripts/prepare-desktop-assets.mjs");
+  assert.match(pkg.scripts?.["desktop:commercial-smoke"] ?? "", /desktop:prepare-assets/);
+  assert.match(pkg.scripts?.["desktop:commercial-session-smoke"] ?? "", /desktop:prepare-assets/);
   assert.match(pkg.scripts?.["verify:desktop"] ?? "", /desktop:commercial-smoke/);
   assert.match(pkg.scripts?.["verify:desktop"] ?? "", /desktop:commercial-session-smoke/);
-  assert.equal(pkg.scripts?.["desktop:installer"], "npm run build && npx --yes electron-builder@26.15.3 --win nsis");
+  assert.match(pkg.scripts?.["desktop:installer"] ?? "", /desktop:prepare-assets/);
+  assert.match(pkg.scripts?.["desktop:installer"] ?? "", /electron-builder@26\.15\.3 --win nsis/);
   assert.equal(pkg.scripts?.["desktop:packaged-smoke"], "node scripts/desktop-packaged-smoke.cjs");
   assert.equal(pkg.scripts?.["desktop:commercial-packaged-smoke"], "node scripts/desktop-commercial-entitlement-smoke.cjs --packaged");
   assert.equal(pkg.scripts?.["desktop:commercial-session-packaged-smoke"], "node scripts/desktop-commercial-session-smoke.cjs --packaged");

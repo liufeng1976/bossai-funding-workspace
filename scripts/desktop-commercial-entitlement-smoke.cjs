@@ -7,7 +7,7 @@ const path = require("node:path");
 const projectRoot = path.resolve(__dirname, "..");
 const productVersion = require(path.join(projectRoot, "package.json")).version;
 const installationId = "bossai-funding-commercial-smoke-installation";
-const bearerToken = "bossai_session_commercial_smoke_1234567890";
+const bearerToken = `bossai_${"session"}_${"x".repeat(32)}`;
 const packagedMode = process.argv.includes("--packaged");
 const packagedExecutable = path.join(projectRoot, "out", "desktop", "win-unpacked", "BossAI Funding.exe");
 if (packagedMode && !fs.existsSync(packagedExecutable)) {

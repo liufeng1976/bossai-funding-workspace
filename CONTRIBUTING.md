@@ -6,7 +6,7 @@ Thank you for considering a contribution.
 
 BossAI Funding is dual-licensed under AGPL-3.0-or-later and separate commercial terms. Preserving that model requires BossAI to have sufficient rights to relicense accepted contributions.
 
-**Until the contributor-rights process in `CLA.md` is explicitly approved by BossAI and operational, external code/documentation pull requests may be reviewed but must not be merged.** Outside-counsel review was waived by the CEO for source publication; this is not lawyer approval. Issues, bug reports, reproducible test cases, product feedback and security reports remain welcome.
+The contributor-rights process in `CLA.md` is active under CEO approval. Outside-counsel review was waived by the CEO; this is not lawyer approval. External code/documentation pull requests may be merged only when both the protected `verify` check and protected `contributor-rights` status pass. Issues, bug reports, reproducible test cases, product feedback and security reports remain welcome.
 
 Do not submit code copied or derived from repositories whose license or provenance is incompatible with this project. In particular, follow the clean-room boundary in `AGENTS.md` and `CLEAN_ROOM_POLICY.md`.
 
@@ -42,7 +42,7 @@ A pull request should:
 
 ## License of contributions
 
-Do not assume that a normal GitHub pull request alone grants BossAI commercial relicensing rights. Contribution acceptance is subject to the contributor-rights process in `CLA.md`.
+Do not assume that a normal GitHub pull request alone grants BossAI commercial relicensing rights. External contributors must check the exact CLA v2026-08-20.1 attestation in the pull-request template. The trusted `contributor-rights` workflow runs from the protected base branch and records the acceptance result against the pull-request head commit. If the CLA checkbox is absent or altered, the merge gate fails.
 
 ## Security issues
 

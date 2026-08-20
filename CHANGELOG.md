@@ -2,6 +2,28 @@
 
 All notable BossAI Funding changes are recorded here at release-summary level. Detailed evidence remains in `Atlas/`.
 
+## [0.51.0] - 2026-08-20
+
+### Added
+
+- Active versioned contributor-rights/CLA gate with trusted-base GitHub status enforcement.
+- Deterministic BossAI Funding multi-resolution Windows icon generator and product metadata.
+- Tag-bound AGPL source-release workflow that cannot imply a signed Windows binary.
+- Fail-closed signed-Windows release workflow requiring valid Authenticode and approved publisher identity.
+
+### Changed
+
+- External pull requests can now be merged only after `verify` and `contributor-rights` pass.
+- Windows packaging no longer falls back to the default Electron icon.
+- Source publication, Community desktop engineering builds and signed proprietary/official Windows distribution are explicitly separate release tracks.
+
+### Release status
+
+- Public source repository remains AGPL-3.0-or-later with separate commercial licensing.
+- Public source release is eligible after protected-PR merge and tag validation.
+- Official signed Windows binary release still requires a publicly trusted signing credential configured in repository secrets.
+- Proprietary production GA still requires a real Headquarters paid account with `bossai-funding.commercial` and production E2E acceptance.
+
 ## [0.50.0] - 2026-08-20
 
 ### Added

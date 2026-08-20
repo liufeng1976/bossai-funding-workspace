@@ -1,0 +1,35 @@
+name: Source Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
+      - run: npm run test:desktop-contract
+      - name: Verify source release identity
+        run: node scripts/verify-source-release.mjs
+      - name: Publish AGPL source release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create "$GITHUB_REF_NAME"
+          --verify-tag
+          --title "BossAI Funding $GITHUB_REF_NAME — Source Release"
+          --generate-notes
+          --notes "Community source release under AGPL-3.0-or-later. This source release does not include or imply a publicly trusted signed Windows binary. Official proprietary/commercial desktop distribution is governed separately by COMMERCIAL_LICENSE.md and Headquarters entitlement."

@@ -1,0 +1,72 @@
+name: Windows Signed Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing source-release tag, for example v0.51.0
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  signed-windows:
+    runs-on: windows-latest
+    env:
+      RELEASE_TAG: ${{ inputs.tag }}
+      CSC_LINK: ${{ secrets.WINDOWS_CSC_LINK }}
+      CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CSC_KEY_PASSWORD }}
+      EXPECTED_SIGNING_SUBJECT: ${{ secrets.WINDOWS_SIGNING_EXPECTED_SUBJECT }}
+    steps:
+      - name: Require public-trust signing configuration
+        shell: pwsh
+        run: |
+          if (-not $env:CSC_LINK) { throw 'WINDOWS_CSC_LINK is not configured.' }
+          if (-not $env:CSC_KEY_PASSWORD) { throw 'WINDOWS_CSC_KEY_PASSWORD is not configured.' }
+          if (-not $env:EXPECTED_SIGNING_SUBJECT) { throw 'WINDOWS_SIGNING_EXPECTED_SUBJECT is not configured.' }
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Verify tag/package identity
+        shell: pwsh
+        run: node scripts/verify-source-release.mjs $env:RELEASE_TAG
+      - run: npm run verify:owner-readiness
+      - run: npm run verify:desktop
+      - name: Build signed NSIS installer
+        run: npm run desktop:installer
+      - name: Require valid Authenticode and expected publisher
+        id: signed
+        shell: pwsh
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          $installer = Join-Path $PWD "out/desktop/BossAI-Funding-Setup-$version-x64.exe"
+          if (-not (Test-Path $installer)) { throw "Installer not found: $installer" }
+          $signature = Get-AuthenticodeSignature $installer
+          if ($signature.Status -ne 'Valid') { throw "Authenticode must be Valid; got $($signature.Status)." }
+          $subject = [string]$signature.SignerCertificate.Subject
+          if (-not $subject.Contains($env:EXPECTED_SIGNING_SUBJECT, [System.StringComparison]::OrdinalIgnoreCase)) {
+            throw "Signer subject does not match the approved publisher contract."
+          }
+          $hash = (Get-FileHash -Algorithm SHA256 $installer).Hash
+          "installer=$installer" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          "sha256=$hash" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          "subject=$subject" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+          "$hash  BossAI-Funding-Setup-$version-x64.exe" | Out-File -FilePath "$installer.sha256" -Encoding ascii
+      - name: Verify installed lifecycle after signing
+        run: npm run desktop:installer-lifecycle
+      - name: Upload signed Windows release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INSTALLER: ${{ steps.signed.outputs.installer }}
+        shell: pwsh
+        run: |
+          gh release view $env:RELEASE_TAG
+          gh release upload $env:RELEASE_TAG $env:INSTALLER "$env:INSTALLER.sha256" --clobber

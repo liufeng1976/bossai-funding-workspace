@@ -10,7 +10,7 @@ import {
 const config: CommercialAccountClientConfig = {
   headquartersBaseUrl: "https://commerce.example.test",
   installationId: "bossai-funding-account-test-installation",
-  productVersion: "0.50.0",
+  productVersion: "0.51.0",
   timeoutMs: 5_000,
 };
 const password = "Strong-password-test-2026";

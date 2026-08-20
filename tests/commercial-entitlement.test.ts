@@ -9,7 +9,7 @@ import {
   verifyFundingDistributionAuthorization,
 } from "../src/server/commercial-entitlement.ts";
 
-const VERSION = "0.50.0";
+const VERSION = "0.51.0";
 const INSTALLATION = "bossai-funding-test-installation";
 const TOKEN = "bossai_session_test_token_123456";
 

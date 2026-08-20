@@ -27,7 +27,9 @@ Describe what changes in the real product entry.
 
 ## Contribution rights
 
-- [ ] I have read `CONTRIBUTING.md` and understand that external contributions cannot be merged until the approved CLA workflow is complete.
+- [ ] I agree to the BossAI Funding CLA v2026-08-20.1 in CLA.md and I am authorized to make this contribution.
+
+For the protected `contributor-rights` status, external contributors must check this exact statement without changing its wording. Trusted BossAI-owned accounts and approved dependency automation are governed by `.github/contributor-rights-policy.json`.
 
 ## Screenshots / artifacts
 
