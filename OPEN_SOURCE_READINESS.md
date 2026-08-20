@@ -24,7 +24,7 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] GitHub dependency vulnerability alerts enabled and verified; automated security fixes enabled.
 - [x] GitHub Discussions enabled; Issues remain enabled.
 - [x] Remote `Source CI / verify` passes on `main`.
-- [x] Remote `Windows Desktop / desktop` passes on `windows-latest` for v0.49. v0.50 adds paid-feature and OS-encrypted commercial-session gates and must re-pass remotely after commit. Unsigned artifact upload is best-effort because the account artifact-storage quota is currently full.
+- [x] Remote `Windows Desktop / desktop` passes on `windows-latest` for v0.50: Community, commercial environment-token, and commercial OS-encrypted-session development paths plus all three packaged paths PASS. Unsigned artifact upload is best-effort because the account artifact-storage quota is currently full.
 - [ ] Private vulnerability reporting: the private-repository endpoint currently returns 404; configure/verify immediately when preparing the Public visibility change.
 - [ ] Branch protection / required `verify`: GitHub API returned 403 (`Upgrade to GitHub Pro or make this repository public to enable this feature`) while the repository is Private. Enable immediately after Public visibility, before accepting external changes.
 

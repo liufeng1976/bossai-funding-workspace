@@ -3774,3 +3774,6 @@ Final local v0.50 evidence:
 - installer and packaged app EXE Authenticode `NotSigned`.
 
 Official proprietary release remains blocked on a real production Headquarters plan/account granting `bossai-funding.commercial`, paid-account E2E acceptance, legal approval, official icon, and publicly trusted Windows signing. Public source visibility remains a separate gated decision and has not been executed.
+
+
+GitHub-hosted v0.50 closure is green. Commit `0304763d5aeec93ea382b01be8096693b7c53c14` passed Source CI run `32338882960` and Windows Desktop run `32338910817`. The Windows runner passed Community, commercial environment-token, and commercial safeStorage session development paths, then passed Community packaged, commercial packaged, and commercial safeStorage packaged smoke. v0.50 Technical Acceptance is PASS for the implemented secure-commercial-session scope. The repository remains Private; signed/public release readiness remains blocked by the separately recorded legal, paid-production-entitlement, official-branding, public-trust-signing, and Public-visibility security gates.

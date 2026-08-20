@@ -116,3 +116,35 @@ v0.50 does not claim official proprietary commercial release readiness. Remainin
 Technical Acceptance for the implemented local v0.50 secure-commercial-session scope: PASS.
 Official proprietary commercial release: NOT PASS.
 Public source publication: NOT YET EXECUTED.
+
+
+
+## GitHub-hosted remote closure
+
+Committed v0.50 implementation:
+
+```text
+0304763d5aeec93ea382b01be8096693b7c53c14
+```
+
+GitHub-hosted evidence:
+
+```text
+Source CI
+run: 32338882960
+result: PASS
+
+Windows Desktop
+run: 32338910817
+result: PASS
+```
+
+The Windows-hosted job completed:
+
+- `npm run verify:desktop` — Community, commercial environment-token, and commercial OS-encrypted-session development paths PASS;
+- `npm run desktop:pack` — PASS;
+- `npm run desktop:packaged-smoke` — Community packaged path PASS;
+- `npm run desktop:commercial-packaged-smoke` — commercial entitlement success/denial packaged path PASS;
+- `npm run desktop:commercial-session-packaged-smoke` — encrypted-session first-login/reuse/401-removal packaged path PASS.
+
+Therefore v0.50 has independent GitHub Windows evidence for both the paid-feature entitlement gate and secure commercial-session lifecycle. The repository remains Private and no signed/public release is claimed.
