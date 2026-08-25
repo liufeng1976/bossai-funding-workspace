@@ -79,9 +79,22 @@ function opportunityTrack(opportunity: FundingOpportunity): FundingTrack {
 }
 
 export function projectCapitalBlockers(input: CapitalBlockerInput): CapitalBlocker[] {
-  if (input.remainingGapCents <= 0 && input.goal?.targetAmountCents) return [];
-
   const now = input.now ?? new Date();
+  const hasArrivalScheduleReconciliationRisk = (input.outcomes ?? []).some((outcome) => {
+    if (outcome.status === "lost" || outcome.status === "withdrawn") return false;
+    const schedule = projectFundingReceiptSchedule(
+      outcome,
+      input.receiptExpectations ?? [],
+      now,
+      input.receiptExpectationAllocations ?? [],
+      input.receiptTranches ?? [],
+    );
+    return schedule.status === "over-scheduled" || schedule.status === "allocation-error";
+  });
+  // A fully covered funding target suppresses pipeline work, but it must not hide
+  // a stale arrival schedule or an invalid receipt-to-expectation allocation.
+  if (input.remainingGapCents <= 0 && input.goal?.targetAmountCents && !hasArrivalScheduleReconciliationRisk) return [];
+
   const { resolvedApplicationIds, resolvedInvestorIds, resolvedOpportunityIds } = projectFundingOutcomeResolution(input.applications, input.outcomes ?? []);
   const unresolvedOpportunities = input.opportunities.filter((opportunity) => !resolvedOpportunityIds.has(opportunity.id) && !(opportunity.investorId && resolvedInvestorIds.has(opportunity.investorId)));
   const viableOpportunities = unresolvedOpportunities.filter((opportunity) => opportunity.decision !== "dismissed" && projectOpportunityDeadlineViability(opportunity, now).deadlineViable);
@@ -309,6 +322,20 @@ export function projectCapitalBlockers(input: CapitalBlockerInput): CapitalBlock
       });
       continue;
     }
+    if (schedule.status === "over-scheduled") {
+      add({
+        key: `receipt-schedule-over-${outcome.id}`,
+        severity: "critical",
+        title: "The committed-capital arrival schedule no longer reconciles",
+        reason: `Remaining active arrival expectations exceed the remaining unreceived commitment by ${schedule.overScheduledAmountCents} cents. Actual cash receipt is authoritative; only explicitly allocated receipts reduce a specific expectation.`,
+        nextStep: "Explicitly allocate known receipts to the expectation they fulfilled, or correct/cancel the stale expectation if the payer schedule changed.",
+        track: outcome.track,
+        entityType: "funding-outcome",
+        entityId: outcome.id,
+        destination: "execution",
+      });
+      continue;
+    }
     const overdue = active.find((item) => item.fulfillment.remainingAmountCents > 0 && isOverdue(item.expectation.expectedDate, now));
     if (overdue) {
       add({
@@ -320,20 +347,6 @@ export function projectCapitalBlockers(input: CapitalBlockerInput): CapitalBlock
         track: outcome.track,
         entityType: "receipt-expectation",
         entityId: overdue.expectation.id,
-        destination: "execution",
-      });
-      continue;
-    }
-    if (schedule.status === "over-scheduled") {
-      add({
-        key: `receipt-schedule-over-${outcome.id}`,
-        severity: "critical",
-        title: "The committed-capital arrival schedule no longer reconciles",
-        reason: `Remaining active arrival expectations exceed the remaining unreceived commitment by ${schedule.overScheduledAmountCents} cents. Actual cash receipt is authoritative; only explicitly allocated receipts reduce a specific expectation.`,
-        nextStep: "Explicitly allocate known receipts to the expectation they fulfilled, or correct/cancel the stale expectation if the payer schedule changed.",
-        track: outcome.track,
-        entityType: "funding-outcome",
-        entityId: outcome.id,
         destination: "execution",
       });
       continue;

@@ -222,7 +222,9 @@ function receiptScheduleCandidate(
   }
   if (schedule.status === "over-scheduled") {
     return {
-      score: 1_350,
+      // A receipt expectation can be overdue, but a schedule that no longer
+      // reconciles to recorded cash must be corrected before it is chased.
+      score: 1_451,
       focus: {
         title: "Reconcile the committed-capital arrival schedule",
         reason: `Active arrival expectations exceed the remaining unreceived commitment by ${schedule.overScheduledAmountCents} cents. Actual receipts changed the financing state, so the old schedule must be corrected rather than treated as current.`,
