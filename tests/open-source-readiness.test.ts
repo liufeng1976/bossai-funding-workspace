@@ -11,8 +11,8 @@ const pkg = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8")) as {
   homepage?: string;
 };
 const license = readFileSync(resolve(root, "LICENSE"), "utf8");
-const normalizedLicense = license.replace(/\r\n/g, "\n");
 const commercial = readFileSync(resolve(root, "COMMERCIAL_LICENSE.md"), "utf8");
+const history = readFileSync(resolve(root, "LICENSE_HISTORY.md"), "utf8");
 const contributing = readFileSync(resolve(root, "CONTRIBUTING.md"), "utf8");
 const cla = readFileSync(resolve(root, "CLA.md"), "utf8");
 const entitlementBoundary = readFileSync(resolve(root, "COMMERCIAL_ENTITLEMENT_BOUNDARY.md"), "utf8");
@@ -23,6 +23,7 @@ const html = readFileSync(resolve(root, "public", "index.html"), "utf8");
 const requiredPublicFiles = [
   "README.md",
   "LICENSE",
+  "LICENSE_HISTORY.md",
   "COMMERCIAL_LICENSE.md",
   "COMMERCIAL_ENTITLEMENT_BOUNDARY.md",
   "NOTICE.md",
@@ -35,27 +36,31 @@ const requiredPublicFiles = [
   "THIRD_PARTY_LICENSES.md",
 ];
 
-test("repository metadata declares AGPL open-source licensing while preventing accidental npm publication", () => {
+test("repository metadata declares Community Source licensing while preventing accidental npm publication", () => {
   assert.equal(pkg.private, true);
-  assert.equal(pkg.license, "AGPL-3.0-or-later");
+  assert.equal(pkg.license, "LicenseRef-BossAI-Community-Source-1.0");
   assert.equal(pkg.repository?.url, "git+https://github.com/liufeng1976/bossai-funding-workspace.git");
   assert.equal(pkg.homepage, "https://github.com/liufeng1976/bossai-funding-workspace#readme");
   for (const file of requiredPublicFiles) assert.equal(existsSync(resolve(root, file)), true, `missing ${file}`);
 });
 
-test("LICENSE is the unmodified GNU Affero GPL version 3 text and not the abandoned Apache proposal", () => {
-  assert.match(normalizedLicense, /GNU AFFERO GENERAL PUBLIC LICENSE\n\s+Version 3, 19 November 2007/);
-  assert.match(normalizedLicense, /13\. Remote Network Interaction; Use with the GNU General Public License\./);
-  assert.match(normalizedLicense, /END OF TERMS AND CONDITIONS/);
-  assert.doesNotMatch(normalizedLicense, /Apache License/);
+test("LICENSE is the BossAI Community Source license and preserves historical AGPL rights", () => {
+  assert.match(license, /BossAI Community Source License 1\.0/u);
+  assert.match(license, /Personal and non-commercial grant/u);
+  assert.match(license, /Commercial use requires authorization/u);
+  assert.match(license, /Historical repository revisions.*AGPL-3\.0-or-later/is);
+  assert.match(history, /v0\.51\.0/u);
+  assert.match(history, /6600da2899d83eddcfc43efbc2d81805d662d77a/u);
+  assert.match(history, /Rights already granted under AGPL.*remain governed/is);
 });
 
-test("commercial licensing is an alternative permission path rather than a false ban on AGPL commercial use", () => {
-  assert.match(commercial, /AGPL permits commercial activity/i);
-  assert.match(commercial, /permissions outside the AGPL/i);
-  assert.match(commercial, /proprietary or closed-source/i);
-  assert.match(commercial, /does not create its own account, subscription, payment, license, or entitlement ledger/i);
+test("commercial licensing separates offline Community runtime from commercial-use authorization", () => {
+  assert.match(commercial, /source available, not OSI Open Source/i);
+  assert.match(commercial, /Commercial use.*requires BossAI/i);
+  assert.match(commercial, /offline technical behavior does not grant commercial-use rights/i);
+  assert.match(commercial, /historical.*v0\.51\.0.*AGPL/is);
   assert.match(entitlementBoundary, /Community build.*must not require a proprietary BossAI commercial entitlement/is);
+  assert.match(entitlementBoundary, /does not.*grant commercial-use rights/is);
   assert.match(entitlementBoundary, /BossAI Headquarters Commerce/i);
   assert.match(entitlementBoundary, /must not create a second source of truth/i);
   assert.match(entitlementBoundary, /bossai\.commercial-entitlement\.v1/i);
@@ -68,11 +73,12 @@ test("commercial licensing is an alternative permission path rather than a false
   assert.doesNotMatch(entitlementConsumer, /FundingRepository|database\.ts|sqlite/i);
 });
 
-test("dual-license contribution rights are active and fail closed through the protected CLA status", () => {
+test("Community Source and commercial contribution rights are active and fail closed through the protected CLA status", () => {
   assert.match(contributing, /may be merged only when both the protected `verify` check and protected `contributor-rights` status pass/i);
   assert.match(contributing, /CLA\.md/);
   assert.match(cla, /ACTIVE BY BOSSAI CEO APPROVAL — NO LAWYER APPROVAL CLAIMED/);
   assert.match(cla, /sublicense, and relicense|sublicense,\s*and relicense/i);
+  assert.match(cla, /Community Source/i);
   assert.match(cla, /contributor-rights/i);
 });
 
