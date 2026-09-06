@@ -11,19 +11,23 @@ All notable BossAI Funding changes are recorded here at release-summary level. D
 - Community runtime remains local/offline for eligible Community use; commercial use of current revisions requires BossAI authorization.
 - Receipt-schedule blocker priority now preserves `receipt-schedule-over-*` when actual cash reduces the remaining commitment but the related expected receipt has not yet been explicitly allocated.
 - Arrival-schedule regression coverage no longer depends on wall-clock proximity for a normal future receipt; explicit overdue and over-scheduled focus cases remain separately verified.
+- Source release governance now supports an explicit main-branch release request while preserving tag/version/license/private-package checks before source publication.
+- The source release verifier now gives an explicit governed release tag priority over the ambient GitHub branch ref, with regression coverage for the `main` release-request path.
 
 ### Validation
 
 - Protected PR validation passed, including the full 280/280 source test suite, `test:desktop-contract`, and contributor-rights.
-- The squash-merged `main` commit `fc29265bdef3f3785d2d6f1887590da4b47d0961` passed the post-merge Source CI push run.
+- The squash-merged `main` commit `fc29265bdef3f3785d2d6f1887590da4b47d0961` passed the post-merge Source CI push run for the licensing and receipt-schedule changes.
 - Windows Desktop extended CI passed `verify:desktop`, unpacked packaging, packaged smoke, commercial packaged smoke, commercial-session packaged smoke, and unsigned evidence upload.
 - Existing expectation-to-receipt allocation behavior remains explicit: actual cash never silently fulfills an Arrival Expectation; only an explicit Allocation reduces the remaining expected amount.
+- The first governed `v0.52.0` publication attempt failed closed before tag creation when the verifier incorrectly preferred `GITHUB_REF_NAME=main`; no tag or Release was created by that attempt.
+- The corrected second governed publication attempt passed `npm ci`, the full 280/280 verify suite, `test:desktop-contract`, release-request validation, source-release identity validation, tag creation, and GitHub Release publication.
 
 ### Release status
 
-- The repository source line is release-ready as `0.52.0` under BossAI Community Source License 1.0.
-- The existing public GitHub source Release remains `v0.51.0` until the explicit `v0.52.0` tag is created and the tag-bound Source Release workflow passes.
-- The Source Release workflow publishes source only; it does not include or imply a publicly trusted signed Windows binary.
+- `v0.52.0` is published as **BossAI Funding v0.52.0 — Community Source Release** under BossAI Community Source License 1.0.
+- The GitHub source Release contains no binary assets and does not include or imply a publicly trusted signed Windows binary.
+- Historical `v0.51.0` remains available under the AGPL rights already granted for that release.
 - An official proprietary/signed Windows release remains a separate fail-closed gate and must not be inferred from successful Community engineering packaging or smoke tests.
 
 ## [0.51.0] - 2026-08-20

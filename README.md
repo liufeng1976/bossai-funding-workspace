@@ -131,10 +131,11 @@ Read `CONTRIBUTING.md` before opening a pull request. The versioned `CLA.md` con
 ## Source and project links
 
 - Repository: https://github.com/liufeng1976/bossai-funding-workspace
+- Current Community Source release: https://github.com/liufeng1976/bossai-funding-workspace/releases/tag/v0.52.0
 - Source releases: https://github.com/liufeng1976/bossai-funding-workspace/releases
 - Issues: https://github.com/liufeng1976/bossai-funding-workspace/issues
 - BossAI: https://bossaios.com
 
 ## Current release status
 
-The repository source line is now `0.52.0` under BossAI Community Source License 1.0. The existing `v0.51.0` public source release remains the historical AGPL release until a later Community Source release is explicitly published. Tag-bound source releases and official signed Windows releases are separate gates. The desktop icon is generated deterministically from repository source; unsigned engineering installers remain non-production evidence and are intentionally absent from the official source Release. Passing tests or producing an installer is not by itself a production/GA claim.
+`v0.52.0` is the current public **Community Source Release** under BossAI Community Source License 1.0. It is a source-only release and intentionally contains no signed Windows binary assets. Historical `v0.51.0` remains available under its previously granted AGPL terms. Official proprietary/signed Windows distribution remains a separate fail-closed gate requiring the approved commercial entitlement path and publicly trusted Windows code signing; successful Community engineering builds, packaging, or smoke tests are not a production/GA claim.
