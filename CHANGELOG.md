@@ -14,9 +14,17 @@ All notable BossAI Funding changes are recorded here at release-summary level. D
 
 ### Validation
 
-- Source CI full verify and desktop-contract checks pass on the licensing/regression-fix PR head.
-- Contributor-rights status passes.
+- Protected PR validation passed, including the full 280/280 source test suite, `test:desktop-contract`, and contributor-rights.
+- The squash-merged `main` commit `fc29265bdef3f3785d2d6f1887590da4b47d0961` passed the post-merge Source CI push run.
+- Windows Desktop extended CI passed `verify:desktop`, unpacked packaging, packaged smoke, commercial packaged smoke, commercial-session packaged smoke, and unsigned evidence upload.
 - Existing expectation-to-receipt allocation behavior remains explicit: actual cash never silently fulfills an Arrival Expectation; only an explicit Allocation reduces the remaining expected amount.
+
+### Release status
+
+- The repository source line is release-ready as `0.52.0` under BossAI Community Source License 1.0.
+- The existing public GitHub source Release remains `v0.51.0` until the explicit `v0.52.0` tag is created and the tag-bound Source Release workflow passes.
+- The Source Release workflow publishes source only; it does not include or imply a publicly trusted signed Windows binary.
+- An official proprietary/signed Windows release remains a separate fail-closed gate and must not be inferred from successful Community engineering packaging or smoke tests.
 
 ## [0.51.0] - 2026-08-20
 
