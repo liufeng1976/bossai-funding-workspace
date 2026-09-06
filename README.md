@@ -1,10 +1,34 @@
 # BossAI Funding
 
-BossAI Funding is an owner-facing capital decision and execution workspace that helps a founder or business owner move from **how much money is needed** to **money actually received**.
+> **Open-source capital decision and execution workspace for founders and business owners.**  
+> Move from **“How much money do I need?”** to **“What capital should I pursue, what is blocking it, and what money has actually arrived?”**
 
-The product is local-first. Critical financing state is stored in SQLite, and the desktop edition runs the same local Funding server inside a Windows desktop shell rather than creating a separate business implementation.
+[![GitHub stars](https://img.shields.io/github/stars/liufeng1976/bossai-funding-workspace?style=social)](https://github.com/liufeng1976/bossai-funding-workspace/stargazers)
+[![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
 
-## What it covers
+- Website: https://bossaios.com
+- Source releases: https://github.com/liufeng1976/bossai-funding-workspace/releases
+- Issues: https://github.com/liufeng1976/bossai-funding-workspace/issues
+
+If BossAI Funding is useful to your founder or finance workflow, consider giving the project a **Star** so more operators can discover it.
+
+## What it helps you do
+
+BossAI Funding is designed around the owner's real financing loop:
+
+```text
+Funding target
+→ capital strategy
+→ opportunities / investors
+→ applications & materials
+→ diligence / term sheets
+→ closing conditions
+→ committed capital
+→ money actually received
+→ remaining funding gap
+```
+
+It covers:
 
 - company funding profile and funding target;
 - explainable Grant / Debt / Equity capital strategy;
@@ -16,7 +40,32 @@ The product is local-first. Critical financing state is stored in SQLite, and th
 - owner-first focus, blockers, timing and capital-gap views;
 - local backup, export and recovery.
 
+The product is **local-first**. Critical financing state is stored in SQLite, and the desktop edition runs the same local Funding server inside a Windows desktop shell rather than creating a separate business implementation.
+
 BossAI Funding is **not** an Agent Platform. Persistent AI employees, task runtime, approvals, memory, model routing and AI gateway authority belong to BossAI OS.
+
+## Quick start
+
+Requirements:
+
+- Node.js 24+
+- npm
+- Windows + Google Chrome for the full owner-readiness browser gates
+
+```bash
+git clone https://github.com/liufeng1976/bossai-funding-workspace.git
+cd bossai-funding-workspace
+npm install
+npm run verify
+npm run verify:owner-readiness
+npm run verify:desktop
+```
+
+For local desktop development:
+
+```bash
+npm run desktop:run
+```
 
 ## Desktop edition
 
@@ -52,21 +101,6 @@ A fresh installation defaults to **English**. Users can switch and persist one o
 - Español
 
 Language preference is presentation state only and never becomes financing authority.
-
-## Development
-
-Requirements:
-
-- Node.js 24+
-- npm
-- Windows + Google Chrome for the full owner-readiness browser gates
-
-```bash
-npm install
-npm run verify
-npm run verify:owner-readiness
-npm run verify:desktop
-```
 
 ## Security boundary
 
@@ -124,12 +158,8 @@ This extra paid-capability gate is required because an active product-license re
 
 Read `CONTRIBUTING.md` before opening a pull request. The versioned `CLA.md` contributor-rights agreement is active under CEO approval. External pull requests require the exact CLA checkbox and must pass both protected `verify` and `contributor-rights` gates before merge.
 
-## Source and project links
-
-- Repository: https://github.com/liufeng1976/bossai-funding-workspace
-- Source releases: https://github.com/liufeng1976/bossai-funding-workspace/releases
-- Issues: https://github.com/liufeng1976/bossai-funding-workspace/issues
-
 ## Current release status
 
-The repository is public under AGPL-3.0-or-later. `v0.51.0` is the current public **source release**. Tag-bound source releases and official signed Windows releases are separate gates. The desktop icon is generated deterministically from repository source; unsigned engineering installers remain non-production evidence and are intentionally absent from the official source Release. Passing tests or producing an installer is not by itself a production/GA claim.
+The repository is public under AGPL-3.0-or-later. `v0.51.0` is the current public **source release**. Tag-bound source releases and official signed Windows releases are separate gates.
+
+The desktop icon is generated deterministically from repository source; unsigned engineering installers remain non-production evidence and are intentionally absent from the official source Release. Passing tests or producing an installer is not by itself a production/GA claim.
