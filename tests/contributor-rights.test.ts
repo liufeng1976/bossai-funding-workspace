@@ -30,12 +30,14 @@ test("external contributor must accept the exact versioned CLA attestation", () 
 
 test("CLA, PR template and machine policy share the same active version and exact attestation", () => {
   assert.equal(policy.schemaVersion, "bossai.contributor-rights-policy.v1");
-  assert.equal(policy.claVersion, "2026-08-20.1");
+  assert.equal(policy.claVersion, "2026-09-06.1");
   assert.match(cla, /Status: \*\*ACTIVE BY BOSSAI CEO APPROVAL — NO LAWYER APPROVAL CLAIMED\.\*\*/u);
   assert.ok(cla.includes("Version: `" + policy.claVersion + "`"));
   assert.ok(cla.includes(policy.requiredAttestation));
   assert.ok(template.includes(`- [ ] ${policy.requiredAttestation}`));
   assert.match(contributing, /protected `contributor-rights` status pass/u);
+  assert.match(cla, /sublicense, and relicense/u);
+  assert.match(cla, /Community Source/u);
 });
 
 test("contributor-rights workflow evaluates trusted base policy and never checks out untrusted PR code", () => {
