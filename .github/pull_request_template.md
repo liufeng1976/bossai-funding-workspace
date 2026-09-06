@@ -27,7 +27,7 @@ Describe what changes in the real product entry.
 
 ## Contribution rights
 
-- [ ] I agree to the BossAI Funding CLA v2026-08-20.1 in CLA.md and I am authorized to make this contribution.
+- [ ] I agree to the BossAI Funding CLA v2026-09-06.1 in CLA.md and I am authorized to make this contribution.
 
 For the protected `contributor-rights` status, external contributors must check this exact statement without changing its wording. Trusted BossAI-owned accounts and approved dependency automation are governed by `.github/contributor-rights-policy.json`.
 
