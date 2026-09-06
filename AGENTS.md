@@ -1,6 +1,6 @@
 # BossAI Funding Project Directive
 
-This repository is the independent clean-room implementation of BossAI Funding. The product supports an AGPL-3.0-or-later Community distribution and a separate proprietary commercial-licensing path; both use the same financing-domain implementation and must preserve the authority boundaries below.
+This repository is the independent clean-room implementation of BossAI Funding. The current product source line supports a BossAI Community Source distribution for eligible non-commercial use and a separate proprietary commercial-licensing path; both use the same financing-domain implementation and must preserve the authority boundaries below. Historical `v0.51.0` and earlier revisions retain the AGPL rights already granted for those historical copies.
 
 ## Authority
 
@@ -47,7 +47,8 @@ Do not optimize for consultant, CRM administrator, or platform administrator wor
 - Matching and strategy rules must be explainable and auditable.
 - Legal-sensitive output must never be presented as legal advice.
 - Prefer MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, or ISC dependencies.
-- BossAI Funding itself is intentionally AGPL-3.0-or-later under the approved dual-license strategy. Do not introduce new AGPL, GPL, SSPL, or other strong-copyleft **third-party dependencies** without explicit CEO approval and legal/license review.
+- BossAI Funding's current source line is intentionally **BossAI Community Source License 1.0 / Source Available, not OSI Open Source**. Eligible non-commercial use is governed by `LICENSE`; commercial use requires BossAI authorization. Do not introduce new AGPL, GPL, SSPL, or other strong-copyleft **third-party dependencies** without explicit CEO approval and legal/license review.
+- Do not change or obscure the historical AGPL rights already granted for `v0.51.0` and earlier revisions; see `LICENSE_HISTORY.md`.
 
 ## Identity and tenant boundary
 
