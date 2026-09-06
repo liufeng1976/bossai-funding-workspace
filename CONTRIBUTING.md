@@ -4,7 +4,7 @@ Thank you for considering a contribution.
 
 ## Before you contribute
 
-BossAI Funding is dual-licensed under AGPL-3.0-or-later and separate commercial terms. Preserving that model requires BossAI to have sufficient rights to relicense accepted contributions.
+The current BossAI Funding source line is distributed under **BossAI Community Source License 1.0** and may also be distributed by BossAI under separate commercial or proprietary terms. Historical `v0.51.0` and earlier revisions retain the AGPL rights already granted for those revisions. Preserving the current and future distribution model requires BossAI to have sufficient rights to sublicense and relicense accepted contributions.
 
 The contributor-rights process in `CLA.md` is active under CEO approval. Outside-counsel review was waived by the CEO; this is not lawyer approval. External code/documentation pull requests may be merged only when both the protected `verify` check and protected `contributor-rights` status pass. Issues, bug reports, reproducible test cases, product feedback and security reports remain welcome.
 
@@ -42,7 +42,9 @@ A pull request should:
 
 ## License of contributions
 
-Do not assume that a normal GitHub pull request alone grants BossAI commercial relicensing rights. External contributors must check the exact CLA v2026-08-20.1 attestation in the pull-request template. The trusted `contributor-rights` workflow runs from the protected base branch and records the acceptance result against the pull-request head commit. If the CLA checkbox is absent or altered, the merge gate fails.
+Do not assume that a normal GitHub pull request alone grants BossAI sufficient relicensing rights. External contributors must check the exact active CLA v2026-09-06.1 attestation in the pull-request template. The trusted `contributor-rights` workflow runs from the protected base branch and records the acceptance result against the pull-request head commit. If the CLA checkbox is absent or altered, the merge gate fails.
+
+Contributions previously accepted under CLA v2026-08-20.1 remain governed by that accepted agreement. That historical CLA already granted BossAI sublicensing and relicensing rights. See `LICENSE_HISTORY.md`.
 
 ## Security issues
 

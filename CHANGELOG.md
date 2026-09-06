@@ -2,6 +2,22 @@
 
 All notable BossAI Funding changes are recorded here at release-summary level. Detailed evidence remains in `Atlas/`.
 
+## [0.52.0] - 2026-09-06
+
+### Changed
+
+- Current public source line moved to BossAI Community Source License 1.0; historical `v0.51.0` and earlier AGPL rights remain preserved in `LICENSE_HISTORY.md`.
+- External contributor rights/CLA policy advanced to `2026-09-06.1` for future contributions while preserving previously accepted grants.
+- Community runtime remains local/offline for eligible Community use; commercial use of current revisions requires BossAI authorization.
+- Receipt-schedule blocker priority now preserves `receipt-schedule-over-*` when actual cash reduces the remaining commitment but the related expected receipt has not yet been explicitly allocated.
+- Arrival-schedule regression coverage no longer depends on wall-clock proximity for a normal future receipt; explicit overdue and over-scheduled focus cases remain separately verified.
+
+### Validation
+
+- Source CI full verify and desktop-contract checks pass on the licensing/regression-fix PR head.
+- Contributor-rights status passes.
+- Existing expectation-to-receipt allocation behavior remains explicit: actual cash never silently fulfills an Arrival Expectation; only an explicit Allocation reduces the remaining expected amount.
+
 ## [0.51.0] - 2026-08-20
 
 ### Added

@@ -309,7 +309,9 @@ export function projectCapitalBlockers(input: CapitalBlockerInput): CapitalBlock
       });
       continue;
     }
-    const overdue = active.find((item) => item.fulfillment.remainingAmountCents > 0 && isOverdue(item.expectation.expectedDate, now));
+    const overdue = schedule.status === "over-scheduled"
+      ? undefined
+      : active.find((item) => item.fulfillment.remainingAmountCents > 0 && isOverdue(item.expectation.expectedDate, now));
     if (overdue) {
       add({
         key: `receipt-expectation-overdue-${overdue.expectation.id}`,

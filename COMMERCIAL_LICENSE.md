@@ -1,32 +1,43 @@
 # BossAI Funding Commercial Licensing
 
-BossAI Funding is offered under a dual-license model.
+BossAI Funding uses a **Community Source + Commercial Authorization** model for the current post-`v0.51.0` source line.
 
-## Option 1 — Open-source license
+## Community Source use
 
-You may use, modify, distribute, and operate BossAI Funding under the GNU Affero General Public License v3.0 or later (`AGPL-3.0-or-later`) in `LICENSE`.
+The current repository source is governed by **BossAI Community Source License 1.0** in `LICENSE`.
 
-The AGPL permits commercial activity. A paid commercial license is **not** required merely because money is charged, provided that your use fully complies with the AGPL, including its source-code and network-interaction obligations where applicable.
+It permits personal, educational, evaluation, research, and other non-commercial use subject to the license terms. It is **source available, not OSI Open Source**.
 
-## Option 2 — Commercial license
+Commercial use of a revision governed by the current Community Source license is not granted by the repository license alone.
 
-A separate commercial license from BossAI is required when you want permissions outside the AGPL, including typical cases such as:
+## Commercial authorization
 
-- embedding BossAI Funding in proprietary or closed-source software without applying the AGPL to the combined covered work;
-- operating a modified proprietary hosted service without satisfying applicable AGPL source-availability obligations;
-- OEM, white-label, or proprietary redistribution under commercial terms that differ from the AGPL;
-- contractual warranty, indemnity, support, SLA, enterprise deployment, or negotiated commercial rights supplied by BossAI.
+A separate BossAI commercial license or approved commercial entitlement is required for commercial use, including typical cases such as:
+
+- company or organization production use;
+- internal use intended to generate revenue or materially support profit-making operations;
+- paid consulting, financing advisory, implementation, deployment, or client delivery;
+- paid SaaS, API, hosted or managed services;
+- proprietary embedding or closed-source distribution;
+- OEM, white-label, resale, or commercial redistribution;
+- enterprise support, SLA, warranty, indemnification, or negotiated commercial rights.
 
 A commercial license is granted only by a separate executed commercial agreement or entitlement issued through BossAI's approved commercial authority. This file is a licensing notice; it is not itself a commercial license grant.
 
 ## Authority boundary
 
-BossAI Funding does not create its own account, subscription, payment, license, or entitlement ledger. Commercial identity and entitlement remain external BossAI commercial authority concerns. The open-source Community build does not require a proprietary BossAI entitlement to run under the AGPL.
+BossAI Funding does not create its own account, subscription, payment, license, or entitlement ledger. Commercial identity and entitlement remain external BossAI commercial authority concerns.
 
-## Contributions and commercial relicensing
+The local `community` runtime mode does not contact BossAI Headquarters Commerce and does not itself enforce the copyright license. That offline technical behavior does **not** grant commercial-use rights. Users are responsible for complying with the applicable source license.
 
-BossAI intends to preserve the ability to offer both AGPL and commercial licensing. External contributions therefore require the contributor-rights process described in `CONTRIBUTING.md` and `CLA.md` before merge.
+The explicit proprietary/commercial distribution mode continues to consume entitlement from the approved external BossAI commercial authority and remains fail-closed when commercial authorization is absent or cannot be verified. See `COMMERCIAL_ENTITLEMENT_BOUNDARY.md`.
 
-## Legal review
+## Historical AGPL releases
 
-The dual-license structure and contributor agreement should be reviewed by qualified legal counsel before the repository is made public or commercial licenses are executed.
+The historical `v0.51.0` release and revisions at or before commit `6600da2899d83eddcfc43efbc2d81805d662d77a` remain available under the AGPL terms that accompanied those revisions. Their existing AGPL rights are not revoked by the current license change. See `LICENSE_HISTORY.md`.
+
+Commercial use of a historical AGPL-covered copy is governed by that historical AGPL grant. Commercial use of a current Community Source revision is governed by the current Community Source license and requires BossAI authorization.
+
+## Contributions and relicensing
+
+BossAI preserves contributor rights sufficient to distribute accepted contributions under the active public source license and separate commercial/proprietary terms. External contributions must pass the contributor-rights process described in `CONTRIBUTING.md` and `CLA.md` before merge.

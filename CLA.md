@@ -1,18 +1,20 @@
 # BossAI Funding Contributor License Agreement
 
-Version: `2026-08-20.1`
+Version: `2026-09-06.1`
 
 Status: **ACTIVE BY BOSSAI CEO APPROVAL — NO LAWYER APPROVAL CLAIMED.**
 
-The CEO waived outside-counsel review for this project on 2026-08-20 and authorized completion of the contributor-rights workflow. This agreement is therefore the project contribution agreement used by the repository automation. Nothing in this file represents that outside counsel reviewed or approved these terms.
+The CEO previously waived outside-counsel review for this project and authorized the contributor-rights workflow. This agreement is therefore the active project contribution agreement used by repository automation. Nothing in this file represents that outside counsel reviewed or approved these terms.
 
 ## 1. Purpose
 
-BossAI Funding is distributed under `AGPL-3.0-or-later` and may also be distributed by BossAI under separate proprietary/commercial licenses. Accepted external contributions therefore need sufficient contributor permission for both distribution paths.
+The current BossAI Funding source line is distributed under the **BossAI Community Source License 1.0** and may also be distributed by BossAI under separate commercial or proprietary licenses. Historical `v0.51.0` and earlier revisions remain governed by the AGPL rights already granted for those revisions.
+
+Accepted external contributions therefore need sufficient contributor permission for the current Community Source distribution path, future source-license changes authorized by BossAI, and separate commercial/proprietary distribution paths.
 
 ## 2. Copyright license grant
 
-By accepting this agreement for a contribution, you grant BossAI a worldwide, perpetual, irrevocable, non-exclusive, royalty-free copyright license to use, reproduce, modify, prepare derivative works of, publicly display, publicly perform, distribute, sublicense, and relicense your contribution as part of BossAI Funding under open-source and separate commercial or proprietary licensing terms.
+By accepting this agreement for a contribution, you grant BossAI a worldwide, perpetual, irrevocable, non-exclusive, royalty-free copyright license to use, reproduce, modify, prepare derivative works of, publicly display, publicly perform, distribute, sublicense, and relicense your contribution as part of BossAI Funding under source-available/community, open-source, commercial, or proprietary licensing terms selected by BossAI.
 
 You retain ownership of your contribution. This agreement is a license grant and is not a copyright assignment.
 
@@ -36,23 +38,27 @@ Unless separately agreed in writing, the contribution is provided without warran
 
 ## 6. No automatic commercial entitlement
 
-Contributing does not grant you a BossAI proprietary license, commercial support, SLA, warranty, indemnification, enterprise entitlement, trademark rights, subscription, payment credit, or other commercial benefit.
+Contributing does not grant you a BossAI proprietary license, commercial-use authorization, support, SLA, warranty, indemnification, enterprise entitlement, trademark rights, subscription, payment credit, or other commercial benefit.
 
 ## 7. How acceptance is recorded
 
 For an external pull request, acceptance is recorded by checking this exact statement in the pull-request body:
 
-> `I agree to the BossAI Funding CLA v2026-08-20.1 in CLA.md and I am authorized to make this contribution.`
+> `I agree to the BossAI Funding CLA v2026-09-06.1 in CLA.md and I am authorized to make this contribution.`
 
 The repository's trusted `contributor-rights` check records the GitHub account, pull-request number, head commit SHA, CLA version, and check result through GitHub's pull-request/status history. The contributor-rights workflow runs from the protected base branch and does not execute code from an untrusted fork.
 
-A later change to this CLA version does not retroactively change the version accepted for an already accepted contribution. A new CLA version must update the repository contributor-rights policy and required attestation.
+## 8. Historical CLA acceptance
 
-## 8. Trusted internal contributors and automation
+Contributions accepted under CLA v2026-08-20.1 remain governed by the contributor grant accepted for those contributions. That earlier agreement already granted BossAI the right to sublicense and relicense accepted contributions under open-source and separate commercial/proprietary terms. This new CLA version does not retroactively rewrite an earlier contributor's acceptance; it governs new contributions after this version becomes active.
+
+A later change to this CLA version likewise does not retroactively change the version accepted for an already accepted contribution. A new CLA version must update the repository contributor-rights policy and required attestation.
+
+## 9. Trusted internal contributors and automation
 
 BossAI may identify specific company-controlled GitHub accounts and narrowly scoped dependency automation as trusted in `.github/contributor-rights-policy.json`. This bypass is a repository governance decision for contributions whose rights/provenance are already controlled by BossAI or whose changes are generated by approved dependency automation; it is not a general exemption for external contributors.
 
-## 9. Merge gate
+## 10. Merge gate
 
 External code or documentation contributions must not be merged unless:
 

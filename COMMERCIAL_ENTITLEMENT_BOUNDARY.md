@@ -1,12 +1,14 @@
 # BossAI Funding Commercial Entitlement Boundary
 
-BossAI Funding has two distinct distribution paths and must not confuse them.
+BossAI Funding has two distinct technical distribution paths and must not confuse runtime mode with copyright permission.
 
-## Community / AGPL distribution
+## Community Source distribution
 
-The Community build runs under `AGPL-3.0-or-later` and **must not require a proprietary BossAI commercial entitlement merely to exercise rights granted by the AGPL**.
+The current Community build is distributed under **BossAI Community Source License 1.0**. It **must not require a proprietary BossAI commercial entitlement merely to start or exercise non-commercial rights granted by that license**.
 
-The Community build may be used commercially when the user complies with the AGPL. BossAI Funding must not add a local license-key gate that contradicts or narrows those AGPL rights.
+Community runtime mode is an offline/local technical mode. It does not itself decide whether a user's activity is legally commercial or non-commercial, and absence of a local entitlement check does **not** grant commercial-use rights. Commercial use of a current Community Source revision requires BossAI commercial authorization under `LICENSE` and `COMMERCIAL_LICENSE.md`.
+
+Historical `v0.51.0` and earlier AGPL-covered revisions retain the rights already granted under their historical AGPL terms; see `LICENSE_HISTORY.md`.
 
 Default:
 
@@ -17,13 +19,14 @@ BOSSAI_FUNDING_DISTRIBUTION=community
 Community mode:
 
 - does not call Headquarters Commerce;
-- does not require BossAI commercial account login;
+- does not require BossAI commercial account login merely to run the eligible local Community build;
 - does not load or persist a proprietary session;
-- uses the same local Funding server and SQLite business authority.
+- uses the same local Funding server and SQLite business authority;
+- does not create or imply commercial-use authorization.
 
 ## Official proprietary commercial distribution
 
-An official proprietary/commercial BossAI Funding distribution exercises permissions granted by a separate BossAI commercial agreement. Commercial identity and entitlement come only from:
+An official proprietary/commercial BossAI Funding distribution exercises permissions granted by a separate BossAI commercial agreement or approved commercial entitlement. Commercial identity and entitlement come only from:
 
 ```text
 BossAI Headquarters Commerce
@@ -56,7 +59,7 @@ This prevents an ordinary active BossAI account or automatically provisioned pro
 
 ## Desktop commercial account session
 
-For the Windows desktop product, `commercial` mode no longer requires an operator to inject a Bearer token on every launch.
+For the Windows desktop product, `commercial` mode does not require an operator to inject a Bearer token on every launch.
 
 Required commercial deployment input:
 
@@ -163,8 +166,8 @@ Headquarters Commerce remains the sole authority for those states.
 
 Implemented:
 
-- Community AGPL distribution with no proprietary entitlement dependency;
-- online `bossai.commercial-entitlement.v1` consumer;
+- Community Source local distribution with no proprietary entitlement dependency for eligible non-commercial use;
+- online `bossai.commercial-entitlement.v1` consumer for proprietary commercial mode;
 - exact product / installation / version binding;
 - `bossai-funding.commercial` membership-feature gate;
 - fail-closed Headquarters authority checks;
@@ -182,7 +185,7 @@ Still required before an official proprietary commercial release:
 - an approved production Headquarters Commerce endpoint with a real plan/membership that grants `bossai-funding.commercial`;
 - real paid-account end-to-end acceptance against that production endpoint;
 - production account registration/recovery delivery operated by Headquarters/official BossAI account surfaces;
-- approved commercial agreement/legal review;
+- approved commercial agreement/legal review where required by the release decision;
 - official Funding icon;
 - publicly trusted Windows code signing;
 - explicit final release approval.
@@ -193,8 +196,9 @@ No offline commercial entitlement cache is implemented. Commercial mode intentio
 
 These remain separate gates:
 
-- Public AGPL source release: governed by `LICENSE` and open-source readiness.
-- Official Community desktop binary: must comply with AGPL object-code/source obligations and release-supply-chain requirements.
-- Official proprietary/commercial desktop binary: additionally requires the approved commercial agreement, real production Headquarters account/paid-feature evidence, and signed distribution.
+- Current Community Source release: governed by `LICENSE`, `LICENSE_HISTORY.md`, and public-source readiness; non-commercial rights are granted by the Community Source license and commercial use requires BossAI authorization.
+- Historical `v0.51.0` AGPL source release: retains the AGPL rights already granted for that historical revision.
+- Community desktop binary: must comply with the current Community Source license, third-party license obligations, and release-supply-chain requirements.
+- Official proprietary/commercial desktop binary: additionally requires the approved commercial agreement/entitlement, real production Headquarters account/paid-feature evidence, and signed distribution.
 
-See `COMMERCIAL_LICENSE.md`, `OPEN_SOURCE_READINESS.md`, and Headquarters Commerce governance.
+See `COMMERCIAL_LICENSE.md`, `LICENSE_HISTORY.md`, and Headquarters Commerce governance.
