@@ -6,22 +6,17 @@ All notable BossAI Funding changes are recorded here at release-summary level. D
 
 ### Changed
 
-- Current source line moved from AGPL-3.0-or-later to **BossAI Community Source License 1.0**.
-- Current source is classified as **Source Available / Community Source, not OSI Open Source**.
-- Personal, educational, evaluation, research, and other non-commercial use remains available subject to `LICENSE`; commercial use of current revisions requires BossAI authorization.
-- `package.json`, release verification, source-release notes, README, NOTICE, commercial licensing, entitlement boundary, contribution docs, and license-readiness tests now use the Community Source model.
-- Active contributor agreement advanced to CLA v2026-09-06.1 while preserving earlier accepted CLA grants.
+- Current public source line moved to BossAI Community Source License 1.0; historical `v0.51.0` and earlier AGPL rights remain preserved in `LICENSE_HISTORY.md`.
+- External contributor rights/CLA policy advanced to `2026-09-06.1` for future contributions while preserving previously accepted grants.
+- Community runtime remains local/offline for eligible Community use; commercial use of current revisions requires BossAI authorization.
+- Receipt-schedule blocker priority now preserves `receipt-schedule-over-*` when actual cash reduces the remaining commitment but the related expected receipt has not yet been explicitly allocated.
+- Arrival-schedule regression coverage no longer depends on wall-clock proximity for a normal future receipt; explicit overdue and over-scheduled focus cases remain separately verified.
 
-### Historical rights
+### Validation
 
-- `v0.51.0` and repository revisions at or before `6600da2899d83eddcfc43efbc2d81805d662d77a` remain governed by the AGPL rights already granted for those historical copies.
-- `LICENSE_HISTORY.md` records the historical/current license boundary; no historical AGPL grant is revoked or narrowed.
-
-### Authority boundary
-
-- Community runtime mode remains local/offline and does not contact Headquarters merely to start eligible Community use; that technical behavior does not itself grant commercial-use rights.
-- Explicit proprietary commercial mode continues to require `bossai.commercial-entitlement.v1`, the `bossai-funding.commercial` paid capability, and fail-closed Headquarters authorization.
-- No financing business logic, SQLite authority, account authority, billing authority, or entitlement authority is moved into the license layer.
+- Source CI full verify and desktop-contract checks pass on the licensing/regression-fix PR head.
+- Contributor-rights status passes.
+- Existing expectation-to-receipt allocation behavior remains explicit: actual cash never silently fulfills an Arrival Expectation; only an explicit Allocation reduces the remaining expected amount.
 
 ## [0.51.0] - 2026-08-20
 
