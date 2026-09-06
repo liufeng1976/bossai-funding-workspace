@@ -4,6 +4,10 @@ on:
   push:
     tags:
       - "v*.*.*"
+    branches:
+      - main
+    paths:
+      - ".github/release-requests/v*.json"
 
 permissions:
   contents: write
@@ -22,13 +26,57 @@ jobs:
       - run: npm ci
       - run: npm run verify
       - run: npm run test:desktop-contract
+      - name: Resolve governed source release tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            release_tag="$GITHUB_REF_NAME"
+          else
+            version="$(node -p "JSON.parse(require('fs').readFileSync('package.json','utf8')).version")"
+            release_tag="v${version}"
+            request_path=".github/release-requests/${release_tag}.json"
+            if [[ ! -f "$request_path" ]]; then
+              echo "Missing governed source release request: $request_path" >&2
+              exit 1
+            fi
+            node --input-type=module - "$request_path" "$release_tag" <<'NODE'
+          import { readFileSync } from "node:fs";
+          const [, , requestPath, releaseTag] = process.argv;
+          const request = JSON.parse(readFileSync(requestPath, "utf8"));
+          if (request.schemaVersion !== "bossai.source-release-request.v1") throw new Error("Unexpected release request schemaVersion");
+          if (request.tag !== releaseTag) throw new Error(`Release request tag ${request.tag} does not match ${releaseTag}`);
+          if (request.sourceOnly !== true) throw new Error("Release request must be sourceOnly=true");
+          if (request.signedWindowsBinaryIncluded !== false) throw new Error("Source release request must set signedWindowsBinaryIncluded=false");
+          NODE
+          fi
+          echo "RELEASE_TAG=$release_tag" >> "$GITHUB_ENV"
       - name: Verify source release identity
-        run: node scripts/verify-source-release.mjs
+        run: node scripts/verify-source-release.mjs "$RELEASE_TAG"
+      - name: Create governed source tag when requested from main
+        if: github.ref_type != 'tag'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code --tags origin "refs/tags/$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Tag $RELEASE_TAG already exists; leaving it unchanged."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag -a "$RELEASE_TAG" -m "BossAI Funding $RELEASE_TAG Community Source Release"
+            git push origin "refs/tags/$RELEASE_TAG"
+          fi
       - name: Publish Community Source release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: >-
-          gh release create "$GITHUB_REF_NAME"
-          --verify-tag
-          --title "BossAI Funding $GITHUB_REF_NAME — Community Source Release"
-          --notes "Source-available release under BossAI Community Source License 1.0. Personal, educational, evaluation, research, and other non-commercial use is permitted subject to LICENSE; commercial use requires BossAI authorization. Historical v0.51.0 and earlier AGPL rights are preserved separately in LICENSE_HISTORY.md. This source release does not include or imply a publicly trusted signed Windows binary. Official proprietary/commercial desktop distribution is governed separately by COMMERCIAL_LICENSE.md and Headquarters entitlement."
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Release $RELEASE_TAG already exists; leaving it unchanged."
+            exit 0
+          fi
+          gh release create "$RELEASE_TAG" \
+            --verify-tag \
+            --title "BossAI Funding $RELEASE_TAG — Community Source Release" \
+            --notes "Source-available release under BossAI Community Source License 1.0. Personal, educational, evaluation, research, and other non-commercial use is permitted subject to LICENSE; commercial use requires BossAI authorization. Historical v0.51.0 and earlier AGPL rights are preserved separately in LICENSE_HISTORY.md. This source release does not include or imply a publicly trusted signed Windows binary. Official proprietary/commercial desktop distribution is governed separately by COMMERCIAL_LICENSE.md and Headquarters entitlement."
