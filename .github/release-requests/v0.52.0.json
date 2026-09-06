@@ -2,5 +2,6 @@
   "schemaVersion": "bossai.source-release-request.v1",
   "tag": "v0.52.0",
   "sourceOnly": true,
-  "signedWindowsBinaryIncluded": false
+  "signedWindowsBinaryIncluded": false,
+  "attempt": 2
 }

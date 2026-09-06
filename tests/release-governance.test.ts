@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { spawnSync } from "node:child_process";
 
 const root = process.cwd();
 const pkg = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8")) as {
@@ -33,6 +34,19 @@ test("v0.52 source line is tag-bound Community Source while v0.51 AGPL history r
   assert.doesNotMatch(sourceRelease, /desktop:installer|BossAI-Funding-Setup/u);
   assert.match(history, /v0\.51\.0/u);
   assert.match(history, /AGPL-3\.0-or-later/u);
+});
+
+test("explicit source release tag outranks ambient main ref during governed release request", () => {
+  const result = spawnSync(process.execPath, [resolve(root, "scripts", "verify-source-release.mjs"), "v0.52.0"], {
+    cwd: root,
+    env: { ...process.env, GITHUB_REF_NAME: "main" },
+    encoding: "utf8",
+  });
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const evidence = JSON.parse(result.stdout.trim()) as { tag?: string; sourceReleaseOnly?: boolean; signedWindowsBinaryIncluded?: boolean };
+  assert.equal(evidence.tag, "v0.52.0");
+  assert.equal(evidence.sourceReleaseOnly, true);
+  assert.equal(evidence.signedWindowsBinaryIncluded, false);
 });
 
 test("signed Windows release fails closed unless Authenticode and publisher identity are valid", () => {

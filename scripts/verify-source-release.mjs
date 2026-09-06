@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 const root = process.cwd();
 const pkg = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
-const tag = String(process.env.GITHUB_REF_NAME ?? process.argv[2] ?? "").trim();
+const tag = String(process.argv[2] ?? process.env.GITHUB_REF_NAME ?? "").trim();
 const expectedTag = `v${pkg.version}`;
 const expectedLicense = "LicenseRef-BossAI-Community-Source-1.0";
 
