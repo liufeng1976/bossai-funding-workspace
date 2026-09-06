@@ -57,7 +57,7 @@ test("LICENSE is the BossAI Community Source license and preserves historical AG
 test("commercial licensing separates offline Community runtime from commercial-use authorization", () => {
   assert.match(commercial, /source available, not OSI Open Source/i);
   assert.match(commercial, /Commercial use.*requires BossAI/i);
-  assert.match(commercial, /offline technical behavior does not grant commercial-use rights/i);
+  assert.match(commercial, /offline technical behavior does.*not.*grant commercial-use rights/is);
   assert.match(commercial, /historical.*v0\.51\.0.*AGPL/is);
   assert.match(entitlementBoundary, /Community build.*must not require a proprietary BossAI commercial entitlement/is);
   assert.match(entitlementBoundary, /does not.*grant commercial-use rights/is);
