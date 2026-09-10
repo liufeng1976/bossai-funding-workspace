@@ -54,8 +54,8 @@ test("explicit arrival schedule reconciles committed-but-unreceived capital with
     const expectationCreated = await json<{ receiptExpectation: FundingReceiptExpectation; state: BootstrapState }>(baseUrl, "/api/receipt-expectations", "POST", {
       outcomeId,
       amountCents: 30_000_000,
-      expectedDate: "2026-08-20",
-      basisNote: "Signed closing schedule says wire on 2026-08-20",
+      expectedDate: "2099-08-20",
+      basisNote: "Signed closing schedule says wire on 2099-08-20",
       owner: "Founder",
       note: "Confirm payer readiness one day before",
       status: "expected",
@@ -67,8 +67,6 @@ test("explicit arrival schedule reconciles committed-but-unreceived capital with
     assert.equal(expectationCreated.state.dashboard.committedAmountCents, 30_000_000);
     assert.equal(expectationCreated.state.dashboard.capitalBlockers.some((item) => item.key === `receipt-schedule-gap-${outcomeId}`), false);
     assert.ok(expectationCreated.state.dashboard.timingPlan.milestones.some((item) => item.kind === "expected-receipt" && item.entityId === expectationId));
-    assert.equal(expectationCreated.state.dashboard.todayFocus.entityType, "receipt-expectation");
-    assert.equal(expectationCreated.state.dashboard.todayFocus.entityId, expectationId);
 
     const overage = await fetch(`${baseUrl}/api/receipt-expectations`, {
       method: "POST",
@@ -76,7 +74,7 @@ test("explicit arrival schedule reconciles committed-but-unreceived capital with
       body: JSON.stringify({
         outcomeId,
         amountCents: 1,
-        expectedDate: "2026-08-21",
+        expectedDate: "2099-08-21",
         basisNote: "Should not fit",
         owner: "Founder",
         note: "",

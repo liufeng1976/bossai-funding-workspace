@@ -4,6 +4,8 @@ BossAI Funding is an owner-facing capital decision and execution workspace that 
 
 The product is local-first. Critical financing state is stored in SQLite, and the desktop edition runs the same local Funding server inside a Windows desktop shell rather than creating a separate business implementation.
 
+> **License classification:** Source Available / Community Source, not OSI Open Source. The current post-`v0.51.0` source line is free for personal, educational, evaluation, research, and other non-commercial use under BossAI Community Source License 1.0. Commercial use requires BossAI authorization. Historical `v0.51.0` and earlier revisions keep their existing AGPL rights; see `LICENSE_HISTORY.md`.
+
 ## What it covers
 
 - company funding profile and funding target;
@@ -76,29 +78,31 @@ See `SECURITY.md`, `SECURITY_REVIEW_READINESS.md`, `IDENTITY_TENANT_CONTRACT.md`
 
 ## Licensing
 
-BossAI Funding uses a dual-license model.
+### Current Community Source line
 
-### Open source
+The post-`v0.51.0` repository source line is licensed under **BossAI Community Source License 1.0**. See `LICENSE`.
 
-The repository is licensed under **GNU Affero General Public License v3.0 or later (`AGPL-3.0-or-later`)**. See `LICENSE`.
+Permitted Community use includes personal, educational, evaluation, research, and other non-commercial use subject to the license. Commercial use requires a separate BossAI commercial license or approved entitlement. This is **source available, not OSI Open Source**.
 
-The AGPL permits commercial activity when its terms are followed.
+### Historical AGPL line
 
-### Commercial license
+The `v0.51.0` release and repository revisions at or before commit `6600da2899d83eddcfc43efbc2d81805d662d77a` were published under **AGPL-3.0-or-later**. Rights already granted for those historical revisions remain governed by their historical AGPL terms and are not revoked. See `LICENSE_HISTORY.md`.
 
-If you need permissions outside the AGPL—for example proprietary/closed-source embedding, proprietary OEM redistribution, or negotiated enterprise rights—you need a separate commercial license from BossAI. See `COMMERCIAL_LICENSE.md`.
+### Commercial authorization
 
-The project itself does not create a second commercial account, payment, subscription, license, or entitlement ledger. The Community AGPL build does not require a proprietary entitlement; an official proprietary commercial build consumes entitlement from the approved external BossAI commercial authority. See `COMMERCIAL_ENTITLEMENT_BOUNDARY.md`.
+Commercial use of a current Community Source revision—including company production use, paid client delivery, consulting, SaaS, proprietary embedding, OEM/white-label, resale, or other profit-making use—requires BossAI commercial authorization. See `COMMERCIAL_LICENSE.md`.
+
+The project itself does not create a second commercial account, payment, subscription, license, or entitlement ledger. Commercial authorization is owned by the approved external BossAI commercial authority. See `COMMERCIAL_ENTITLEMENT_BOUNDARY.md`.
 
 ### Distribution modes
 
-Community mode is the default:
+Community mode is the default technical runtime mode:
 
 ```text
 BOSSAI_FUNDING_DISTRIBUTION=community
 ```
 
-It does not contact BossAI Headquarters Commerce and does not require a proprietary BossAI token.
+It does not contact BossAI Headquarters Commerce and does not require a proprietary BossAI token merely to start the local Community runtime. **This offline technical behavior does not grant commercial-use rights.** Commercial use remains subject to the current source license.
 
 The proprietary commercial integration mode is explicit and fail-closed:
 
@@ -110,7 +114,7 @@ BOSSAI_FUNDING_INSTALLATION_ID=<optional-stable-installation-id>
 
 On desktop, if no valid commercial session exists, BossAI Funding opens a dedicated BossAI commercial-account sign-in window and supports Headquarters MFA. The resulting `bossai_session_...` value is encrypted with Electron `safeStorage` (Windows DPAPI on the supported Windows target) before it is written to the desktop user-data directory. Passwords, MFA proofs, raw sessions, entitlement truth, and financing records are not written to Funding SQLite.
 
-Every desktop launch revalidates the session through Headquarters `GET /api/v1/commerce/entitlement` (`bossai.commercial-entitlement.v1`) before Funding persistence starts. Proprietary access requires the exact `bossai-funding` product/install/version binding plus an active membership entitlement whose feature allowlist contains:
+Every desktop launch in proprietary commercial mode revalidates the session through Headquarters `GET /api/v1/commerce/entitlement` (`bossai.commercial-entitlement.v1`) before Funding persistence starts. Proprietary access requires the exact `bossai-funding` product/install/version binding plus an active membership entitlement whose feature allowlist contains:
 
 ```text
 bossai-funding.commercial
@@ -122,14 +126,16 @@ This extra paid-capability gate is required because an active product-license re
 
 ## Contributing
 
-Read `CONTRIBUTING.md` before opening a pull request. The versioned `CLA.md` contributor-rights agreement is active under CEO approval. External pull requests require the exact CLA checkbox and must pass both protected `verify` and `contributor-rights` gates before merge.
+Read `CONTRIBUTING.md` before opening a pull request. The versioned `CLA.md` contributor-rights agreement is active under CEO approval. External pull requests require the exact active CLA checkbox and must pass both protected `verify` and `contributor-rights` gates before merge.
 
 ## Source and project links
 
 - Repository: https://github.com/liufeng1976/bossai-funding-workspace
+- Current Community Source release: https://github.com/liufeng1976/bossai-funding-workspace/releases/tag/v0.52.0
 - Source releases: https://github.com/liufeng1976/bossai-funding-workspace/releases
 - Issues: https://github.com/liufeng1976/bossai-funding-workspace/issues
+- BossAI: https://bossaios.com
 
 ## Current release status
 
-The repository is public under AGPL-3.0-or-later. `v0.51.0` is the current public **source release**. Tag-bound source releases and official signed Windows releases are separate gates. The desktop icon is generated deterministically from repository source; unsigned engineering installers remain non-production evidence and are intentionally absent from the official source Release. Passing tests or producing an installer is not by itself a production/GA claim.
+`v0.52.0` is the current public **Community Source Release** under BossAI Community Source License 1.0. It is a source-only release and intentionally contains no signed Windows binary assets. Historical `v0.51.0` remains available under its previously granted AGPL terms. Official proprietary/signed Windows distribution remains a separate fail-closed gate requiring the approved commercial entitlement path and publicly trusted Windows code signing; successful Community engineering builds, packaging, or smoke tests are not a production/GA claim.

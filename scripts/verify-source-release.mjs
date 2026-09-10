@@ -3,8 +3,9 @@ import { resolve } from "node:path";
 
 const root = process.cwd();
 const pkg = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
-const tag = String(process.env.GITHUB_REF_NAME ?? process.argv[2] ?? "").trim();
+const tag = String(process.argv[2] ?? process.env.GITHUB_REF_NAME ?? "").trim();
 const expectedTag = `v${pkg.version}`;
+const expectedLicense = "LicenseRef-BossAI-Community-Source-1.0";
 
 if (!/^v\d+\.\d+\.\d+$/u.test(tag)) {
   console.error(`Source release tag must be semantic vX.Y.Z; received: ${tag || "<empty>"}.`);
@@ -14,8 +15,8 @@ if (tag !== expectedTag) {
   console.error(`Source release tag ${tag} does not match package version ${pkg.version}; expected ${expectedTag}.`);
   process.exit(1);
 }
-if (pkg.license !== "AGPL-3.0-or-later") {
-  console.error(`Unexpected source license metadata: ${pkg.license}.`);
+if (pkg.license !== expectedLicense) {
+  console.error(`Unexpected source license metadata: ${pkg.license}; expected ${expectedLicense}.`);
   process.exit(1);
 }
 if (pkg.private !== true) {

@@ -1,32 +1,44 @@
-# BossAI Funding Open-Source Readiness
+# BossAI Funding Public-Source Readiness
 
-Target: publish BossAI Funding as a usable open-source product **after** the Windows desktop distribution, licensing, security, provenance and contribution boundaries are evidence-backed.
+This file keeps the historical publication evidence for BossAI Funding while recording the current license model.
 
-## Licensing
+The repository was originally published under AGPL-3.0-or-later through `v0.51.0`. The current post-`v0.51.0` source line is **BossAI Community Source License 1.0**: source available, non-commercial use permitted under `LICENSE`, and commercial use requires BossAI authorization. Historical AGPL rights are preserved in `LICENSE_HISTORY.md`.
 
-- [x] Canonical open-source license selected: AGPL-3.0-or-later.
-- [x] `LICENSE` matches the standard GNU AGPL v3 text.
-- [x] Separate commercial-license notice exists.
-- [x] README explains that AGPL itself permits commercial use when its terms are followed.
-- [x] Trademark rights are separated from copyright license.
-- [x] Third-party software licenses are documented.
-- [x] CEO explicitly waived qualified outside/legal-counsel review for source publication on 2026-08-20; no lawyer approval is claimed. See `Atlas/CEO_LEGAL_REVIEW_WAIVER_2026-08-20.md`.
-- [x] CEO explicitly waived qualified outside/legal-counsel review of the contributor-rights documents for source publication; the CLA remains fail-closed and is not represented as lawyer-approved.
-- [x] v0.51 contributor-rights workflow is operational on `main`: active CLA v2026-08-20.1, exact PR attestation, trusted-base `pull_request_target` evaluation, and independent `contributor-rights` PR-head status. Live proof PR #7 passed `Contributor Rights` run `32344905425`; its updated head then passed both required `verify` and `contributor-rights` before merge.
+## Current licensing
+
+- [x] Current license: BossAI Community Source License 1.0.
+- [x] `package.json` uses `LicenseRef-BossAI-Community-Source-1.0`.
+- [x] Current repository wording says **Source Available / Community Source, not OSI Open Source**.
+- [x] Personal, educational, evaluation, research, and other non-commercial use is permitted subject to `LICENSE`.
+- [x] Current commercial use requires BossAI commercial authorization.
+- [x] Historical `v0.51.0` and revisions at or before `6600da2899d83eddcfc43efbc2d81805d662d77a` retain their existing AGPL rights.
+- [x] `LICENSE_HISTORY.md` records the historical/current boundary without attempting to revoke prior grants.
+- [x] Trademark rights remain separate from copyright/source-license rights.
+- [x] Third-party software licenses remain separately documented.
+- [x] Community runtime mode remains local/offline and does not contact Headquarters merely to start; this technical behavior does not grant commercial-use rights.
+- [x] Proprietary commercial mode continues to require Headquarters entitlement and fail closed.
+
+## Contributor rights
+
+- [x] CLA v2026-08-20.1 historically granted BossAI sufficient sublicensing and relicensing rights for accepted contributions.
+- [x] Active CLA for new contributions is v2026-09-06.1.
+- [x] Active CLA expressly covers Community Source/source-available, open-source, commercial, and proprietary relicensing paths.
+- [x] Exact PR attestation and `.github/contributor-rights-policy.json` use the same active CLA version.
+- [x] Trusted-base `pull_request_target` evaluation remains fail-closed for external contributors.
+- [x] Required protected checks remain `verify` and `contributor-rights`; branch protection must not be bypassed for external contributions.
+- [x] The CEO legal-review waiver remains historical governance evidence and is not represented as lawyer approval. See `Atlas/CEO_LEGAL_REVIEW_WAIVER_2026-08-20.md`.
 
 ## Repository hygiene
 
-- [x] README, SECURITY, CONTRIBUTING, Code of Conduct, NOTICE, CLA draft, trademark policy and changelog exist.
+- [x] README, SECURITY, CONTRIBUTING, Code of Conduct, NOTICE, CLA, trademark policy, changelog, license history, and third-party license records exist.
 - [x] Issue and pull-request templates exist.
 - [x] CI and Windows desktop workflows exist.
 - [x] Dependabot configuration exists.
-- [x] Final exact-main pre-tag scan completed on 2026-08-20 at `4a2d9f5121e282bba91a1d0aa23b9c9090d7e90f`: 0 sensitive credential/private-key filenames, 0 common private-key/AWS/GitHub/OpenAI secret-pattern paths, and 0 OpenBcon implementation-path provenance. Historical BossAI session-shaped matches are known synthetic commercial-smoke fixtures only; the current source no longer contains that raw fixture literal.
-- [x] GitHub dependency vulnerability alerts enabled and verified; automated security fixes enabled.
-- [x] GitHub Discussions enabled; Issues remain enabled.
-- [x] Remote `Source CI / verify` passes on `main`.
-- [x] Remote v0.51 protected-PR evidence: Source CI run `32344535006` PASS and Windows Desktop run `32344535015` PASS on PR #6, including Community, commercial environment-token, commercial OS-encrypted-session development/package paths. Unsigned artifact upload remains best-effort because the account artifact-storage quota may be full.
-- [x] GitHub Private Vulnerability Reporting enabled and verified after Public visibility.
-- [x] `main` branch protection is strict and admin-enforced: required status checks are `verify` and `contributor-rights`; linear history required; force-push disabled; branch deletion disabled; conversation resolution required. PR #7 was merged only after its post-protection head satisfied both required checks.
+- [x] Historical final exact-main pre-tag scan completed on 2026-08-20 at `4a2d9f5121e282bba91a1d0aa23b9c9090d7e90f`: no sensitive credential/private-key filenames, no common private-key/AWS/GitHub/OpenAI secret-pattern paths, and no OpenBcon implementation-path provenance were reported.
+- [x] GitHub dependency vulnerability alerts and automated security fixes were enabled and verified for the public repository.
+- [x] GitHub Discussions and Issues were enabled.
+- [x] GitHub Private Vulnerability Reporting was enabled after Public visibility.
+- [x] Historical branch protection evidence records strict required checks, linear history, force-push disabled, branch deletion disabled, and conversation resolution required.
 
 ## Desktop product form
 
@@ -37,44 +49,48 @@ Target: publish BossAI Funding as a usable open-source product **after** the Win
 - [x] Persistent per-user SQLite location.
 - [x] Windows x64 NSIS packaging configuration.
 - [x] User data is not deleted on uninstall by installer policy.
-- [x] Development Electron smoke PASS with isolated temporary userData, default English and no horizontal overflow.
-- [x] Packaged `win-unpacked` smoke PASS with packaged runtime and isolated temporary userData.
-- [x] v0.51.0 NSIS engineering installer generated after final local gates. SHA-256: `3CD9B0BF4F873F81CEBF70872C644A5036A632A27D19C89C0306B17B67A1578C`.
-- [x] Real isolated lifecycle PASS: install → first launch → single-instance rejection → save → restart → data persists → uninstall → data preserved → reinstall → data restored → final uninstall preserves data.
-- [x] Packaged distribution contains Electron and Chromium bundled license files (`LICENSE.electron.txt`, `LICENSES.chromium.html`).
-- [x] BossAI Funding Windows identity is deterministic and source-generated: 7-size ICO, `ProductName=BossAI Funding`, `FileDescription=BossAI Funding`, `LegalCopyright=Copyright (c) 2026 BossAI`, `LegalTrademarks=BossAI`, `requestedExecutionLevel=asInvoker`. Electron Builder no longer reports the default Electron icon fallback.
-- [x] Fail-closed signed Windows release workflow exists and requires `Authenticode=Valid`, an approved signer-subject contract, full owner/desktop gates, and installer lifecycle before upload.
-- [ ] Public-trust Windows code-signing credential is still external: local certificate store contains only self-signed BossAI development/preview certificates and GitHub currently has no `WINDOWS_CSC_LINK`, `WINDOWS_CSC_KEY_PASSWORD`, or `WINDOWS_SIGNING_EXPECTED_SUBJECT` secrets. Current v0.51 app EXE and installer both report `NotSigned`.
+- [x] Development and packaged smoke paths exist.
+- [x] Historical `v0.51.0` NSIS engineering installer evidence was generated and tested but was not published as a trusted production binary.
+- [x] Packaged distribution contains the applicable Electron/Chromium license files.
+- [x] BossAI Funding Windows identity is deterministic and source-generated.
+- [x] Signed Windows release workflow fails closed unless trusted Authenticode and publisher identity gates pass.
+- [ ] Public-trust Windows code signing remains an external release prerequisite for an official signed Windows release unless a later recorded release decision proves it satisfied.
 
 ## Product / language
 
 - [x] Fresh install default locale is English.
-- [x] Explicit locale selection remains persistent UI preference only.
-- [x] English / Simplified Chinese / Traditional Chinese / Spanish are production-complete locales.
-- [x] Full v0.51 owner-readiness re-run: 280/280 tests PASS; desktop/responsive Chrome, 390×844 owner path, four production locales, zero-leak audit and receipt-reconciliation Chrome PASS.
-- [x] Human owner installs the v0.48 desktop build, confirms it opens and runs normally, and uninstalls successfully on the target machine (2026-08-20). Machine-only evidence remains separately scoped for restart/reinstall data persistence.
+- [x] Explicit locale selection remains presentation state only.
+- [x] English / Simplified Chinese / Traditional Chinese / Spanish are production-complete locales in the recorded v0.51 evidence.
+- [x] Historical owner-readiness evidence includes desktop/responsive Chrome, 390×844 owner path, locale and receipt-reconciliation checks.
 
 ## Commercial authority
 
-- [x] Community AGPL build does not require proprietary entitlement and performs no Headquarters entitlement call.
+- [x] Community Source local mode does not require proprietary entitlement merely to run eligible non-commercial use and performs no Headquarters entitlement call.
+- [x] Absence of a local entitlement check is explicitly **not** commercial-use authorization.
 - [x] Funding does not create a second account/payment/license/entitlement ledger.
-- [x] Online `bossai.commercial-entitlement.v1` consumer is implemented for explicit commercial mode with product/install/version binding and fail-closed Headquarters authority checks.
+- [x] Online `bossai.commercial-entitlement.v1` consumer remains implemented for explicit proprietary commercial mode with product/install/version binding and fail-closed Headquarters authority checks.
 - [x] Proprietary mode additionally requires Headquarters paid capability `bossai-funding.commercial`; active product license alone is insufficient.
-- [x] BossAI commercial-account password login and Headquarters MFA client implemented without Funding business-data access.
-- [x] Commercial desktop session is encrypted with Electron `safeStorage`; passwords/MFA proofs/raw sessions do not enter Funding SQLite.
-- [x] Real development Electron secure-session smoke PASS: first login encrypted, second launch reused secure session, entitlement revalidated each launch, 401 removed stale session, raw session not logged.
-- [x] Packaged commercial secure-session smoke PASS with the same encrypted-session and stale-session boundary.
-- [x] Real Headquarters Commerce HTTP contract (not a mock) proved on its clean isolated worktree: a normal Plan does not invent `bossai-funding.commercial`; an explicitly configured active Plan/Membership returns that feature through canonical `bossai.commercial-entitlement.v1`; Headquarters business-execution/provider-routing flags remain false. Headquarters PR #1 carries the contract test and is intentionally Draft because the HQ repository has pre-existing cross-repository CI topology failures unrelated to Funding.
-- [ ] Official proprietary commercial desktop still needs a deployed production Headquarters plan/account granting `bossai-funding.commercial`, production paid-account E2E acceptance, and publicly trusted Windows signing. On 2026-08-20, `https://cloud.destinykit.com/health` returned 200 while `/ready`, `/api/v1/auth/session`, and `/api/v1/commerce/entitlement` returned 404; no local `BOSSAI_HQ_*` production environment variables were present. Outside-counsel review and desktop icon are no longer blockers.
+- [x] BossAI commercial-account login and Headquarters MFA client remain outside Funding business-data authority.
+- [x] Commercial desktop session uses Electron `safeStorage`; passwords/MFA proofs/raw sessions do not enter Funding SQLite.
+- [ ] Official proprietary commercial desktop still requires the production account/plan entitlement evidence and signed-distribution gates recorded by current release governance.
 
-## Publication gate
+## Historical AGPL publication evidence
 
-- [x] GitHub repository visibility changed from Private to **Public** on 2026-08-20 after the final candidate history/worktree scan and a successful `Source CI / verify` run on commit `7fd588e`.
-- [x] GitHub recognizes the repository license as GNU Affero General Public License v3.0 / AGPL-3.0.
-- [x] Secret Scanning enabled.
-- [x] Secret Scanning Push Protection enabled.
-- [ ] GitHub extended non-provider secret patterns and validity checks remain disabled by the current account/platform capability; this is not represented as enabled.
-- [x] Tag-bound AGPL Source Release workflow implemented with package/tag identity verification and an explicit no-signed-Windows-binary claim.
-- [x] First tag-driven Source Release `v0.51.0` completed from exact `main@4a2d9f5121e282bba91a1d0aa23b9c9090d7e90f`. Source Release workflow run `32345532712` PASS; GitHub Release is non-draft/non-prerelease and has `assets=[]`, so no unsigned Windows installer was published as an official binary.
+The following are historical facts and are intentionally preserved rather than rewritten as current policy:
 
-The public-source publication decision is separate from a production/GA claim. The CEO legal-review waiver is recorded and must never be described as lawyer approval. An unsigned installer may be used as engineering evidence but must not be represented as an official production release.
+- [x] Repository visibility changed from Private to Public on 2026-08-20 after the recorded source scan and Source CI evidence.
+- [x] GitHub recognized the historical repository license as GNU Affero General Public License v3.0 / AGPL-3.0.
+- [x] Secret Scanning and Secret Scanning Push Protection were enabled.
+- [x] The historical tag-bound AGPL Source Release workflow produced `v0.51.0` from the recorded exact main revision.
+- [x] Historical `v0.51.0` Release was source-only and did not publish an unsigned Windows installer as an official binary.
+
+## Current release gate
+
+- [x] Current package/source line is `0.52.0` with `LicenseRef-BossAI-Community-Source-1.0` metadata.
+- [x] Source-release verifier requires the package/tag identity and current Community Source license metadata.
+- [x] Source-release workflow labels future source releases as **Community Source Release** and states commercial use requires BossAI authorization.
+- [x] Future Community Source releases must preserve the historical AGPL notice rather than implying old rights were revoked.
+- [x] Public-source publication remains separate from production/GA approval.
+- [x] Unsigned installer evidence must not be represented as an official production release.
+
+The filename `OPEN_SOURCE_READINESS.md` is retained for repository-history continuity. Its current contents intentionally use **Public Source / Community Source** terminology because the current BossAI Funding line is not OSI open source.
