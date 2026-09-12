@@ -1,6 +1,17 @@
-# BossAI Funding
+# BossAI Funding — Founder Funding & Capital Planning Workspace
 
-BossAI Funding is an owner-facing capital decision and execution workspace that helps a founder or business owner move from **how much money is needed** to **money actually received**.
+[![GitHub stars](https://img.shields.io/github/stars/liufeng1976/bossai-funding-workspace?style=social)](https://github.com/liufeng1976/bossai-funding-workspace/stargazers)
+[![Windows](https://img.shields.io/badge/platform-Windows-blue)](https://github.com/liufeng1976/bossai-funding-workspace)
+[![BossAI](https://img.shields.io/badge/BossAI-bossaios.com-black)](https://bossaios.com)
+[![License](https://img.shields.io/badge/license-BossAI%20Community%20Source-orange)](LICENSE)
+
+**Local-first funding workspace for founders and business owners: funding target, grants, debt, equity, investor pipeline, applications, data room, diligence, term sheets, closing, and actual cash-receipt reconciliation.**
+
+BossAI Funding helps an owner move from **how much capital is needed** to **which funding path to pursue**, **what is blocking the process**, and ultimately **whether committed money was actually received**.
+
+[BossAI website](https://bossaios.com) · [Current v0.52.0 Source Release](https://github.com/liufeng1976/bossai-funding-workspace/releases/tag/v0.52.0) · [Issues / feedback](https://github.com/liufeng1976/bossai-funding-workspace/issues)
+
+If this project is useful for startup funding, small-business financing, grant/debt/equity planning, or capital execution, consider giving the repository a **Star** so more founders and operators can discover it.
 
 The product is local-first. Critical financing state is stored in SQLite, and the desktop edition runs the same local Funding server inside a Windows desktop shell rather than creating a separate business implementation.
 
